@@ -21,7 +21,17 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Absolute Path */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"],
+      "@apis/*": ["src/apis/*"]
+    }
   },
   "include": ["src"]
 }
