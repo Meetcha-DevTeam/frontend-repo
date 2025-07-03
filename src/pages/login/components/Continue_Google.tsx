@@ -2,7 +2,7 @@ import React from "react";
 
 import google_logo from "../../../assets/imgs/Google.svg";
 
-import "./login.scss";
+import "../styles/login.scss";
 
 const Continue_Google = () => {
   return (

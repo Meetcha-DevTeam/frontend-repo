@@ -21,8 +21,10 @@ $signiture-color: #FF6200;
 
     > .meetcha_banner {
         position: absolute;
-        @include meetcha-banner-common();
         top: 287px;
+        
+        @include meetcha-banner-common();
+        
     }
 
     > .google_button {

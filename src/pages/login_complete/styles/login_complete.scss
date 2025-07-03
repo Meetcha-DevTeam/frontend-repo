@@ -1,0 +1,38 @@
+@import "../../../components/common/meetcha_banner.scss";
+
+*{
+    margin:0;
+}
+
+$container-width: 393px;
+$container-height: 852px;
+$background-color: #FFFFFF;
+
+.login_complete_container{
+
+    position: relative;
+    margin: 0 auto;
+    width: $container-width;
+    height: $container-height;
+    background: $background-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > .meetcha_banner {
+        @include meetcha-banner-common();
+        position: absolute;
+        top: 307px;
+    }
+
+    >p{
+        position: absolute;
+        top:426px;
+        font-family: Pretendard;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 23.1px;
+        letter-spacing: 1%;
+        text-align: center;
+    }
+}
