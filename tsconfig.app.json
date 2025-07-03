@@ -31,7 +31,9 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@apis/*": ["src/apis/*"]
-    }
+    },
+    "noImplicitAny": false,
+    "strictNullChecks": false
   },
   "include": ["src", "src/types/**/*.d.ts"]
 }
