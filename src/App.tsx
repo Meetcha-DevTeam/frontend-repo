@@ -1,11 +1,12 @@
 import React from "react";
 
-function App() {
- 
+import LoginContainer from "./pages/login/components/LoginContainer";
 
+//여기에 router 구현
+function App() {
   return (
     <>
-      <div>hello World</div>
+      <LoginContainer />
     </>
   );
 };
