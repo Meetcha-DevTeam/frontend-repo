@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MonthlySchedulePage from "./pages/schedule/monthly_schedule/MonthlySchedulePage";
+import SchedulePage from "./pages/schedule/SchedulePage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index path="/" element={<MonthlySchedulePage />}></Route>
+        <Route index path="/" element={<SchedulePage />}></Route>
       </Routes>
     </BrowserRouter>
   );

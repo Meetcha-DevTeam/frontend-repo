@@ -18,11 +18,11 @@ export default defineConfig({
   },
 
   //SCSS 전역 사용
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "@/assets/styles/main" as *;`,
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: `@use "@/assets/styles/main" as *;`,
+  //     },
+  //   },
+  // },
 });
