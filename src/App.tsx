@@ -7,7 +7,7 @@ import LoginCompleteContainer from "./pages/login_complete/components/LoginCompl
 function App() {
   return (
     <>
-      <LoginCompleteContainer/>
+      <LoginContainer/>
     </>
   );
 };
