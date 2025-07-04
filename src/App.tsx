@@ -1,14 +1,14 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SchedulePage from "./pages/schedule/SchedulePage";
 
-import LoginContainer from "./pages/login/components/LoginContainer";
-
-import LoginCompleteContainer from "./pages/login_complete/components/LoginCompleteContainer";
-//여기에 router 구현
-function App() {
+const App = () => {
   return (
-    <>
-      <LoginContainer/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index path="/" element={<SchedulePage />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
