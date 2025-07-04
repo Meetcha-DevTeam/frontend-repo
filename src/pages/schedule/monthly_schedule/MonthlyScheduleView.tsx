@@ -6,10 +6,11 @@ import { useAPIs } from "@/apis/useAPIs";
 import EventTagBox from "./EventTagBox";
 import { dateFormatter } from "@/utils/dateFormatter";
 
-const MonthlyScheduleView = () => {
-  const userId = "11";
-  const { response: schedules, loading, error } = useAPIs(`/schedules?userid=${userId}`);
-  console.log(schedules);
+interface Props {
+  schedules: any[];
+}
+
+const MonthlyScheduleView = ({ schedules }: Props) => {
   return (
     <div className={styles.monthlyScheduleView}>
       <Calendar
