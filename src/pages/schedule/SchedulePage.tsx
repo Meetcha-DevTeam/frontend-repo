@@ -4,9 +4,11 @@ import MonthlyScheduleView from "./monthly_schedule/MonthlyScheduleView";
 import WeeklyScheduleView from "./weekly_schedule/WeeklyScheduleView";
 import WriteButton from "@assets/writeButton.svg?react";
 import { useAPIs } from "@/apis/useAPIs";
+import { useNavigate } from "react-router-dom";
 
 const SchedulePage = () => {
   const [viewNum, setViewNum] = useState<number>(0);
+  const navigate = useNavigate();
 
   const userId = "11";
   const { response: schedules, loading, error } = useAPIs(`/schedules?userid=${userId}`);
@@ -42,7 +44,7 @@ const SchedulePage = () => {
           <WeeklyScheduleView schedules={schedules} />
         )}
       </div>
-      <WriteButton className={styles.writeButton} />
+      <WriteButton className={styles.writeButton} onClick={() => navigate("/meeting-creation")} />
     </div>
   );
 };
