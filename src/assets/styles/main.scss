@@ -1,5 +1,5 @@
 @use "./fonts" as *;
-@forward "./colors";
+@use "./setup" as *;
 
 * {
   padding: 0;
