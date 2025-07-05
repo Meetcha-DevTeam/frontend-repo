@@ -3,12 +3,17 @@ import Hamburger from "@assets/hamburger.svg?react";
 import Calendar from "@assets/calendar.svg?react";
 import { useState } from "react";
 
-const BottomNav = () => {
+interface Props {
+  activeMenuNum: number;
+  setActiveMenuNum: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const BottomNav = ({ activeMenuNum, setActiveMenuNum }: Props) => {
   const dataSet = [
     { id: 0, label: "홈", img: <Hamburger /> },
     { id: 1, label: "내 일정", img: <Calendar /> },
   ];
-  const [activeMenuNum, setActiveMenuNum] = useState<number>(0);
+
   return (
     <div className={styles.bottom_nav}>
       {dataSet.map((item, index) => (
