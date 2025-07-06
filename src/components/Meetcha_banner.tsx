@@ -2,7 +2,7 @@ import React from "react";
 
 import meetchaImage from ".././assets/MeetchaLogo.svg";
 
-import "./meetcha_banner.scss"
+import "./Meetcha_banner.scss";
 
 const Meetcha_banner = () => {
   return (
