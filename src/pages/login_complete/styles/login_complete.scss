@@ -1,38 +1,40 @@
-@import "../../../components/common/meetcha_banner.scss";
+@import "../../../components/meetcha_banner.scss";
 
 *{
     margin:0;
 }
 
-$container-width: 393px;
-$container-height: 852px;
+
 $background-color: #FFFFFF;
 
 .login_complete_container{
-
-    position: relative;
-    margin: 0 auto;
-    width: $container-width;
-    height: $container-height;
+    width: 100%;
+    height: 100vh;
+    
     background: $background-color;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
-    > .meetcha_banner {
-        @include meetcha-banner-common();
-        position: absolute;
-        top: 307px;
-    }
+    .flex_container1 {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2rem;
+        &> .meetcha_banner {
+            @include meetcha-banner-common();
+            
+        }
 
-    >p{
-        position: absolute;
-        top:426px;
-        font-family: Pretendard;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 23.1px;
-        letter-spacing: 1%;
-        text-align: center;
+        &> p{
+            
+            font-family: Pretendard;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 23.1px;
+            letter-spacing: 1%;
+            text-align: center;
+            
+        }
     }
 }

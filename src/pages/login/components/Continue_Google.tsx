@@ -1,6 +1,6 @@
 import React from "react";
 
-import google_logo from "../../../assets/imgs/Google.svg";
+import google_logo from "../../../assets/Google.svg";
 
 import "../styles/login.scss";
 

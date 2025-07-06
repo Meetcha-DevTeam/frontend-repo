@@ -7,7 +7,7 @@ export const useAPIs = (path: string, method = "GET", data?: any, withAuth = fal
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const access_token = sessionStorage.getItem("access-token");
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
