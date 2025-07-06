@@ -1,7 +1,5 @@
 import { useState } from "react";
 import styles from "./SchedulePage.module.scss";
-import BottomNav from "@/components/BottomNav";
-import Header from "@/components/Header";
 import MonthlyScheduleView from "./monthly_schedule/MonthlyScheduleView";
 import WeeklyScheduleView from "./weekly_schedule/WeeklyScheduleView";
 import WriteButton from "@assets/writeButton.svg?react";
@@ -15,7 +13,6 @@ const SchedulePage = () => {
   console.log(schedules);
   return (
     <div className={styles.schedulePage}>
-      <Header />
       <div className={styles.schedulePage__viewBox}>
         <div className={styles.schedulePage__viewBox__buttonContainer}>
           <div
@@ -46,7 +43,6 @@ const SchedulePage = () => {
         )}
       </div>
       <WriteButton className={styles.writeButton} />
-      <BottomNav />
     </div>
   );
 };
