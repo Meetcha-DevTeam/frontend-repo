@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: start;
+  gap: 24px;
 
   &__inputTag {
     width: 100%;
@@ -23,6 +24,16 @@
     font-weight: 700;
     font-size: 21px;
     font-style: bold;
+  }
+
+  &__meetingOptionContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
   }
 }
 
