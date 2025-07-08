@@ -7,11 +7,11 @@ import "../styles/login.scss";
 const Continue_Google = () => {
   const navigate = useNavigate();
 
-  // 🔎 1. URL에서 code 추출
+  //1. URL에서 code 추출
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
 
-  // 🚀 2. API 훅 구성: 수동 실행 모드
+  //2. API 훅 구성: 수동 실행 모드
   const {
     response,
     loading,
@@ -25,15 +25,15 @@ const Continue_Google = () => {
     true
   );
 
-  // 🔁 3. code가 생기면 서버로 전송
+  //3. code가 생기면 서버로 전송
   useEffect(() => {
     if (code) {
-      console.log("🔐 Google code:", code);
+      console.log("Google code:", code);
       sendAuthCodeToServer();
     }
   }, [code]);
 
-  // ✅ 4. 응답 처리
+  //4. 응답 처리
   useEffect(() => {
     if (response?.isSuccess) {
       sessionStorage.setItem("access-token", response.data.accessToken);
@@ -43,7 +43,7 @@ const Continue_Google = () => {
     }
   }, [response]);
 
-  // 🎯 5. 버튼 클릭 → Google 로그인 페이지로 이동
+  //5. 버튼 클릭 → Google 로그인 페이지로 이동
   const handleGoogleLogin = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     const redirectUri = encodeURIComponent("http://localhost:5173/login"); // Google 콘솔에 등록한 리디렉션 URI
