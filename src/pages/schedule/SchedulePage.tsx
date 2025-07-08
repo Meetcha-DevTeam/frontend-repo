@@ -1,16 +1,18 @@
 import { useState } from "react";
 import styles from "./SchedulePage.module.scss";
-import BottomNav from "@/components/BottomNav";
-import Header from "@/components/Header";
 import MonthlyScheduleView from "./monthly_schedule/MonthlyScheduleView";
 import WeeklyScheduleView from "./weekly_schedule/WeeklyScheduleView";
 import WriteButton from "@assets/writeButton.svg?react";
+import { useAPIs } from "@/apis/useAPIs";
 
 const SchedulePage = () => {
   const [viewNum, setViewNum] = useState<number>(0);
+
+  const userId = "11";
+  const { response: schedules, loading, error } = useAPIs(`/schedules?userid=${userId}`);
+  console.log(schedules);
   return (
     <div className={styles.schedulePage}>
-      <Header />
       <div className={styles.schedulePage__viewBox}>
         <div className={styles.schedulePage__viewBox__buttonContainer}>
           <div
@@ -34,10 +36,13 @@ const SchedulePage = () => {
             Weekly
           </div>
         </div>
-        {viewNum === 0 ? <MonthlyScheduleView /> : <WeeklyScheduleView />}
+        {viewNum === 0 ? (
+          <MonthlyScheduleView schedules={schedules} />
+        ) : (
+          <WeeklyScheduleView schedules={schedules} />
+        )}
       </div>
       <WriteButton className={styles.writeButton} />
-      <BottomNav />
     </div>
   );
 };
