@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./MeetingOptionCard.module.scss";
 import DownArrow from "@assets/downArrow.svg?react";
-import InputComponent from "./InputComponent";
+import TextInputComponent from "./input_component/TextInputComponent";
+import CalendarInputComponent from "./input_component/CalendarInputComponent";
 
 interface Props {
   title: string;
@@ -15,11 +16,16 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
   const [active, setActive] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<boolean>(false); // 카드가 펼쳐졌는지 여부
   const contentRef = useRef<HTMLDivElement>(null); // 사용자 입력 컴포넌트 크기 영역 참조 변수
-  let inputType; // 사용자 입력 방식(input태그, 달력, ...)
+  // const [inputType, setInputType] = useState<number>(); // 사용자 입력 방식(input태그, 달력, ...)
+  let inputComponent;
 
   switch (type) {
     case 0:
-      inputType = <InputComponent />;
+      inputComponent = <TextInputComponent />;
+      break;
+    case 1:
+      inputComponent = <CalendarInputComponent />;
+      break;
   }
 
   useEffect(() => {
@@ -61,7 +67,7 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       </div>
 
       <div ref={contentRef} className={styles.meetingOptionCard__content}>
-        {expanded && inputType}
+        {expanded && inputComponent}
       </div>
     </div>
   );

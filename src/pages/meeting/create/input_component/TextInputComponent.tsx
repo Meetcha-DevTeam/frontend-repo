@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./InputComponent.module.scss";
+import styles from "./TextInputComponent.module.scss";
 
-const InputComponent = () => {
+const TextInputComponent = () => {
   return (
     <div className={styles.inputComponent}>
       <textarea className={styles.inputComponent__inputArea} />
@@ -9,4 +9,4 @@ const InputComponent = () => {
   );
 };
 
-export default InputComponent;
+export default TextInputComponent;
