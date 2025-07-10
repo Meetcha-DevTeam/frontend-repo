@@ -1,6 +1,6 @@
 @use "@/assets/styles/colors" as *;
 
-.react-calendar {
+.calendarInputComponent .react-calendar {
   width: 100%;
   height: 100%;
   max-width: 100%;
@@ -12,60 +12,60 @@
   line-height: 1.125em;
 }
 
-.react-calendar--doubleView {
+.calendarInputComponent .react-calendar--doubleView {
   width: 700px;
 }
 
-.react-calendar--doubleView .react-calendar__viewContainer {
+.calendarInputComponent .react-calendar--doubleView .react-calendar__viewContainer {
   display: flex;
   margin: -0.5em;
 }
 
-.react-calendar--doubleView .react-calendar__viewContainer > * {
+.calendarInputComponent .react-calendar--doubleView .react-calendar__viewContainer > * {
   width: 50%;
   margin: 0.5em;
 }
 
-.react-calendar,
-.react-calendar *,
-.react-calendar *:before,
-.react-calendar *:after {
+.calendarInputComponent .react-calendar,
+.calendarInputComponent .react-calendar *,
+.calendarInputComponent .react-calendar *:before,
+.calendarInputComponent .react-calendar *:after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-.react-calendar button {
+.calendarInputComponent .react-calendar button {
   margin: 0;
   border: 0;
   outline: none;
 }
 
-.react-calendar button:enabled:hover {
+.calendarInputComponent .react-calendar button:enabled:hover {
   cursor: pointer;
 }
 
-.react-calendar__navigation {
+.calendarInputComponent .react-calendar__navigation {
   display: flex;
   height: 44px;
   margin-bottom: 1em;
 }
 
-.react-calendar__navigation button {
+.calendarInputComponent .react-calendar__navigation button {
   min-width: 44px;
   background: none;
 }
 
-.react-calendar__navigation button:disabled {
+.calendarInputComponent .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
 }
 
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
+.calendarInputComponent .react-calendar__navigation button:enabled:hover,
+.calendarInputComponent .react-calendar__navigation button:enabled:focus {
   background-color: #e6e6e6;
 }
 
-.react-calendar__month-view__weekdays {
+.calendarInputComponent .react-calendar__month-view__weekdays {
   text-align: center;
   text-transform: none;
   font: inherit;
@@ -73,11 +73,11 @@
   font-weight: bold;
 }
 
-.react-calendar__month-view__weekdays__weekday {
+.calendarInputComponent .react-calendar__month-view__weekdays__weekday {
   padding: 0.5em;
 }
 
-.react-calendar__month-view__weekNumbers .react-calendar__tile {
+.calendarInputComponent .react-calendar__month-view__weekNumbers .react-calendar__tile {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,31 +86,31 @@
   font-weight: bold;
 }
 
-.react-calendar__month-view__weekdays__weekday--weekend {
+.calendarInputComponent .react-calendar__month-view__weekdays__weekday--weekend {
   color: $color-orange-5;
 }
 
-.react-calendar__month-view__days__day--weekend {
+.calendarInputComponent .react-calendar__month-view__days__day--weekend {
   color: $color-orange-5;
 }
 
-.react-calendar__month-view__days__day {
+.calendarInputComponent .react-calendar__month-view__days__day {
   height: 40px;
 }
 
-.react-calendar__month-view__days__day--neighboringMonth,
-.react-calendar__decade-view__years__year--neighboringDecade,
-.react-calendar__century-view__decades__decade--neighboringCentury {
+.calendarInputComponent .react-calendar__month-view__days__day--neighboringMonth,
+.calendarInputComponent .react-calendar__decade-view__years__year--neighboringDecade,
+.calendarInputComponent .react-calendar__century-view__decades__decade--neighboringCentury {
   color: #757575;
 }
 
-.react-calendar__year-view .react-calendar__tile,
-.react-calendar__decade-view .react-calendar__tile,
-.react-calendar__century-view .react-calendar__tile {
+.calendarInputComponent .react-calendar__year-view .react-calendar__tile,
+.calendarInputComponent .react-calendar__decade-view .react-calendar__tile,
+.calendarInputComponent .react-calendar__century-view .react-calendar__tile {
   padding: 2em 0.5em;
 }
 
-.react-calendar__tile {
+.calendarInputComponent .react-calendar__tile {
   max-width: 100%;
   padding: 10px 6.6667px;
   background: none;
@@ -119,55 +119,56 @@
   font-size: 0.833em;
 }
 
-.react-calendar__tile:disabled {
+.calendarInputComponent .react-calendar__tile:disabled {
   background-color: #f0f0f0;
   color: #ababab;
 }
 
-.react-calendar__month-view__days__day--neighboringMonth:disabled,
-.react-calendar__decade-view__years__year--neighboringDecade:disabled,
-.react-calendar__century-view__decades__decade--neighboringCentury:disabled {
+.calendarInputComponent .react-calendar__month-view__days__day--neighboringMonth:disabled,
+.calendarInputComponent .react-calendar__decade-view__years__year--neighboringDecade:disabled,
+.calendarInputComponent
+  .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
   color: #cdcdcd;
 }
 
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
+.calendarInputComponent .react-calendar__tile:enabled:hover,
+.calendarInputComponent .react-calendar__tile:enabled:focus {
   background-color: #e6e6e6;
 }
 
-.react-calendar__tile--now {
+.calendarInputComponent .react-calendar__tile--now {
 }
 
-.react-calendar__tile--now:enabled:hover,
-.react-calendar__tile--now:enabled:focus {
+.calendarInputComponent .react-calendar__tile--now:enabled:hover,
+.calendarInputComponent .react-calendar__tile--now:enabled:focus {
   background: #ffffa9;
 }
 
-.react-calendar__tile--hasActive {
+.calendarInputComponent .react-calendar__tile--hasActive {
   background: #76baff;
 }
 
-.react-calendar__tile--hasActive:enabled:hover,
-.react-calendar__tile--hasActive:enabled:focus {
+.calendarInputComponent .react-calendar__tile--hasActive:enabled:hover,
+.calendarInputComponent .react-calendar__tile--hasActive:enabled:focus {
   background: #a9d4ff;
 }
 
-.react-calendar__tile--active {
+.calendarInputComponent .react-calendar__tile--active {
 }
 
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
+.calendarInputComponent .react-calendar__tile--active:enabled:hover,
+.calendarInputComponent .react-calendar__tile--active:enabled:focus {
 }
 
-.react-calendar--selectRange .react-calendar__tile--hover {
+.calendarInputComponent .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
 }
 
-abbr {
+.calendarInputComponent abbr {
   text-decoration: none !important;
 }
 
-.eventTagBox {
+.calendarInputComponent .eventTagBox {
   width: 100%;
   height: 100%;
   display: flex;
@@ -175,7 +176,7 @@ abbr {
   gap: 3px;
 }
 
-.eventTag {
+.calendarInputComponent .eventTag {
   width: 100%;
   height: 33%;
   border-radius: 10px;
@@ -190,7 +191,7 @@ abbr {
   text-overflow: ellipsis;
 }
 
-.custom-active {
+.calendarInputComponent .custom-active {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -203,7 +204,7 @@ abbr {
   justify-content: center;
 }
 
-.custom-active:enabled:hover,
-.custom-active:enabled:focus {
+.calendarInputComponent .custom-active:enabled:hover,
+.calendarInputComponent .custom-active:enabled:focus {
   background: $color-orange-5;
 }
