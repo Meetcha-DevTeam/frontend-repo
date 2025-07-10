@@ -3,6 +3,8 @@ import styles from "./MeetingOptionCard.module.scss";
 import DownArrow from "@assets/downArrow.svg?react";
 import TextInputComponent from "./input_component/TextInputComponent";
 import CalendarInputComponent from "./input_component/CalendarInputComponent";
+import TimeInputComponent from "./input_component/TimeInputComponent";
+import TimePicker from "../../../components/TimePicker/TimePicker";
 
 interface Props {
   title: string;
@@ -25,6 +27,10 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       break;
     case 1:
       inputComponent = <CalendarInputComponent />;
+      break;
+    case 2:
+      inputComponent = <TimePicker onChange={(item) => console.log(item)} />;
+      // inputComponent = <TimeInputComponent />;
       break;
   }
 

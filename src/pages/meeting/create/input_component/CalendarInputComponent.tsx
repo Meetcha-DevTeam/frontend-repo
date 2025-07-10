@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "./CalendarInputComponent.module.scss";
 import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { dateFormatter } from "@/utils/dateFormatter";
@@ -22,7 +21,7 @@ const CalendarInputComponent = () => {
   }, [clickedDays]);
 
   return (
-    <div className={styles.calendarInputComponent}>
+    <div className="calendarInputComponent">
       <Calendar
         formatDay={(locale, date) => date.toLocaleString("en", { day: "numeric" })}
         onClickDay={clickDaySaver}

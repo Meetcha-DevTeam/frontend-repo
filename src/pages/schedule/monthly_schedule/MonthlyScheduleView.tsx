@@ -1,8 +1,6 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./Calendar.scss";
-import styles from "./MonthlyScheduleView.module.scss";
-import { useAPIs } from "@/apis/useAPIs";
 import EventTagBox from "./EventTagBox";
 import { dateFormatter } from "@/utils/dateFormatter";
 
@@ -12,7 +10,7 @@ interface Props {
 
 const MonthlyScheduleView = ({ schedules }: Props) => {
   return (
-    <div className={styles.monthlyScheduleView}>
+    <div className="monthlyScheduleView">
       <Calendar
         tileContent={({ date, view }) => {
           const eventName = new Array();
