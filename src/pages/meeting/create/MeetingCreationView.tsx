@@ -5,8 +5,14 @@ import Calendar from "@assets/calendar.svg?react";
 import Clock from "@assets/clock.svg?react";
 import Watch from "@assets/watch.svg?react";
 import MeetingOptionCard from "./MeetingOptionCard";
+import type { MeetingData } from "./MeetingCreationPage";
 
-const MeetingCreationView = () => {
+interface Props {
+  setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
+  setCompleteData: React.Dispatch<React.SetStateAction<MeetingData>>;
+}
+
+const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => {
   const [meetingTitle, setMeetingTitle] = useState<string>("");
   const [meetingExplanation, setMeetingExplanation] = useState<string>();
   const [meetingCandidateDate, setMeetingCandidateDate] = useState<string[]>();
@@ -45,15 +51,26 @@ const MeetingCreationView = () => {
   ];
 
   useEffect(() => {
-    console.log("meetingTitle: ", meetingTitle);
-    console.log("meetingCandidateDate: ", meetingCandidateDate);
-    console.log("meetingExplanation: ", meetingExplanation);
-    console.log("meetingProceedTime: ", meetingProceedTime);
-    console.log("voteExpirationTime: ", voteExpirationTime);
+    if (
+      meetingTitle &&
+      meetingExplanation &&
+      meetingCandidateDate &&
+      meetingProceedTime &&
+      voteExpirationTime
+    ) {
+      setAllDataReserved(true);
+      setCompleteData({
+        title: meetingTitle,
+        explanation: meetingExplanation,
+        candidateDate: meetingCandidateDate,
+        proceedTime: meetingProceedTime,
+        expirationTime: voteExpirationTime,
+      });
+    }
   }, [
     meetingTitle,
-    meetingCandidateDate,
     meetingExplanation,
+    meetingCandidateDate,
     meetingProceedTime,
     voteExpirationTime,
   ]);
