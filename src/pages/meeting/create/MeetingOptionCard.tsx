@@ -9,9 +9,11 @@ import TimePicker from "../../../components/TimePicker/TimePicker";
 interface Props {
   title: string;
   icon: React.ReactNode;
-  data: string;
+  data: string | string[];
   type: number;
-  dataSetter: React.Dispatch<React.SetStateAction<string>>;
+  dataSetter:
+    | React.Dispatch<React.SetStateAction<string>>
+    | React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
@@ -26,12 +28,14 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       inputComponent = <TextInputComponent />;
       break;
     case 1:
-      inputComponent = <CalendarInputComponent />;
+      inputComponent = <CalendarInputComponent dataSetter={dataSetter} />;
       break;
     case 2:
       inputComponent = <TimePicker onChange={(item) => console.log(item)} />;
       // inputComponent = <TimeInputComponent />;
       break;
+    case 3:
+      inputComponent = <CalendarInputComponent dataSetter={dataSetter} />;
   }
 
   useEffect(() => {

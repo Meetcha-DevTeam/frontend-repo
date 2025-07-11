@@ -3,7 +3,12 @@ import Calendar from "react-calendar";
 import "./Calendar.scss";
 import { dateFormatter } from "@/utils/dateFormatter";
 
-const CalendarInputComponent = () => {
+interface Props {
+  dataSetter:
+    | React.Dispatch<React.SetStateAction<string>>
+    | React.Dispatch<React.SetStateAction<string[]>>;
+}
+const CalendarInputComponent = ({ dataSetter }: Props) => {
   const [clickedDays, setClickedDays] = useState<string[]>([]);
 
   const clickDaySaver = (value: Date) => {
@@ -18,6 +23,7 @@ const CalendarInputComponent = () => {
 
   useEffect(() => {
     console.log(clickedDays);
+    dataSetter(clickedDays);
   }, [clickedDays]);
 
   return (

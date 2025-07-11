@@ -31,7 +31,7 @@ export default function TimePicker({ onChange }) {
     const scrollTop = ref.current.scrollTop; // 가운데의 indicator를 기준으로 scroll된 높이를 구해야함
     const idx = Math.round(scrollTop / ITEM_HEIGHT);
     const picked = options[idx];
-    console.log(scrollTop, idx, picked);
+    // console.log(scrollTop, idx, picked);
     if (picked && picked !== value[key]) {
       const next = { ...value, [key]: picked };
       setValue(next);

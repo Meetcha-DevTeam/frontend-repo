@@ -8,7 +8,7 @@ import MeetingOptionCard from "./MeetingOptionCard";
 
 const MeetingCreationView = () => {
   const [meetingExplanation, setMeetingExplanation] = useState<string>();
-  const [meetingCandidateDate, setMeetingCandidateDate] = useState<string>();
+  const [meetingCandidateDate, setMeetingCandidateDate] = useState<string[]>();
   const [meetingProceedTime, setMeetingProceedTime] = useState<string>();
   const [voteExpirationTime, setVoteExpirationTime] = useState<string>();
 
