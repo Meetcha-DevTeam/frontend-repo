@@ -9,22 +9,28 @@ interface Props {
     | React.Dispatch<React.SetStateAction<string[]>>;
 }
 const CalendarMultipleInputComponent = ({ dataSetter }: Props) => {
-  const [clickedDay, setClickedDay] = useState<string>();
+  const [clickedDays, setClickedDays] = useState<string[]>([]);
+
+  const clickDaySaver = (value: Date) => {
+    const clickedDay = dateFormatter(value);
+    if (clickedDays.includes(clickedDay)) {
+      setClickedDays((prevClickedDays) => prevClickedDays.filter((day) => day !== clickedDay));
+      return;
+    }
+    setClickedDays((prevClickedDays) => [...prevClickedDays, clickedDay]);
+  };
 
   useEffect(() => {
-    console.log(clickedDay);
-    (dataSetter as React.Dispatch<React.SetStateAction<string>>)(clickedDay);
-  }, [clickedDay]);
+    (dataSetter as React.Dispatch<React.SetStateAction<string[]>>)(clickedDays);
+  }, [clickedDays]);
 
   return (
     <div className="calendarMultipleInputComponent">
       <Calendar
         formatDay={(locale, date) => date.toLocaleString("en", { day: "numeric" })}
-        onClickDay={(value) => {
-          setClickedDay(dateFormatter(value));
-        }}
+        onClickDay={clickDaySaver}
         tileClassName={({ date, view }) => {
-          if (clickedDay === dateFormatter(date)) {
+          if (clickedDays.includes(dateFormatter(date))) {
             return "custom-active";
           }
         }}
