@@ -12,7 +12,6 @@ const CalendarMultipleInputComponent = ({ dataSetter }: Props) => {
   const [clickedDay, setClickedDay] = useState<string>();
 
   useEffect(() => {
-    console.log(clickedDay);
     (dataSetter as React.Dispatch<React.SetStateAction<string>>)(clickedDay);
   }, [clickedDay]);
 

@@ -18,7 +18,6 @@ export const useAPIs = (
 
   useEffect(() => {
     if (manual && !trigger) return;
-    console.log(API_BASE);
     const fetchData = async () => {
       try {
         const res = await fetch(`${API_BASE}${path}`, {
@@ -39,7 +38,7 @@ export const useAPIs = (
     };
 
     fetchData();
-  }, [trigger, path, method, JSON.stringify(data)]); // trigger 변화 시 실행
+  }, [trigger, path, method]); // trigger 변화 시 실행
 
   const fire = () => {
     setLoading(true);
