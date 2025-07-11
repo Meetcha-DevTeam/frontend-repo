@@ -35,7 +35,7 @@ export default function TimePicker({ onChange }) {
     if (picked && picked !== value[key]) {
       const next = { ...value, [key]: picked };
       setValue(next);
-      onChange?.(next);
+      onChange?.(`${next.ampm} ${next.hour}:${next.minute}`);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MeetingCreationView.module.scss";
 import Pencil from "@assets/pencil.svg?react";
 import Calendar from "@assets/calendar.svg?react";
@@ -7,6 +7,7 @@ import Watch from "@assets/watch.svg?react";
 import MeetingOptionCard from "./MeetingOptionCard";
 
 const MeetingCreationView = () => {
+  const [meetingTitle, setMeetingTitle] = useState<string>("");
   const [meetingExplanation, setMeetingExplanation] = useState<string>();
   const [meetingCandidateDate, setMeetingCandidateDate] = useState<string[]>();
   const [meetingProceedTime, setMeetingProceedTime] = useState<string>();
@@ -42,12 +43,30 @@ const MeetingCreationView = () => {
       dataSetter: setVoteExpirationTime,
     },
   ];
+
+  useEffect(() => {
+    console.log("meetingTitle: ", meetingTitle);
+    console.log("meetingCandidateDate: ", meetingCandidateDate);
+    console.log("meetingExplanation: ", meetingExplanation);
+    console.log("meetingProceedTime: ", meetingProceedTime);
+    console.log("voteExpirationTime: ", voteExpirationTime);
+  }, [
+    meetingTitle,
+    meetingCandidateDate,
+    meetingExplanation,
+    meetingProceedTime,
+    voteExpirationTime,
+  ]);
+
   return (
     <div className={styles.meetingCreationView}>
       <input
         className={styles.meetingCreationView__inputTag}
         type="text"
         placeholder="미팅 제목을 적어주세요"
+        onChange={(e) => {
+          setMeetingTitle(e.target.value);
+        }}
       />
       <div className={styles.meetingCreationView__meetingOptionContainer}>
         {cardDataSet.map((item, index) => (
