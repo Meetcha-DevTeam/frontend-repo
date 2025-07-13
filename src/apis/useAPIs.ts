@@ -29,6 +29,7 @@ export const useAPIs = (
           ...(data && { body: JSON.stringify(data) }),
         });
         const jsonData = await res.json();
+        console.log(jsonData);
         setResponse(jsonData);
       } catch (e: any) {
         setError(e.message);

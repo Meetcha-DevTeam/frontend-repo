@@ -9,16 +9,11 @@ interface Props {
 
 const CarouselContainer = ({ dataSet, renderItem }: Props) => {
   const dataArray = dataSet;
-  // const [itemWidth, setItemWidth] = useState<number>();
   const isDragging = useRef(false);
   const translateXRef = useRef(0); // 마우스를 놓을 때 저장해두는 기존 오프셋
   const startX = useRef(0);
   const [translateX, setTranslateX] = useState(0); // 이동량
   const carouselContainerRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   console.log(itemWidth);
-  // }, [itemWidth]);
 
   // 공통으로 쓰일 move/ up 핸들러
   const handleMove = (clientX: number) => {
@@ -123,7 +118,7 @@ const CarouselContainer = ({ dataSet, renderItem }: Props) => {
         userSelect: "none",
       }}
     >
-      {dataArray.map((data, index) => renderItem(data, index))}
+      {dataArray && dataArray.map((data, index) => renderItem(data, index))}
     </div>
   );
 };
