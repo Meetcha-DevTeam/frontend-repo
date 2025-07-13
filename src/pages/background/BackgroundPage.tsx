@@ -18,7 +18,7 @@ const BackgroundPage = () => {
 
   return (
     <div className={styles.background_page}>
-      <Header />
+      <Header prevButton={false} />
       {activeMenu()}
       <BottomNav activeMenuNum={activeMenuNum} setActiveMenuNum={setActiveMenuNum} />
     </div>

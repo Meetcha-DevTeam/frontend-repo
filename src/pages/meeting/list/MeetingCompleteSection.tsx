@@ -7,7 +7,9 @@ import type { MeetingDataType } from "@/types/meeting-data-type";
 
 const MeetingCompleteSection = () => {
   const meetingList: MeetingDataType[] = useMeetingStore((state) => state.meetingList);
-  console.log("meetingList:", meetingList);
+  const completeDataList = meetingList?.filter((item) => {
+    return item.meetingState !== "incomplete";
+  });
 
   return (
     <div className={styles.meetingCompleteSection}>
@@ -16,7 +18,7 @@ const MeetingCompleteSection = () => {
         확인해주세요
       </div>
       <div className={styles.meetingCompleteSection__meetingList}>
-        {meetingList.map((item, _) => (
+        {completeDataList.map((item, _) => (
           <MeetingItemCard key={item.id} data={item} />
         ))}
       </div>
