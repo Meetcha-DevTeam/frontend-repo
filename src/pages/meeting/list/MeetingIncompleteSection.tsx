@@ -2,7 +2,7 @@ import { useAPIs } from "@/apis/useAPIs";
 import styles from "./MeetingIncompleteSection.module.scss";
 import Carousel from "@/components/Carousel/Carousel";
 import CarouselItem from "@/pages/meeting/list/CarouselItem";
-import type { IncompleteMeetingData } from "@/types/incomp-meeting";
+import type { IncompleteMeetingData } from "@/types/meeting-data-type";
 
 const MeetingIncompleteSection = () => {
   const userId = 3;

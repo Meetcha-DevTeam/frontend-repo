@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "./CarouselContainer.module.scss";
-import type { IncompleteMeetingData } from "@/types/incomp-meeting";
+import type { IncompleteMeetingData } from "@/types/meeting-data-type";
 
 interface Props {
   dataSet: IncompleteMeetingData[];
@@ -57,9 +57,9 @@ const CarouselContainer = ({ dataSet, renderItem }: Props) => {
     // 경계 내에서만 이동하도록 실시간 제한
     const clampedTranslateX = Math.max(minTranslateX, Math.min(maxTranslateX, newTranslateX));
 
-    console.log("minTranslateX:", minTranslateX);
-    console.log("maxTranslateX:", maxTranslateX);
-    console.log("clampedTranslateX:", clampedTranslateX);
+    // console.log("minTranslateX:", minTranslateX);
+    // console.log("maxTranslateX:", maxTranslateX);
+    // console.log("clampedTranslateX:", clampedTranslateX);
 
     setTranslateX(clampedTranslateX);
   };

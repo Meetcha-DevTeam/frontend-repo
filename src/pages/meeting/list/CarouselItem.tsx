@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./CarouselItem.module.scss";
-import type { IncompleteMeetingData } from "@/types/incomp-meeting";
+import type { IncompleteMeetingData } from "@/types/meeting-data-type";
 import Human from "@assets/human.svg?react";
 
 interface Props {
