@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./CarouselItem.module.scss";
 import type { IncompleteMeetingData } from "@/types/incomp-meeting";
+import Human from "@assets/human.svg?react";
 
 interface Props {
   data: IncompleteMeetingData;
@@ -39,6 +40,10 @@ const CarouselItem = ({ data }: Props) => {
         <div className={styles.carouselItem__dataArea__timeAndPlace}>
           <div>{data.participationExpirationTime}</div>
           <div>{data.meetingName}</div>
+        </div>
+        <div className={styles.carouselItem__dataArea__participantNum}>
+          <Human />
+          {data.currentParticipantNum}
         </div>
       </div>
     </div>
