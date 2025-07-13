@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Carousel.module.scss";
 import CarouselContainer from "./CarouselContainer";
-import type { IncompleteMeetingData } from "@/types/incomp-meeting";
+import type { IncompleteMeetingData } from "@/types/meeting-data-type";
 
 interface Props {
   dataSet: IncompleteMeetingData[];
