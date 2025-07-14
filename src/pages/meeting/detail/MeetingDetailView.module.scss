@@ -1,0 +1,46 @@
+.meetingDetailView {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 42px;
+
+  background-color: $color-cream-dark;
+
+  padding: 23px;
+
+  &__summary {
+    width: 100%;
+    &__name {
+      font-size: 17px;
+      font-weight: 600;
+    }
+    &__desc {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  &__infoArea {
+    width: 100%;
+  }
+
+  &__iconArea {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 29px;
+  }
+}
+
+.success {
+  color: $color-orange-5;
+}
+
+.failure {
+  color: $color-gray-2;
+}

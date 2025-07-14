@@ -12,7 +12,9 @@ const Header = ({ prevButton }: Props) => {
 
   return (
     <div className={styles.header}>
-      {prevButton && <LeftArrow className={styles.header__leftArrow} />}
+      {prevButton && (
+        <LeftArrow className={styles.header__leftArrow} onClick={() => navigate(-1)} />
+      )}
       <img
         className={styles.header__mainlogo}
         src={MainLogo}
