@@ -11,7 +11,7 @@ interface MeetingState {
 export const useMeetingStore = create<MeetingState>()((set) => ({
   meetingList: [],
   fetchMeetings: async (id) => {
-    const res = await fetch(`${API_BASE}/meeting_incomplete?id=${id}`, {
+    const res = await fetch(`${API_BASE}/meeting_list?id=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
