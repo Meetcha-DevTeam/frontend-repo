@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./CarouselItem.module.scss";
-import type { IncompleteMeetingData } from "@/types/meeting-data-type";
 import Human from "@assets/human.svg?react";
+import type { MeetingDataType } from "@/types/meeting-data-type";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
-  data: IncompleteMeetingData;
+  data: MeetingDataType;
 }
 
 const CarouselItem = ({ data }: Props) => {
   const carouselItemRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // CarouselItem의 width를 동적으로 감지 후 상태에 세팅
   // useEffect(() => {
@@ -30,8 +32,12 @@ const CarouselItem = ({ data }: Props) => {
   //   };
   // }, [setItemWidth]);
 
+  const handleClick = () => {
+    navigate("detail", { state: data });
+  };
+
   return (
-    <div className={styles.carouselItem} ref={carouselItemRef}>
+    <div className={styles.carouselItem} ref={carouselItemRef} onClick={handleClick}>
       <div className={styles.carouselItem__topEdge}></div>
       <div className={styles.carouselItem__dataArea}>
         <div className={styles.carouselItem__dataArea__expirationDate}>

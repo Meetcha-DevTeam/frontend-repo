@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import styles from "./CarouselContainer.module.scss";
-import type { IncompleteMeetingData } from "@/types/meeting-data-type";
+import type { MeetingDataType } from "@/types/meeting-data-type";
 
 interface Props {
-  dataSet: IncompleteMeetingData[];
-  renderItem: (data: IncompleteMeetingData, index: number) => React.ReactNode;
+  dataSet: MeetingDataType[];
+  renderItem: (data: MeetingDataType, index: number) => React.ReactNode;
 }
 
 const CarouselContainer = ({ dataSet, renderItem }: Props) => {
