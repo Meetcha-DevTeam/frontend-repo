@@ -74,7 +74,7 @@ button.rbc-input::-moz-focus-inner {
 .rbc-show-more,
 .rbc-row-segment .rbc-event-content,
 .rbc-event-label {
-  //   display: block;
+  // display: block;
   display: none;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -113,6 +113,7 @@ button.rbc-input::-moz-focus-inner {
   justify-content: center;
   align-items: center;
 }
+
 .rbc-header + .rbc-header {
   border-left: 1px solid #ddd;
 }
@@ -781,6 +782,8 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-time-header.rbc-overflowing {
   border-right: 1px solid #ddd;
+  //
+  margin-right: 0px !important;
 }
 .rbc-rtl .rbc-time-header.rbc-overflowing {
   border-right-width: 0;
@@ -794,7 +797,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-time-header-cell-single-day {
-  display: none;
+  // display: none;
 }
 
 .rbc-time-header-content {
@@ -882,4 +885,9 @@ button.rbc-input::-moz-focus-inner {
 /*# sourceMappingURL=react-big-calendar.css.map */
 .rbc-time-header-cell {
   height: 3rem;
+}
+
+//
+.rbc-label.rbc-time-header-gutter {
+  flex: 1;
 }
