@@ -5,7 +5,7 @@ import CarouselItem from "@/pages/meeting/list/CarouselItem";
 
 const MeetingIncompleteSection = () => {
   const userId = 3;
-  const { response: dataSet, loading, error } = useAPIs(`/meeting_incomplete?id=${userId}`);
+  const { response: dataSet, loading, error } = useAPIs(`/meeting_list?id=${userId}`);
   const incompleteData = dataSet?.data.filter((item) => {
     return item.meetingState === "incomplete";
   });

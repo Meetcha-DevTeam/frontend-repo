@@ -4,7 +4,7 @@ import LeftArrow from "@assets/leftArrow.svg?react";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  type: string;
+  type?: string;
   label?: string;
 }
 

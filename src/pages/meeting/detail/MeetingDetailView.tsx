@@ -7,6 +7,7 @@ import Check from "@assets/check.svg?react";
 import People from "@assets/people.svg?react";
 import CompletedMatching from "@assets/completedMatching.svg?react";
 import FailedMatching from "@assets/failedMatching.svg?react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   data: MeetingDataType;
@@ -27,7 +28,7 @@ const MeetingDetailView = ({ data }: Props) => {
     {
       label: "참여자 정보 확인",
       icon: <People />,
-      data: null,
+      data: data,
     },
   ];
 
