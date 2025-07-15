@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const API_BASE = import.meta.env.VITE_API_BASE_URL;
-
+console.log("useAPI hook 실행됨");
 export const useAPIs = (
   path: string,
   method = "GET",
@@ -18,7 +18,7 @@ export const useAPIs = (
 
   useEffect(() => {
     if (manual && !trigger) return;
-    console.log(API_BASE);
+
     const fetchData = async () => {
       try {
         const res = await fetch(`${API_BASE}${path}`, {
@@ -29,13 +29,17 @@ export const useAPIs = (
           },
           ...(data && { body: JSON.stringify(data) }),
         });
+        
         const jsonData = await res.json();
+       
         setResponse(jsonData);
+      
       } catch (e: any) {
         setError(e.message);
       } finally {
         setLoading(false);
       }
+  
     };
 
     fetchData();

@@ -7,7 +7,7 @@ import { useAPIs } from "@/apis/useAPIs";
 
 const SchedulePage = () => {
   const [viewNum, setViewNum] = useState<number>(0);
-
+  
   const userId = "11";
   const { response: schedules, loading, error } = useAPIs(`/schedules?userid=${userId}`);
   console.log(schedules);
