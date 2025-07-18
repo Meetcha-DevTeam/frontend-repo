@@ -1,6 +1,4 @@
-import React from "react";
 import styles from "./MeetingCompleteSection.module.scss";
-import Checkbox from "@assets/checkbox.svg?react";
 import { useMeetingStore } from "@/store/meetingStore";
 import MeetingItemCard from "./MeetingItemCard";
 import type { MeetingDataType } from "@/types/meeting-data-type";
@@ -8,18 +6,15 @@ import type { MeetingDataType } from "@/types/meeting-data-type";
 const MeetingCompleteSection = () => {
   const meetingList: MeetingDataType[] = useMeetingStore((state) => state.meetingList);
   const completeDataList = meetingList?.filter((item) => {
-    return item.meetingState !== "incomplete";
+    return item.meeting_status === "진행중";
   });
 
   return (
     <div className={styles.meetingCompleteSection}>
-      <div className={styles.meetingCompleteSection__label}>
-        <Checkbox />
-        확인해주세요
-      </div>
+      <div className={styles.meetingCompleteSection__label}>매칭 중인 미팅</div>
       <div className={styles.meetingCompleteSection__meetingList}>
         {completeDataList.map((item, _) => (
-          <MeetingItemCard key={item.id} data={item} />
+          <MeetingItemCard key={item.meeting_id} data={item} />
         ))}
       </div>
     </div>

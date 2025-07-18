@@ -12,9 +12,7 @@ const MeetingIncompleteSection = () => {
 
   return (
     <div className={styles.meetingIncompleteSection}>
-      <div className={styles.meetingIncompleteSection__label}>
-        곧 다가올 나의 미팅을 확인해보세요
-      </div>
+      <div className={styles.meetingIncompleteSection__label}>매칭 완료 미팅</div>
       <Carousel
         dataSet={incompleteData}
         renderItem={(data, index) => <CarouselItem key={index} data={data} />}

@@ -17,8 +17,8 @@ const HomePage = () => {
 
   return (
     <div className={styles.homePage}>
-      <MeetingIncompleteSection />
       <MeetingCompleteSection />
+      <MeetingIncompleteSection />
       <WriteButton className={styles.writeButton} onClick={() => navigate("/meeting-creation")} />
     </div>
   );
