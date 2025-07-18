@@ -7,12 +7,12 @@ import "./Memoir_meeting.scss";
 
 const Must_write = ({ meetingLists }) => {
   const navigate = useNavigate();
-
+  console.log(meetingLists);
   const handleClick = (meeting) => {
     navigate("/memoir-write",{
       state:{
-        title:meeting.title,
-        meetingDate:meeting.meetingDate,
+        title:meeting.meeting_name,
+        meetingDate:meeting.created_at,
       },
     });
   };
@@ -24,9 +24,9 @@ const Must_write = ({ meetingLists }) => {
           meetingLists
             .filter((meeting) => !meeting.done)
             .map((meeting) => (
-              <div key={meeting.id} className="meetingcard">
-                <p>{meeting.title}</p>
-                <p>{meeting.meetingDate}</p>
+              <div key={meeting.reflection_id} className="meetingcard">
+                <p>{meeting.meeting_name}</p>
+                <p>{meeting.created_at}</p>
                 <button 
                   className="writeMemoir_button"
                   onClick={()=>handleClick(meeting)}
