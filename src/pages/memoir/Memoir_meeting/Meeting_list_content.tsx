@@ -9,7 +9,7 @@ import "./Memoir_meeting.scss";
 const Meeting_list_content = ({ meetingLists }: Props) => {
   const navigate = useNavigate();
   const handleClick = (meeting: any) => {
-    navigate("/meeting-complete", { state: meeting });
+    navigate("/memoir-complete", { state: meeting });
   };
   return (
     <div className="meetings_ctn">
