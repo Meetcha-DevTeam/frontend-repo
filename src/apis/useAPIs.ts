@@ -15,12 +15,13 @@ export const useAPIs = (
   const [trigger, setTrigger] = useState(false); // 실행 트리거
 
   const access_token = sessionStorage.getItem("access-token");
-
+  
   useEffect(() => {
     if (manual && !trigger) return;
-
+    
     const fetchData = async () => {
       try {
+        
         const res = await fetch(`${API_BASE}${path}`, {
           method: method,
           headers: {

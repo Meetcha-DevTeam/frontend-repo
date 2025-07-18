@@ -86,6 +86,7 @@ const Memoir_write_main = () => {
       </div>
       <div className="ctn_common to_write_meeting">
         <p className="write_title">프로젝트</p>
+        <div className="in-common"></div>
       </div>
     </div>
   );

@@ -1,0 +1,20 @@
+.complete_intro_ctn{
+    display: flex;
+    margin: 1rem;
+    justify-content: space-between;
+    >p{
+        font-family: Pretendard;
+        font-weight: 600;
+        font-style: SemiBold;
+        font-size: 17px;
+        line-height: 23.1px;
+        letter-spacing: 1%;
+
+    }
+}
+
+.ctn_common{
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+}
