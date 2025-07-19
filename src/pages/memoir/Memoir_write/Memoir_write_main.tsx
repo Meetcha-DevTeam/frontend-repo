@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Meeting_card from "../Memoir_common/Meeting_card";
+import Project_container from "./Project_container";
 import "./Memoir_write.scss";
 
 const Memoir_write_main = () => {
@@ -76,10 +77,7 @@ const Memoir_write_main = () => {
           onChange={(e) => setTodo(e.target.value)}
         />
       </div>
-      <div className="ctn_in_common to_write_meeting">
-        <p className="write_title">프로젝트</p>
-        <div className="in-common"></div>
-      </div>
+      <Project_container meeting={meeting}/>
     </div>
   );
 };
