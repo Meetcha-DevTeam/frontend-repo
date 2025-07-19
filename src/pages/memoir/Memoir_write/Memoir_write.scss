@@ -2,13 +2,12 @@
   padding: 0;
   margin: 0;
 }
-.Memoir_write_ctn{
-  height: 68.5rem;
+.Memoir_write_ctn {
+  height: 100%;
   overflow: scroll;
-
+  padding-bottom: 4rem;
 }
 .memoir_write_intro_container {
-  
   padding: 1rem;
   display: flex;
   gap: 0.5rem;
@@ -39,12 +38,12 @@
   width: 100%;
   height: 100%;
   padding: 1rem 1rem 5rem 1rem;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
-  .meeting_card_ctn{
+  .meeting_card_ctn {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
@@ -84,14 +83,14 @@
             letter-spacing: 0%;
             color: #404040;
           }
-          >p:nth-of-type(2){
+          > p:nth-of-type(2) {
             font-family: Pretendard;
             font-weight: 400;
             font-style: Regular;
             font-size: 11px;
             line-height: 100%;
             letter-spacing: 0%;
-            color:#616161;
+            color: #616161;
           }
         }
       }
@@ -152,6 +151,98 @@
   }
 }
 
-.star{
-    color: #ff6200;
+.star {
+  color: #ff6200;
+}
+
+.project_banner_ctn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  .banner {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    img {
+      width: 13px;
+      height: 13px;
+    }
+  }
+  .banner_box {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .banner_box_input_ctn {
+      width: 100%;
+      height: 2.5rem;
+      background: #f7f7f7;
+      display: flex;
+      padding: 0.5rem;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 0.8rem;
+      border-radius: 8px;
+      > input {
+        width: 80%;
+        all: unset;
+        box-sizing: border-box;
+      }
+      .project_banner_input {
+      }
+    }
+    .checkbox_ctn {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: center;
+      .study_checkbox {
+        appearance: none;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid #cccccc;
+        border-radius: 100%;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 1rem;
+          height: 1rem;
+          background: #ff914c;
+          transform: translate(-50%, -50%) scale(0);
+          transition: transform 0.2s ease-in-out;
+          border-radius: 100%;
+        }
+        &:checked::after {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    }
+  }
+}
+.banner_name_ctn {
+  display: inline-block;
+  width: fit-content;
+  padding: 0 0.6rem;
+  height: 100%;
+  background-color: #faefdf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+
+  > p {
+    font-size: 12px;
+    color: #b04404;
+  }
 }
