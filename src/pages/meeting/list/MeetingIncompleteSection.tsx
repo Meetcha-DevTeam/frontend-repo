@@ -10,7 +10,7 @@ const MeetingIncompleteSection = () => {
     .filter((item: MeetingDataType) => {
       return item.meeting_status === "생성중" || item.meeting_status === "실패";
     })
-    .sort((a, b) => a.meeting_status.localeCompare(b.meeting_status));
+    .sort((a, b) => b.meeting_status.localeCompare(a.meeting_status));
 
   return (
     <div className={styles.meetingIncompleteSection}>

@@ -10,9 +10,9 @@ const BackgroundPage = () => {
   const activeMenu = () => {
     switch (activeMenuNum) {
       case 0:
-        return <HomePage />;
-      case 1:
         return <SchedulePage />;
+      case 1:
+        return <HomePage />;
     }
   };
 

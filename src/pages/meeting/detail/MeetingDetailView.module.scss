@@ -5,42 +5,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  gap: 42px;
+  gap: 16px;
 
-  background-color: $color-cream-dark;
-
-  padding: 23px;
-
-  &__summary {
-    width: 100%;
-    &__name {
-      font-size: 17px;
-      font-weight: 600;
-    }
-    &__desc {
-      font-size: 14px;
-      font-weight: 500;
-    }
-  }
-
-  &__infoArea {
-    width: 100%;
-  }
-
-  &__iconArea {
+  &__infoContainer1 {
     width: 100%;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 29px;
+    justify-content: start;
+    gap: 8px;
+  }
+
+  &__infoContainer2 {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    border: 1px solid $color-gray-8;
+    border-radius: 8px;
+
+    padding: 16px 14px;
   }
 }
 
-.success {
-  color: $color-orange-5;
-}
-
-.failure {
-  color: $color-gray-2;
+.icon {
+  color: $color-orange-2;
 }

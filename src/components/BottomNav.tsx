@@ -4,6 +4,7 @@ import Calendar from "@assets/calendar.svg?react";
 import SpinningClock from "@assets/spinningClock.svg?react";
 import Human from "@assets/human.svg?react";
 import { PiPlusCircleFill } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   activeMenuNum: number;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const BottomNav = ({ activeMenuNum, setActiveMenuNum }: Props) => {
+  const navigate = useNavigate();
+
   const leftDataSet = [
     { id: 0, label: "내 일정", img: <Calendar /> },
     { id: 1, label: "미팅 목록", img: <Hamburger /> },
@@ -20,6 +23,12 @@ const BottomNav = ({ activeMenuNum, setActiveMenuNum }: Props) => {
     { id: 2, label: "회고", img: <SpinningClock /> },
     { id: 3, label: "마이", img: <Human /> },
   ];
+
+  const clickHandler = () => {
+    if (activeMenuNum === 1) {
+      navigate("/meeting-creation");
+    }
+  };
 
   return (
     <div className={styles.bottomNav}>
@@ -57,7 +66,7 @@ const BottomNav = ({ activeMenuNum, setActiveMenuNum }: Props) => {
         ))}
       </div>
       <div className={styles.largeCircle}>
-        <PiPlusCircleFill />
+        <PiPlusCircleFill onClick={clickHandler} />
       </div>
     </div>
   );
