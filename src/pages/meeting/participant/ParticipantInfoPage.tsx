@@ -1,15 +1,17 @@
-import React from "react";
+import { useEffect } from "react";
 import styles from "./ParticipantInfoPage.module.scss";
-import TopNav from "@/components/TopNav";
 import ParticipantInfoView from "./ParticipantInfoView";
-import { useLocation } from "react-router-dom";
 
-const ParticipantInfoPage = () => {
-  const { state } = useLocation();
+interface Props {
+  participants: [];
+}
+
+const ParticipantInfoPage = ({ participants }: Props) => {
+  useEffect(() => {});
   return (
     <div className={styles.participantInfoPage}>
-      <TopNav label={"참여자 정보"} />
-      <ParticipantInfoView data={state} />
+      <div className={styles.participantInfoPage__title}>참여자 목록</div>
+      <ParticipantInfoView data={participants} />
     </div>
   );
 };

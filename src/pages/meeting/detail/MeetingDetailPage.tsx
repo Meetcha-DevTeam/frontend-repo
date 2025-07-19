@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./MeetingDetailPage.module.scss";
 import Header from "@/components/Header";
 import MeetingDetailView from "./MeetingDetailView";
@@ -17,8 +17,8 @@ const MeetingDetailPage = () => {
         <div className={styles.meetingDetailPage__contents__view}>
           <MeetingDetailView data={state} />
         </div>
-        {state.meetingState === "failure" && (
-          <Button label={"다른 시간 제안"} className={styles.button} />
+        {state.meetingState !== "진행중" && (
+          <Button label={"나의 미팅 시간 수정하기"} className={styles.button} />
         )}
       </div>
     </div>

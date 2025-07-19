@@ -44,7 +44,6 @@ const SchedulePage = () => {
           <WeeklyScheduleView schedules={schedules} />
         )}
       </div>
-      <WriteButton className={styles.writeButton} onClick={() => navigate("/")} />
     </div>
   );
 };
