@@ -2,7 +2,13 @@
   padding: 0;
   margin: 0;
 }
+.Memoir_write_ctn{
+  height: 68.5rem;
+  overflow: scroll;
+
+}
 .memoir_write_intro_container {
+  
   padding: 1rem;
   display: flex;
   gap: 0.5rem;
@@ -32,12 +38,17 @@
 .main_ctn {
   width: 100%;
   height: 100%;
-  padding: 1rem;
-  margin-top: 1.2rem;
+  padding: 1rem 1rem 5rem 1rem;
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
+  .meeting_card_ctn{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
   .to_write_meeting {
     .write_title_ctn {
       display: flex;
@@ -106,7 +117,7 @@
   }
 }
 
-.ctn_common {
+.ctn_in_common {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
