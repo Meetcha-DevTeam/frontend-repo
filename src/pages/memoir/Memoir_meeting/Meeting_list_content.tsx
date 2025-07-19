@@ -9,7 +9,9 @@ import "./Memoir_meeting.scss";
 const Meeting_list_content = ({ meetingLists }: Props) => {
   const navigate = useNavigate();
   const handleClick = (meeting: any) => {
+    setTimeout(() => {
     navigate("/memoir-complete", { state: meeting });
+  }, 0);
   };
   return (
     <div className="meetings_ctn">

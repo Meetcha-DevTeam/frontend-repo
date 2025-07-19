@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import Meeting_card from "../Memoir_common/Meeting_card";
 import "./Memoir_write.scss";
 
 const Memoir_write_main = () => {
   const location = useLocation();
-  const { title, meetingDate } = location.state || {};
+  const { meeting } = location.state || {};
 
   const [contribution, setContribution] = useState<string>("");
   const [role, setRole] = useState<string>("");
@@ -15,20 +15,12 @@ const Memoir_write_main = () => {
 
   return (
     <div className="main_ctn">
-      <div className="to_write_meeting">
-        <div className="write_title_ctn">
-          <p className="write_title">작성할 회의</p>
-          <div className="write_content">
-            <div className="empty_space"></div>
-            <div className="p_container">
-              <p>{title}</p>
-              <p>{meetingDate}</p>
-            </div>
-          </div>
-        </div>
+      <div className="meeting_card_ctn">
+        <p className="write_title">작성할 회의</p>
+        <Meeting_card meeting={meeting} />
       </div>
       <div className="contribution_role">
-        <div className="ctn_common contribution">
+        <div className="ctn_in_common contribution">
           <p className="write_title">
             기여도<span className="star">*</span>
           </p>
@@ -40,7 +32,7 @@ const Memoir_write_main = () => {
             onChange={(e) => setContribution(e.target.value)}
           />
         </div>
-        <div className="ctn_common role">
+        <div className="ctn_in_common role">
           <p className="write_title">
             맡은 역할<span className="star">*</span>
           </p>
@@ -53,7 +45,7 @@ const Memoir_write_main = () => {
           />
         </div>
       </div>
-      <div className="ctn_common what_you_feel">
+      <div className="ctn_in_common what_you_feel">
         <p className="write_title">
           느낀 점<span className="star">*</span>
         </p>
@@ -64,7 +56,7 @@ const Memoir_write_main = () => {
           onChange={(e) => setFeeling(e.target.value)}
         ></textarea>
       </div>
-      <div className="ctn_common to_write_meeting">
+      <div className="ctn_in_common to_write_meeting">
         <p className="write_title">한 일</p>
         <input
           type="text"
@@ -74,7 +66,7 @@ const Memoir_write_main = () => {
           onChange={(e) => setDone(e.target.value)}
         />
       </div>
-      <div className="ctn_common to_write_meeting">
+      <div className="ctn_in_common to_write_meeting">
         <p className="write_title">할 일</p>
         <input
           type="text"
@@ -84,7 +76,7 @@ const Memoir_write_main = () => {
           onChange={(e) => setTodo(e.target.value)}
         />
       </div>
-      <div className="ctn_common to_write_meeting">
+      <div className="ctn_in_common to_write_meeting">
         <p className="write_title">프로젝트</p>
         <div className="in-common"></div>
       </div>

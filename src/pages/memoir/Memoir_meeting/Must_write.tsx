@@ -11,8 +11,7 @@ const Must_write = ({ meetingLists }) => {
   const handleClick = (meeting) => {
     navigate("/memoir-write",{
       state:{
-        title:meeting.meeting_name,
-        meetingDate:meeting.created_at,
+       meeting
       },
     });
   };
