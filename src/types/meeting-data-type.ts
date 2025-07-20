@@ -11,3 +11,13 @@ export interface MeetingDataType {
   created_by: string; // UUID, NOT NULL
   project_id: string; // UUID, NOT NULL
 }
+
+export interface AlternativeScheduleDataType {
+  date: string; // "YYYY/MM/DD"
+  startTime: string; // "HH:MM"
+  endTime: string; // "HH:MM"
+  availableNum: number;
+  totalNum: number;
+  failMembers: string[];
+  adjustedTime: string; // e.g., "2:30"
+}
