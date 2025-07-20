@@ -60,7 +60,7 @@ const Continue_Google = () => {
   return (
     <button className="google_button" onClick={handleGoogleLogin}>
       <img src={google_logo} alt="google_logo" />
-      <p>Continue with Google</p>
+      <p>Sign in with Google</p>
     </button>
   );
 };
