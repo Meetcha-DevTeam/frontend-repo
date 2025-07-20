@@ -4,13 +4,13 @@ import LoginCompleteContainer from "./pages/login_complete/components/LoginCompl
 import BackgroundPage from "./pages/background/BackgroundPage";
 import MeetingCreationPage from "./pages/meeting/create/MeetingCreationPage";
 import MeetingDetailPage from "./pages/meeting/detail/MeetingDetailPage";
-import ParticipantInfoPage from "./pages/meeting/participant/ParticipantInfoPage";
+import MeetingAlternativePage from "./pages/meeting/alternative/MeetingAlternativePage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index path="/participant" element={<ParticipantInfoPage />}></Route>
+        <Route index path="/alternative/:id" element={<MeetingAlternativePage />}></Route>
         <Route index path="/detail" element={<MeetingDetailPage />}></Route>
         <Route index path="/login" element={<LoginContainer />}></Route>
         <Route index path="/login_complete" element={<LoginCompleteContainer />}></Route>
