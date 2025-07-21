@@ -18,7 +18,6 @@ export const useAPIs = (
   
   useEffect(() => {
     if (manual && !trigger) return;
-    
     const fetchData = async () => {
       try {
         
@@ -44,7 +43,7 @@ export const useAPIs = (
     };
 
     fetchData();
-  }, [trigger, path, method, JSON.stringify(data)]); // trigger 변화 시 실행
+  }, [trigger, path, method]); // trigger 변화 시 실행
 
   const fire = () => {
     setLoading(true);
