@@ -46,8 +46,8 @@ const Continue_Google = () => {
   //5. 버튼 클릭 → Google 로그인 페이지로 이동
   const handleGoogleLogin = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectUri = encodeURIComponent("http://localhost:5173/login"); // Google 콘솔에 등록한 리디렉션 URI
-    const scope = encodeURIComponent("profile email");
+    const redirectUri = encodeURIComponent("http://localhost:3000/oauth/callback"); // Google 콘솔에 등록한 리디렉션 URI
+    const scope = encodeURIComponent("openid email profile");
     const responseType = "code";
     const accessType = "offline";
     const prompt = "consent";
