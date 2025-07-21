@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -19,7 +20,7 @@
     "devextreme-react": "24.2.8",
     "framer-motion": "^12.23.6",
     "localforage": "^1.10.0",
-    "luxon": "^3.6.1",
+    "luxon": "^3.7.1",
     "match-sorter": "^8.0.3",
     "react": "^19.1.0",
     "react-big-calendar": "^1.19.4",
@@ -45,5 +46,8 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",
     "vite-plugin-svgr": "^4.3.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.45.1"
   }
 }
