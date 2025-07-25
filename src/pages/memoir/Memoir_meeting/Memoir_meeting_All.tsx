@@ -5,7 +5,8 @@ import Memoir_bottom_fixed from "../Memoir_common/Memoir_bottom_fixed";
 import { useAPIs } from "@/apis/useAPIs";
 
 const Memoir_meeting_All = () => {
-  const { response: meetingLists, loading, error } = useAPIs(`/meetinglist`);
+  const { response: meetingLists, loading, error } = useAPIs("/user/projects","GET",undefined,true,false);
+
   console.log(meetingLists);
   if (loading) {
     return (
@@ -33,7 +34,7 @@ const Memoir_meeting_All = () => {
     <>
       <Memoir_meeting_ctn
         /* meetingLists가 배열인지 한 번 더 방어 */
-        meetingLists={Array.isArray(meetingLists) ? meetingLists : []}
+        meetingLists={Array.isArray(meetingLists?.data) ? meetingLists : []}
       />
       <Memoir_bottom_fixed />
     </>
