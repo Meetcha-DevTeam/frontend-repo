@@ -41,7 +41,6 @@ button.rbc-input::-moz-focus-inner {
   background-color: $color-cream-light;
   width: 100%;
   overflow: scroll;
-  padding-top: 10px;
 }
 
 .rbc-m-b-negative-3 {
@@ -171,9 +170,12 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-toolbar {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  //
+  // display: -webkit-box;
+  // display: -ms-flexbox;
+  // display: flex;
+  display: none;
+  //
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -webkit-box-pack: center;
@@ -888,32 +890,35 @@ button.rbc-input::-moz-focus-inner {
   display: none;
 }
 
-.calendar-container {
-  position: relative;
+// .calendar-container {
+//   position: relative;
 
-  width: 100%;
-  height: 100%;
+//   width: 100%;
+//   height: 100%;
 
-  overflow-x: hidden;
-}
+//   overflow-x: hidden;
+// }
 
-.calendar-slider {
-  width: 300%;
-  height: 100%;
+// .calendar-slider {
+//   width: 300%;
+//   height: 100%;
 
-  transform: translateX(-33.333%);
-}
+//   transform: translateX(-33.333%);
+// }
 
-.calendar-viewport {
-  position: absolute;
+// .calendar-viewport {
+//   position: absolute;
 
-  width: 100%;
-  height: 100%;
+//   width: 100%;
+//   height: 100%;
 
-  display: flex;
-  flex-direction: row;
-}
+//   display: flex;
+//   flex-direction: row;
+// }
 
-.rbc-calendar {
-  width: 100%;
+// .rbc-calendar {
+//   width: 100%;
+// }
+.swiper {
+  width: 100% !important;
 }
