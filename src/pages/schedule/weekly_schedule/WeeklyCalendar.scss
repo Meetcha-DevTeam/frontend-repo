@@ -887,3 +887,33 @@ button.rbc-input::-moz-focus-inner {
 .rbc-allday-cell {
   display: none;
 }
+
+.calendar-container {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow-x: hidden;
+}
+
+.calendar-slider {
+  width: 300%;
+  height: 100%;
+
+  transform: translateX(-33.333%);
+}
+
+.calendar-viewport {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.rbc-calendar {
+  width: 100%;
+}
