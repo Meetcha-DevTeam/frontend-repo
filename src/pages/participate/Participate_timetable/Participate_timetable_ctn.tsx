@@ -1,12 +1,22 @@
-import React from "react";
+import React,{useState} from "react";
 
 import "./Participate_timetabe.scss";
 
+import { useLocation } from "react-router-dom";
 import Top_banner from "../common/Top_banner";
 import Botton_banner_button from "../common/Botton_banner_button";
 import Timetable from "./Timetable";
 
 const Participate_timetable_ctn = () => {
+  const [nickname,setNickname]=useState("");
+  const location=useLocation();
+  const {chosenMeeting}=location.state||{};
+
+  const handleSetNickname=(e)=>{
+    setNickname(e.target.value);
+  }//나중에 backend에 post로 보낼예정..
+
+  
   return (
     <>
       <Top_banner text={"미팅 참가"} />
@@ -15,11 +25,11 @@ const Participate_timetable_ctn = () => {
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
             <div className="meeting_info">
-              <p>코딩 스터디 회의</p>
-              <p>2025.05.10</p>
+              <p>{chosenMeeting.title}</p>
+              <p>{chosenMeeting.created_at}</p>
             </div>
           </div>
-          <input type="text" placeholder="닉네임*"></input>
+          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임*"></input>
         </div>
 
         <div className="timetable">
