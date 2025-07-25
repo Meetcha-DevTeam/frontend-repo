@@ -42,10 +42,10 @@ export const useAPIs = (
       }
   
     };
-
+    
     fetchData();
   }, [trigger, path, method, JSON.stringify(data)]); // trigger 변화 시 실행
-
+  console.log("access_token:", access_token);
   const fire = () => {
     setLoading(true);
     setTrigger((prev) => !prev); // toggle to retrigger
