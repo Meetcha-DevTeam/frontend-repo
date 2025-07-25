@@ -6,6 +6,8 @@ import CustomWeekHeader from "./CustomWeekHeader";
 import { colorAutoSelector } from "@/utils/colorAutoSelector";
 import { useRef, useState } from "react";
 import { addWeeks, subWeeks } from "date-fns";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 interface Props {
   schedules: any[];
@@ -27,7 +29,7 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
   const [offset, setOffset] = useState(0); // 슬라이딩용 오프셋
   const touchStartX = useRef<number | null>(null);
 
-  const events = schedules.map((item, index) => ({
+  const events = schedules?.map((item, index) => ({
     id: item.id,
     title: item.scheduleName,
     start: new Date(`${item.date}T${item.startTime}`),
@@ -58,9 +60,11 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
     }
 
     touchStartX.current = null;
+
+    console.log(offset);
   };
 
-  const calendaryArr = [
+  const calendarArr = [
     <Calendar
       date={prevWeek}
       localizer={localizer}
@@ -140,37 +144,49 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
   ];
 
   return (
-    <div className="calendar-container" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <div className="calendar-slider" style={{ transform: `translateX(${offset}%)` }}>
-        <div className="calendar-viewport">{calendaryArr.map((item, index) => item)}</div>
-      </div>
+    // <div className="calendar-container" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    //   <div className="calendar-slider" style={{ transform: `translateX(${offset}%)` }}>
+    //     <div className="calendar-viewport">{calendaryArr.map((item, index) => item)}</div>
+    //   </div>
 
-      {/* <Calendar
-        date={new Date("2025-8-1")}
-        localizer={localizer}
-        events={events}
-        formats={formats}
-        startAccessor="start"
-        endAccessor="end"
-        defaultView="week"
-        views={["week"]}
-        components={{
-          week: {
-            header: CustomWeekHeader,
-            event: CustomEvent,
-          },
-        }}
-        eventPropGetter={(event) => {
-          return {
-            style: {
-              backgroundColor: `${colorAutoSelector(event.id)}`,
-              borderRadius: "6px",
-              color: "white",
-            },
-          };
-        }}
-      /> */}
-    </div>
+    //   {/* <Calendar
+    //     date={new Date("2025-8-1")}
+    //     localizer={localizer}
+    //     events={events}
+    //     formats={formats}
+    //     startAccessor="start"
+    //     endAccessor="end"
+    //     defaultView="week"
+    //     views={["week"]}
+    //     components={{
+    //       week: {
+    //         header: CustomWeekHeader,
+    //         event: CustomEvent,
+    //       },
+    //     }}
+    //     eventPropGetter={(event) => {
+    //       return {
+    //         style: {
+    //           backgroundColor: `${colorAutoSelector(event.id)}`,
+    //           borderRadius: "6px",
+    //           color: "white",
+    //         },
+    //       };
+    //     }}
+    //   /> */}
+    // </div>
+    <Swiper
+      slidesPerView={1}
+      spaceBetween={0}
+      className="swiper-container"
+      onSlideChange={(swiper) => {
+        console.log(swiper);
+      }}
+    >
+      {calendarArr.map((item, index) => (
+        <SwiperSlide key={index}>{item}</SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 
