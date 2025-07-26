@@ -1,33 +1,29 @@
-import { Calendar, luxonLocalizer } from "react-big-calendar";
-import { DateTime } from "luxon";
-import { CustomEvent } from "./CustomEvent";
 import "./WeeklyCalendar.scss";
-import CustomWeekHeader from "./CustomWeekHeader";
-import { colorAutoSelector } from "@/utils/colorAutoSelector";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addWeeks, subWeeks } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import WeeklyCalendar from "./WeeklyCalendar";
+import { Virtual } from "swiper/modules";
 
 interface Props {
   schedules: any[];
 }
 
-const localizer = luxonLocalizer(DateTime);
-
-const formats = {
-  timeGutterFormat: (date: Date, culture: string, localizer: any) => {
-    return DateTime.fromJSDate(date).toFormat("H"); // 예: 22
-  },
-};
-
 const WeeklyScheduleView = ({ schedules }: Props) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const prevWeek = subWeeks(currentDate, 1);
-  const nextWeek = addWeeks(currentDate, 1);
+  const [standardDate, setStandardDate] = useState(new Date());
+  const didSkipFirstChange = useRef(false); // 0->1 이동시 handleSlideChange는 발동안되게하는 플래그
+  const swiperRef = useRef(null);
 
-  const [offset, setOffset] = useState(0); // 슬라이딩용 오프셋
-  const touchStartX = useRef<number | null>(null);
+  const [calendarArr, setCalendarArr] = useState(() => {
+    const prev = subWeeks(standardDate, 1);
+    const next = addWeeks(standardDate, 1);
+    return [
+      { week: prev, key: prev.getTime() },
+      { week: standardDate, key: standardDate.getTime() },
+      { week: next, key: next.getTime() },
+    ];
+  });
 
   const events = schedules?.map((item, index) => ({
     id: item.id,
@@ -36,155 +32,77 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
     end: new Date(`${item.date}T${item.endTime}`),
   }));
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-
-    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
-
-    if (deltaX > 50) {
-      setOffset(100); // 오른쪽으로 이동
-      setTimeout(() => {
-        setCurrentDate(prevWeek);
-        setOffset(0);
-      }, 300);
-    } else if (deltaX < -50) {
-      setOffset(-100); // 왼쪽으로 이동
-      setTimeout(() => {
-        setCurrentDate(nextWeek);
-        setOffset(0);
-      }, 300);
+  const handleSlideChange = (swiper) => {
+    if (!didSkipFirstChange.current) {
+      didSkipFirstChange.current = true;
+      return;
     }
 
-    touchStartX.current = null;
+    const { previousIndex, activeIndex } = swiper;
 
-    console.log(offset);
+    setCalendarArr((prevArr) => {
+      let newStandard: Date;
+      let newArr = [...prevArr];
+
+      if (activeIndex > previousIndex) {
+        console.log("next");
+
+        // 다음 주로 이동
+        newStandard = addWeeks(standardDate, 1);
+        // 오른쪽으로 한 칸 추가, 왼쪽 하나 제거
+        const nextWeek = addWeeks(newStandard, 1);
+        newArr.push({ week: nextWeek, key: nextWeek.getTime() });
+        newArr.shift();
+        console.log(newArr);
+      } else {
+        console.log("prev");
+        // 이전 주로 이동
+        newStandard = subWeeks(standardDate, 1);
+        const prevWeek = subWeeks(newStandard, 1);
+        newArr.unshift({ week: prevWeek, key: prevWeek.getTime() });
+        newArr.pop();
+        console.log(newArr);
+      }
+
+      // 기준 날짜 업데이트
+      setStandardDate(newStandard);
+
+      return newArr;
+    });
   };
 
-  const calendarArr = [
-    <Calendar
-      date={prevWeek}
-      localizer={localizer}
-      events={events}
-      formats={formats}
-      startAccessor="start"
-      endAccessor="end"
-      defaultView="week"
-      views={["week"]}
-      components={{
-        week: {
-          header: CustomWeekHeader,
-          event: CustomEvent,
-        },
-      }}
-      eventPropGetter={(event) => {
-        return {
-          style: {
-            backgroundColor: `${colorAutoSelector(event.id)}`,
-            borderRadius: "6px",
-            color: "white",
-          },
-        };
-      }}
-    />,
+  useEffect(() => {
+    if (!swiperRef.current) return;
 
-    <Calendar
-      date={currentDate}
-      localizer={localizer}
-      events={events}
-      formats={formats}
-      startAccessor="start"
-      endAccessor="end"
-      defaultView="week"
-      views={["week"]}
-      components={{
-        week: {
-          header: CustomWeekHeader,
-          event: CustomEvent,
-        },
-      }}
-      eventPropGetter={(event) => {
-        return {
-          style: {
-            backgroundColor: `${colorAutoSelector(event.id)}`,
-            borderRadius: "6px",
-            color: "white",
-          },
-        };
-      }}
-    />,
-    <Calendar
-      date={nextWeek}
-      localizer={localizer}
-      events={events}
-      formats={formats}
-      startAccessor="start"
-      endAccessor="end"
-      defaultView="week"
-      views={["week"]}
-      components={{
-        week: {
-          header: CustomWeekHeader,
-          event: CustomEvent,
-        },
-      }}
-      eventPropGetter={(event) => {
-        return {
-          style: {
-            backgroundColor: `${colorAutoSelector(event.id)}`,
-            borderRadius: "6px",
-            color: "white",
-          },
-        };
-      }}
-    />,
-  ];
+    // DOM 수정 → Swiper에게 알려줌
+    swiperRef.current.update();
+
+    // 한 틱 뒤(다음 페인트 전에) 중앙으로 이동
+    requestAnimationFrame(() => {
+      swiperRef.current?.slideTo(1, 0, false); // runCallbacks=false
+    });
+  }, [calendarArr]);
+
+  useEffect(() => {
+    console.log(calendarArr);
+  }, [calendarArr]);
 
   return (
-    // <div className="calendar-container" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-    //   <div className="calendar-slider" style={{ transform: `translateX(${offset}%)` }}>
-    //     <div className="calendar-viewport">{calendaryArr.map((item, index) => item)}</div>
-    //   </div>
-
-    //   {/* <Calendar
-    //     date={new Date("2025-8-1")}
-    //     localizer={localizer}
-    //     events={events}
-    //     formats={formats}
-    //     startAccessor="start"
-    //     endAccessor="end"
-    //     defaultView="week"
-    //     views={["week"]}
-    //     components={{
-    //       week: {
-    //         header: CustomWeekHeader,
-    //         event: CustomEvent,
-    //       },
-    //     }}
-    //     eventPropGetter={(event) => {
-    //       return {
-    //         style: {
-    //           backgroundColor: `${colorAutoSelector(event.id)}`,
-    //           borderRadius: "6px",
-    //           color: "white",
-    //         },
-    //       };
-    //     }}
-    //   /> */}
-    // </div>
     <Swiper
+      onSwiper={(instance) => (swiperRef.current = instance)}
+      observer // MutationObserver 사용
+      observeParents
+      observeSlideChildren // slide 자체의 자식까지 감시
+      initialSlide={1}
       slidesPerView={1}
       spaceBetween={0}
       className="swiper-container"
-      onSlideChange={(swiper) => {
-        console.log(swiper);
-      }}
+      onSlideChangeTransitionEnd={handleSlideChange}
     >
-      {calendarArr.map((item, index) => (
-        <SwiperSlide key={index}>{item}</SwiperSlide>
+      {calendarArr.map(({ week, key }) => (
+        <SwiperSlide key={key}>
+          <WeeklyCalendar week={week} events={events} />
+        </SwiperSlide>
       ))}
     </Swiper>
   );
