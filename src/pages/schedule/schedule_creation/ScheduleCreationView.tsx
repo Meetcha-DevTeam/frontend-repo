@@ -56,12 +56,17 @@ const ScheduleCreationView = ({
     },
   ];
 
+  useEffect(() => {
+    console.log(scheduleTitle);
+  }, [scheduleTitle]);
+
   return (
     <div className={styles.scheduleCreationView}>
       <input
         className={styles.scheduleCreationView__inputTag}
         type="text"
         placeholder="일정 제목"
+        value={scheduleTitle}
         onChange={(e) => {
           setScheduleTitle(e.target.value);
         }}

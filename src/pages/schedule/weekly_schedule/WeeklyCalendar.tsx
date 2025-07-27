@@ -9,6 +9,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import ScheduleCreationPage from "../schedule_creation/ScheduleCreationPage";
 import { format } from "date-fns/format";
 import { ko } from "date-fns/locale";
+import type { ScheduleDataType } from "@/types/schedule-data-type";
+import { scheduleStringFormatter } from "@/utils/dateFormatter";
 
 interface Props {
   week: Date;
@@ -27,6 +29,8 @@ const formats = {
 const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
   const [creationOpen, setCreationOpen] = useState<boolean>(false);
   const [clickedSpan, setClickedSpan] = useState<string>();
+  const [clickedSchedule, setClickedSchedule] = useState<ScheduleDataType>();
+  const [mode, setMode] = useState<boolean>(true); // 생성모드 or 수정모드
 
   const portal = ReactDOM.createPortal(
     <AnimatePresence>
@@ -54,7 +58,11 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
               }
             }}
           >
-            <ScheduleCreationPage clickedSpan={clickedSpan} createMode={true} />
+            <ScheduleCreationPage
+              clickedSpan={clickedSpan}
+              createMode={mode}
+              data={clickedSchedule}
+            />
           </motion.div>
         </>
       )}
@@ -96,25 +104,24 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
           if (blockInteraction) return;
           setTimeout(() => setCreationOpen(true), 0);
           console.log("빈 영역 클릭됨:", slotInfo);
-          const formattedStartDate = format(slotInfo.start, "MM월 dd일(EEE)", { locale: ko });
-          const formattedStartTime = format(slotInfo.start, "a hh:mm")
-            .replace("AM", "오전")
-            .replace("PM", "오후");
-          const formattedEndDate = format(slotInfo.end, "MM월 dd일(EEE)", { locale: ko });
-          const formattedEndTime = format(slotInfo.end, "a hh:mm")
-            .replace("AM", "오전")
-            .replace("PM", "오후");
-          console.log(
-            `${formattedStartDate} ${formattedStartTime} ${formattedEndDate} ${formattedEndTime}`
-          );
-          setClickedSpan(
-            `${formattedStartDate} ${formattedStartTime} ${formattedEndDate} ${formattedEndTime}`
-          );
+          const formattedStart = scheduleStringFormatter(slotInfo.start);
+          const formattedEnd = scheduleStringFormatter(slotInfo.end);
+
+          setClickedSpan(`${formattedStart} ${formattedEnd}`);
         }}
         onSelectEvent={(event) => {
           if (blockInteraction) return;
+          setMode(false);
+          setTimeout(() => setCreationOpen(true), 0);
           console.log("일정 클릭됨:", event);
-          // 원하는 동작 수행 (예: 모달 열기, 상세 페이지 이동 등)
+          setClickedSchedule({
+            title: event.title,
+            startAt: event.start,
+            endAt: event.end,
+          });
+          setClickedSpan(
+            `${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`
+          );
         }}
       />
       {portal}

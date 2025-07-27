@@ -1,5 +1,5 @@
 import "./WeeklyCalendar.scss";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addWeeks, subWeeks } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
