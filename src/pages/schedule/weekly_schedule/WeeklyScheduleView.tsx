@@ -1,10 +1,9 @@
 import "./WeeklyCalendar.scss";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { addWeeks, subWeeks } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import WeeklyCalendar from "./WeeklyCalendar";
-import { Virtual } from "swiper/modules";
 
 interface Props {
   schedules: any[];
@@ -25,7 +24,7 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
     ];
   });
 
-  const events = schedules?.map((item, index) => ({
+  const events = schedules?.map((item, _) => ({
     id: item.id,
     title: item.scheduleName,
     start: new Date(`${item.date}T${item.startTime}`),
@@ -45,23 +44,18 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
       let newArr = [...prevArr];
 
       if (activeIndex > previousIndex) {
-        console.log("next");
-
         // 다음 주로 이동
         newStandard = addWeeks(standardDate, 1);
         // 오른쪽으로 한 칸 추가, 왼쪽 하나 제거
         const nextWeek = addWeeks(newStandard, 1);
         newArr.push({ week: nextWeek, key: nextWeek.getTime() });
         newArr.shift();
-        console.log(newArr);
       } else {
-        console.log("prev");
         // 이전 주로 이동
         newStandard = subWeeks(standardDate, 1);
         const prevWeek = subWeeks(newStandard, 1);
         newArr.unshift({ week: prevWeek, key: prevWeek.getTime() });
         newArr.pop();
-        console.log(newArr);
       }
 
       // 기준 날짜 업데이트
@@ -83,24 +77,30 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
     });
   }, [calendarArr]);
 
-  useEffect(() => {
-    console.log(calendarArr);
-  }, [calendarArr]);
-
   return (
     <Swiper
       onSwiper={(instance) => (swiperRef.current = instance)}
-      observer // MutationObserver 사용
-      observeParents
-      observeSlideChildren // slide 자체의 자식까지 감시
+      // observer // MutationObserver 사용
+      // observeParents
+      // observeSlideChildren // slide 자체의 자식까지 감시
+      observer={false}
+      observeParents={false}
+      observeSlideChildren={false}
       initialSlide={1}
       slidesPerView={1}
       spaceBetween={0}
       className="swiper-container"
       onSlideChangeTransitionEnd={handleSlideChange}
+      preventClicks={false}
+      preventClicksPropagation={false}
+      touchStartPreventDefault={false}
+      touchMoveStopPropagation={false}
     >
       {calendarArr.map(({ week, key }) => (
         <SwiperSlide key={key}>
+          {/* <div onPointerUpCapture={(e) => e.stopPropagation()}>
+            <WeeklyCalendar week={week} events={events} />
+          </div> */}
           <WeeklyCalendar week={week} events={events} />
         </SwiperSlide>
       ))}
