@@ -13,6 +13,7 @@ import { ko } from "date-fns/locale";
 interface Props {
   week: Date;
   events: any[];
+  blockInteraction: boolean;
 }
 
 const localizer = luxonLocalizer(DateTime);
@@ -23,7 +24,7 @@ const formats = {
   },
 };
 
-const WeeklyCalendar = ({ week, events }: Props) => {
+const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
   const [creationOpen, setCreationOpen] = useState<boolean>(false);
   const [clickedSpan, setClickedSpan] = useState<string>();
 
@@ -53,7 +54,7 @@ const WeeklyCalendar = ({ week, events }: Props) => {
               }
             }}
           >
-            <ScheduleCreationPage clickedSpan={clickedSpan} />
+            <ScheduleCreationPage clickedSpan={clickedSpan} createMode={true} />
           </motion.div>
         </>
       )}
@@ -89,8 +90,10 @@ const WeeklyCalendar = ({ week, events }: Props) => {
         selectable={true}
         step={30} // ✅ 각 시간 슬롯 간격 (분 단위)
         timeslots={2} // ✅ 한 시간당 몇 개의 슬롯
-        longPressThreshold={0}
+        longPressThreshold={150}
+        onSelecting={() => !blockInteraction}
         onSelectSlot={(slotInfo) => {
+          if (blockInteraction) return;
           setTimeout(() => setCreationOpen(true), 0);
           console.log("빈 영역 클릭됨:", slotInfo);
           const formattedStartDate = format(slotInfo.start, "MM월 dd일(EEE)", { locale: ko });
@@ -109,6 +112,7 @@ const WeeklyCalendar = ({ week, events }: Props) => {
           );
         }}
         onSelectEvent={(event) => {
+          if (blockInteraction) return;
           console.log("일정 클릭됨:", event);
           // 원하는 동작 수행 (예: 모달 열기, 상세 페이지 이동 등)
         }}

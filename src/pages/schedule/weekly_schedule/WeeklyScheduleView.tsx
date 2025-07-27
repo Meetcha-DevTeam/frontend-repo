@@ -13,6 +13,7 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
   const [standardDate, setStandardDate] = useState(new Date());
   const didSkipFirstChange = useRef(false); // 0->1 이동시 handleSlideChange는 발동안되게하는 플래그
   const swiperRef = useRef(null);
+  const [isSwiping, setIsSwiping] = useState(false);
 
   const [calendarArr, setCalendarArr] = useState(() => {
     const prev = subWeeks(standardDate, 1);
@@ -80,9 +81,15 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
   return (
     <Swiper
       onSwiper={(instance) => (swiperRef.current = instance)}
-      // observer // MutationObserver 사용
-      // observeParents
-      // observeSlideChildren // slide 자체의 자식까지 감시
+      onTouchStart={() => {
+        setIsSwiping(false);
+      }}
+      onSliderFirstMove={() => {
+        setIsSwiping(true);
+      }} // 첫 move 시점
+      onTouchEnd={() => {
+        setIsSwiping(false);
+      }}
       observer={false}
       observeParents={false}
       observeSlideChildren={false}
@@ -101,7 +108,7 @@ const WeeklyScheduleView = ({ schedules }: Props) => {
           {/* <div onPointerUpCapture={(e) => e.stopPropagation()}>
             <WeeklyCalendar week={week} events={events} />
           </div> */}
-          <WeeklyCalendar week={week} events={events} />
+          <WeeklyCalendar week={week} events={events} blockInteraction={isSwiping} />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -6,11 +6,12 @@ import { apiCall } from "@/utils/apiCall";
 
 interface Props {
   clickedSpan: string;
+  createMode: boolean; // true -> create mode, false -> edit mode
 }
 
 const PATH = `/schedule-create`;
 
-const ScheduleCreationPage = ({ clickedSpan }: Props) => {
+const ScheduleCreationPage = ({ clickedSpan, createMode }: Props) => {
   const [allDataReserved, setAllDataReserved] = useState<boolean>(false);
   const [scheduleTitle, setScheduleTitle] = useState<string>();
   const [scheduleTime, setScheduleTime] = useState<string>();
