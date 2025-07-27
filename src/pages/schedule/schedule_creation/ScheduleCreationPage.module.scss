@@ -8,6 +8,13 @@
   justify-content: space-between;
 
   padding: 27px 16px;
+
+  &__buttonContainer {
+    position: relative;
+    width: 100%;
+
+    font-family: Pretendard;
+  }
 }
 
 .active {
@@ -16,4 +23,17 @@
 
 .inactive {
   background-color: $color-orange-6;
+}
+
+.deleteButton {
+  position: absolute;
+  bottom: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+
+  color: $color-orange-5;
 }
