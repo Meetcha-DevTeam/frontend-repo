@@ -50,9 +50,10 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             onClick={(e) => e.stopPropagation()}
             drag="y"
             dragDirectionLock={true}
+            dragConstraints={{ top: 0, bottom: 1000 }}
+            dragElastic={0}
+            dragMomentum={false}
             onDragEnd={(_, info) => {
-              console.log(info.offset.y);
-              console.log(window.innerHeight);
               if (info.offset.y > window.innerHeight * 0.2) {
                 setCreationOpen(false);
               }
