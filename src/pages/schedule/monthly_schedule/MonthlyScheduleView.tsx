@@ -8,6 +8,7 @@ interface Props {
 }
 
 const MonthlyScheduleView = ({ schedules }: Props) => {
+  console.log(schedules);
   return (
     <div className="monthlyScheduleView">
       <Calendar
@@ -15,7 +16,7 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
           const eventName = new Array();
 
           schedules &&
-            schedules?.map((user) => {
+            schedules.map((user) => {
               if (user.date === dateFormatter(date)) {
                 eventName.push(user.scheduleName);
               }

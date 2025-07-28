@@ -1,7 +1,13 @@
 import { http } from "msw";
 
 export const handlers = [
-  http.get("/user/schedule", () => {
+  http.get("/user/schedule", ({ request }) => {
+    const url = new URL(request.url);
+    const from = url.searchParams.get("from");
+    const to = url.searchParams.get("to");
+
+    console.log("쿼리 파라미터:", { from, to });
+
     return Response.json({
       isSuccess: true,
       code: 200,
