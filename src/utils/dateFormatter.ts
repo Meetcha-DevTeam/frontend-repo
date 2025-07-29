@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
+// ex) 2025-08-02
 export const dateFormatter = (input) => {
   const date = new Date(input);
   const year = date.getFullYear();
