@@ -8,7 +8,7 @@ interface Props {
 }
 
 const MonthlyScheduleView = ({ schedules }: Props) => {
-  console.log(schedules);
+  // console.log(schedules);
   return (
     <div className="monthlyScheduleView">
       <Calendar
@@ -17,12 +17,9 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
 
           schedules &&
             schedules.map((schedule) => {
-              // console.log(date);
-              // console.log(new Date(date));
               const date1 = dateFormatter(new Date(schedule.startAt)); // 서버에서 받아온 일정의 날짜
               const date2 = dateFormatter(new Date(date));
-              console.log(date1);
-              // console.log(date2);
+
               if (date1 === date2) {
                 eventName.push(schedule.title);
               }

@@ -119,6 +119,8 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             title: event.title,
             startAt: event.start,
             endAt: event.end,
+            recurrence: event.recur,
+            eventId: event.id,
           });
           setClickedSpan(
             `${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`
