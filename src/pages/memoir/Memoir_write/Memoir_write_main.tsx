@@ -4,13 +4,21 @@ import Meeting_card from "../Memoir_common/Meeting_card";
 import Project_container from "./Project_container";
 import "./Memoir_write.scss";
 
-const Memoir_write_main = () => {
-  const location = useLocation();
-  const { meeting } = location.state || {};
+const Memoir_write_main = ({
+  projectsAll,
+  contribution,
+  setContribution,
+  role,
+  setRole,
+  feeling,
+  setFeeling,
+}) => {
+  const [projects, setProjects] = useState<[string]>();
 
-  const [contribution, setContribution] = useState<string>("");
-  const [role, setRole] = useState<string>("");
-  const [feeling, setFeeling] = useState<string>("");
+  const location = useLocation();
+  const { meeting, meetingLists } = location.state || {};
+
+
   const [done, setDone] = useState<string>("");
   const [todo, setTodo] = useState<string>("");
 
@@ -77,7 +85,7 @@ const Memoir_write_main = () => {
           onChange={(e) => setTodo(e.target.value)}
         />
       </div>
-      <Project_container meeting={meeting}/>
+      <Project_container projectsAll={projectsAll} />
     </div>
   );
 };

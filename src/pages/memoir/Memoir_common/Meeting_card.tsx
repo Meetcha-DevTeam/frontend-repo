@@ -21,12 +21,12 @@ const Meeting_card = ({ meeting }) => {
     <div className="study_info">
       <div className="spare_ctn"></div>
       <div className="study_banner_ctn">
-        <div className="project_name">
+        {/* <div className="project_name">
           <div className="p_container">
-            <p>{meeting.project_name}</p>
+            <p>{meeting.title}</p>
           </div>
-        </div>
-        <p>{meeting.meeting_name}</p>
+        </div> */}
+        <p>{meeting.title}</p>
         <p>{meeting.created_at}</p>
        
         <div
