@@ -5,14 +5,20 @@ import Memoir_bottom_fixed from "../Memoir_common/Memoir_bottom_fixed";
 import { useAPIs } from "@/apis/useAPIs";
 
 const Memoir_meeting_All = () => {
-  const { response: meetingLists, loading, error } = useAPIs("/user/projects","GET",undefined,true,false);
+  const userId = 3;
+  const {
+    response: meetingLists,
+    loading,
+    error,
+  } = useAPIs(`/meeting_list?id=${userId}`);
 
+  //여기서 meetingLists중 meeting_status가 "종료인것만 남긴다."
   console.log(meetingLists);
   if (loading) {
     return (
       <>
         <p style={{ textAlign: "center", marginTop: "2rem" }}>⌛ 로딩 중…</p>
-        <Memoir_bottom_fixed />
+        
       </>
     );
   }
@@ -24,7 +30,7 @@ const Memoir_meeting_All = () => {
         <p style={{ color: "red", textAlign: "center", marginTop: "2rem" }}>
           ❌ 에러 발생: {error}
         </p>
-        <Memoir_bottom_fixed />
+        
       </>
     );
   }
@@ -34,9 +40,11 @@ const Memoir_meeting_All = () => {
     <>
       <Memoir_meeting_ctn
         /* meetingLists가 배열인지 한 번 더 방어 */
-        meetingLists={Array.isArray(meetingLists?.data) ? meetingLists : []}
+        meetingLists={
+          Array.isArray(meetingLists?.data) ? meetingLists.data : []
+        }
       />
-      <Memoir_bottom_fixed />
+      
     </>
   );
 };

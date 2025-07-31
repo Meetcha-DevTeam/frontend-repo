@@ -8,16 +8,7 @@ import Summary_card from "./Summary_card";
 
 import "./Memoir_meeting.scss";
 
-interface Meeting {
-  role: string;
-  contribution: string;
-}
-
-const Mymeeting_summary = ({
-  meetingLists = [],
-}: {
-  meetingLists: Meeting[];
-}) => {
+const Mymeeting_summary = ({ meetingLists }) => {
   const [meetingCount, setMeetingCount] = useState<number>(0);
   const [mainRole, setMainRole] = useState<string>("");
   const [averageContribution, setAverageContribution] = useState<string>("");
@@ -25,26 +16,21 @@ const Mymeeting_summary = ({
   useEffect(() => {
     if (!Array.isArray(meetingLists) || meetingLists.length === 0) return;
 
+    const finishedMeetings = meetingLists.filter((meeting) => {
+      return meeting.meeting_status === "종료";
+    });
+
+    console.log(finishedMeetings);
     /* 1) 미팅 건수 */
-    setMeetingCount(meetingLists.length);
+    setMeetingCount(finishedMeetings.length);
 
     /* 2) 주요 역할 */
-    const roleCount: Record<string, number> = {};
-    meetingLists.forEach(({ role }) => {
-      roleCount[role] = (roleCount[role] || 0) + 1;
-    });
-    const topRole = Object.keys(roleCount).reduce((a, b) =>
-      roleCount[a] > roleCount[b] ? a : b
-    );
-    setMainRole(topRole);
+   
+    setMainRole("--");
 
     /* 3) 평균 기여도 */
-    const total = meetingLists.reduce(
-      (acc, cur) => acc + parseInt(cur.contribution.replace("%", ""), 10),
-      0
-    );
-    const avg = Math.round(total / meetingLists.length);
-    setAverageContribution(`${avg}%`);
+    
+    setAverageContribution(`0%`);
   }, [meetingLists]); // meetingLists가 바뀔 때만 실행
 
   return (
@@ -56,10 +42,7 @@ const Mymeeting_summary = ({
       </div>
       <div className="myMeeting_intro">
         <p>나의 미팅 요약</p>
-        <button className="button_container">
-          <p>전체</p>
-          <img src={LowChevron} alt="lowchevron" />
-        </button>
+       
       </div>
       <div className="myMeetings">
         <Summary_card title="미팅 건수" value={`${meetingCount}`} />

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 import "./Participate_timetabe.scss";
 
@@ -8,15 +8,14 @@ import Botton_banner_button from "../common/Botton_banner_button";
 import Timetable from "./Timetable";
 
 const Participate_timetable_ctn = () => {
-  const [nickname,setNickname]=useState("");
-  const location=useLocation();
-  const {chosenMeeting}=location.state||{};
+  const [nickname, setNickname] = useState("");
+  const location = useLocation();
+  const { chosenMeeting } = location.state || {};
 
-  const handleSetNickname=(e)=>{
+  const handleSetNickname = (e) => {
     setNickname(e.target.value);
-  }//나중에 backend에 post로 보낼예정..
+  }; //나중에 backend에 post로 보낼예정..
 
-  
   return (
     <>
       <Top_banner text={"미팅 참가"} />
@@ -29,7 +28,12 @@ const Participate_timetable_ctn = () => {
               <p>{chosenMeeting.created_at}</p>
             </div>
           </div>
-          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임*"></input>
+          <input
+            type="text"
+            value={nickname}
+            onChange={handleSetNickname}
+            placeholder="닉네임*"
+          ></input>
         </div>
 
         <div className="timetable">
@@ -41,7 +45,14 @@ const Participate_timetable_ctn = () => {
           </div>
         </div>
       </div>
-      <Botton_banner_button text={"참여하기"} />
+
+      <div className="button_ctn">
+        <button className="button">
+          <div className="button_p_ctn">
+            <p>참여하기</p>
+          </div>
+        </button>
+      </div>
     </>
   );
 };
