@@ -12,7 +12,7 @@ const Memoir_write_ctn = () => {
   const [role, setRole] = useState("");
   const [feeling, setFeeling] = useState("");
 
-  const { response: projectsAll, loading, error } = useAPIs("/user/projects");
+  const { response: projectsAll, loading, error } = useAPIs("/projects_all");
   console.log(projectsAll);
   if (loading) return <p>⌛ 프로젝트 목록 불러오는 중...</p>;
   if (error) return <p>❌ 프로젝트 목록 불러오기 실패: {error}</p>;

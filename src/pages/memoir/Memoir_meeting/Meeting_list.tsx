@@ -61,7 +61,7 @@ const Meeting_list = ({ meetingLists }) => {
           className={showInput ? "disappear" : "appear"}
           onClick={handleClick}
         >
-          필터
+        
         </button>
         {showInput && (
           <div className="filter_input_wrapper" ref={inputRef}>

@@ -8,6 +8,10 @@ import Plus from "@/assets/plus.svg";
 
 const Project_container = ({ projectsAll }) => {
   const [chosenProject, setChosenProject] = useState<string>("");
+  const [chosenProjectTextColor, setChosenProjectTextColor] =
+    useState<string>("");
+  const [chosenProjectBgColor, setChosenProjectBgColor] = useState<string>("");
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [newProject, setNewProject] = useState<string>("");
 
@@ -64,14 +68,28 @@ const Project_container = ({ projectsAll }) => {
     "#FFF4ED",
     "#FFF8EB",
   ];
-
+  const handleChosenProject = (project, bgColor, textColor) => {
+    setChosenProject(project.projectName);
+    setChosenProjectBgColor(bgColor);
+    setChosenProjectTextColor(textColor);
+  };
   return (
     <div className="ctn_in_common to_write_meeting">
       <p className="write_title">프로젝트</p>
       <div className="project_banner_ctn">
         <div className="in-common banner" onClick={toggleBannerBox}>
-          <div className="banner_name_ctn">
-            <p className="banner_name">
+          <div
+            style={{
+              background: chosenProjectBgColor,
+            }}
+            className="banner_name_ctn"
+          >
+            <p
+              className="banner_name"
+              style={{
+                color: chosenProjectTextColor,
+              }}
+            >
               {chosenProject || "선택된 프로젝트 없음"}
             </p>
           </div>
@@ -94,6 +112,7 @@ const Project_container = ({ projectsAll }) => {
           {projectList.map((project, index) => {
             const bgColor = bgColors[index % bgColors.length];
             const textColor = textColors[index % textColors.length];
+
             return (
               <div key={project.projectId} className="checkbox_ctn">
                 <input
@@ -101,7 +120,9 @@ const Project_container = ({ projectsAll }) => {
                   type="radio"
                   name="project"
                   checked={chosenProject === project.projectName}
-                  onChange={() => setChosenProject(project.projectName)}
+                  onChange={() =>
+                    handleChosenProject(project, bgColor, textColor)
+                  }
                 ></input>
                 <div
                   className="banner_name_ctn"
