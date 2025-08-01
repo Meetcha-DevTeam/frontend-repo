@@ -12,16 +12,13 @@ interface ScheduleState {
 export const useScheduleStore = create<ScheduleState>()((set) => ({
   scheduleList: [],
   fetchSchedules: async () => {
-    const res = await fetch(
-      `${API_BASE}/user/schedule?from=2025-07-20T00:00:00&to=2025-07-25T23:59:59`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await fetch(`/user/schedule?from=2025-07-20T00:00:00&to=2025-07-25T23:59:59`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     const data = await res.json();
     console.log(data);
     switch (data.code) {
