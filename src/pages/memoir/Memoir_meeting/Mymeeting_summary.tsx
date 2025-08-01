@@ -16,13 +16,9 @@ const Mymeeting_summary = ({ meetingLists }) => {
   useEffect(() => {
     if (!Array.isArray(meetingLists) || meetingLists.length === 0) return;
 
-    const finishedMeetings = meetingLists.filter((meeting) => {
-      return meeting.meeting_status === "종료";
-    });
-
-    console.log(finishedMeetings);
+   
     /* 1) 미팅 건수 */
-    setMeetingCount(finishedMeetings.length);
+    setMeetingCount(meetingLists.length);
 
     /* 2) 주요 역할 */
    
