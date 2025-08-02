@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styles from "./SchedulePage.module.scss";
 import MonthlyScheduleView from "./monthly_schedule/MonthlyScheduleView";
 import WeeklyScheduleView from "./weekly_schedule/WeeklyScheduleView";
-import { useNavigate } from "react-router-dom";
 import { useScheduleStore } from "@/store/scheduleStore";
 
 const SchedulePage = () => {
