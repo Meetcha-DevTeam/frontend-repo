@@ -72,7 +72,7 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
             {type === 1 ? (data as string[])?.join(", ") : data}
           </div>
         </div>
-        <div className={styles.meetingOptionCard__downArrow}>
+        <div className={styles.meetingOptionCard__top__downArrow}>
           <DownArrow />
         </div>
       </div>
