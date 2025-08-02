@@ -9,6 +9,29 @@ export interface MeetingDataType {
   confirmedTime: string | null; // DATETIME (ISO 8601 형식), NULL 허용
 }
 
+export interface MeetingDetailType {
+  meetingId: string;
+  title: string;
+  description: string;
+  status: string;
+  deadline: string;
+  durationMinutes: number;
+  participants: Participant[];
+  finalSchedule: FinalSchedule;
+}
+
+export interface Participant {
+  participantId: string;
+  nickname: string;
+  profileImageUrl: string;
+}
+
+interface FinalSchedule {
+  type: "success" | "fail"; // 필요에 따라 union 확장
+  startAt: string; // ISO date string
+  endAt: string; // ISO date string
+}
+
 export interface AlternativeScheduleDataType {
   date: string; // "YYYY/MM/DD"
   startTime: string; // "HH:MM"
