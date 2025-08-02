@@ -20,7 +20,7 @@ export const useScheduleStore = create<ScheduleState>()((set) => ({
       },
     });
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     switch (data.code) {
       case 200:
         set({ scheduleList: data.data });
