@@ -15,9 +15,12 @@
   border-color: $color-gray-1;
   border-width: 1px;
 
+  cursor: pointer;
+
   &__top {
     width: 100%;
     height: 2.5rem;
+    // height: 25px;
 
     display: flex;
     flex-direction: row;
@@ -29,9 +32,6 @@
       svg {
         color: $color-orange-1;
       }
-      // &.active svg {
-      //   color: $color-orange-5;
-      // }
     }
 
     &__data {
