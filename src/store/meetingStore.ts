@@ -20,7 +20,7 @@ export const useMeetingStore = create<MeetingState>()((set) => ({
       },
     });
     const data = await res.json();
-    console.log(data.data);
+    // console.log(data.data);
     set({ meetingList: data.data });
   },
 }));

@@ -1,8 +1,6 @@
 import BottomNav from "@/components/BottomNav/BottomNav";
 import React, { useEffect, useState } from "react";
 import styles from "./BackgroundPage.module.scss";
-import HomePage from "../meeting/MeetingPage";
-import SchedulePage from "../schedule/SchedulePage";
 import Header from "@/components/Header";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 

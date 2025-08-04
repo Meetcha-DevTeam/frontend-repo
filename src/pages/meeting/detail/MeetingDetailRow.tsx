@@ -82,6 +82,7 @@ const MeetingDetailRow = ({ label, icon, data }: Props) => {
         {label === "참여자 정보 확인"
           ? participants.map((item, _) => (
               <img
+                key={item.participantId}
                 className={styles.meetingDetailRow__rightArea__participantImg}
                 src={item.profileImageUrl}
               />
