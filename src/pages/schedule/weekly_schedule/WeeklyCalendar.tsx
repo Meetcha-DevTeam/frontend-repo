@@ -99,7 +99,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
         selectable={true}
         step={30} // ✅ 각 시간 슬롯 간격 (분 단위)
         timeslots={2} // ✅ 한 시간당 몇 개의 슬롯
-        longPressThreshold={150}
+        longPressThreshold={1000}
         onSelecting={() => !blockInteraction}
         onSelectSlot={(slotInfo) => {
           if (blockInteraction) return;

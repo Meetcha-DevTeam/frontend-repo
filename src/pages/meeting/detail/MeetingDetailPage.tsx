@@ -11,8 +11,6 @@ const MeetingDetailPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [meetingDetail, setMeetingDetail] = useState<MeetingDetailType | null>(null);
-  console.log("RAW state:", JSON.stringify(state));
-  console.log("URL      :", `/meeting-lists/${state}`);
 
   const fetchMeetingDetail = async () => {
     const response = await apiCall(`/meeting-lists/${state}`, "GET", null, true);

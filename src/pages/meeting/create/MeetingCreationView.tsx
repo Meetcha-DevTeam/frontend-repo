@@ -5,34 +5,34 @@ import Calendar from "@assets/calendar.svg?react";
 import Clock from "@assets/clock.svg?react";
 import Watch from "@assets/watch.svg?react";
 import MeetingOptionCard from "./MeetingOptionCard";
-import type { MeetingData } from "./MeetingCreationPage";
+import type { MeetingSendData } from "./MeetingCreationPage";
 
 interface Props {
   setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
-  setCompleteData: React.Dispatch<React.SetStateAction<MeetingData>>;
+  setCompleteData: React.Dispatch<React.SetStateAction<MeetingSendData>>;
 }
 
 const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => {
   const [meetingTitle, setMeetingTitle] = useState<string>("");
-  const [meetingExplanation, setMeetingExplanation] = useState<string>();
-  const [meetingCandidateDate, setMeetingCandidateDate] = useState<string[]>();
+  const [meetingDescription, setMeetingDescription] = useState<string>();
+  const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>();
   const [meetingProceedTime, setMeetingProceedTime] = useState<string>();
-  const [voteExpirationTime, setVoteExpirationTime] = useState<string>();
+  const [deadline, setDeadline] = useState<string>("");
 
   const cardDataSet = [
     {
       id: 0,
       title: "미팅 설명",
       icon: <Pencil />,
-      data: meetingExplanation,
-      dataSetter: setMeetingExplanation,
+      data: meetingDescription,
+      dataSetter: setMeetingDescription,
     },
     {
       id: 1,
       title: "미팅 후보 날짜",
       icon: <Calendar />,
-      data: meetingCandidateDate,
-      dataSetter: setMeetingCandidateDate,
+      data: meetingCandidateDates,
+      dataSetter: setMeetingCandidateDates,
     },
     {
       id: 2,
@@ -45,35 +45,30 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       id: 3,
       title: "투표 마감 시간",
       icon: <Watch />,
-      data: voteExpirationTime,
-      dataSetter: setVoteExpirationTime,
+      data: deadline,
+      dataSetter: setDeadline,
     },
   ];
 
   useEffect(() => {
     if (
       meetingTitle &&
-      meetingExplanation &&
-      meetingCandidateDate &&
+      meetingDescription &&
+      meetingCandidateDates &&
       meetingProceedTime &&
-      voteExpirationTime
+      deadline
     ) {
       setAllDataReserved(true);
       setCompleteData({
         title: meetingTitle,
-        explanation: meetingExplanation,
-        candidateDate: meetingCandidateDate,
+        description: meetingDescription,
+        candidateDates: meetingCandidateDates,
         proceedTime: meetingProceedTime,
-        expirationTime: voteExpirationTime,
+        deadline: deadline,
+        projectId: crypto.randomUUID(),
       });
     }
-  }, [
-    meetingTitle,
-    meetingExplanation,
-    meetingCandidateDate,
-    meetingProceedTime,
-    voteExpirationTime,
-  ]);
+  }, [meetingTitle, meetingDescription, meetingCandidateDates, meetingProceedTime, deadline]);
 
   return (
     <div className={styles.meetingCreationView}>
@@ -86,7 +81,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
         }}
       />
       <div className={styles.meetingCreationView__meetingOptionContainer}>
-        {cardDataSet.map((item, index) => (
+        {cardDataSet.map((item, _) => (
           <MeetingOptionCard
             key={item.id}
             title={item.title}

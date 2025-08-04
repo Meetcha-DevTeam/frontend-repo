@@ -30,8 +30,9 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       inputComponent = <CalendarMultipleInputComponent dataSetter={dataSetter} />;
       break;
     case 2:
-      inputComponent = <TimePicker onChange={(item) => dataSetter(item)} />;
-      // inputComponent = <TimeInputComponent />;
+      inputComponent = (
+        <TimePicker onChange={(item) => dataSetter(item)} ampm={false} minRange={1} />
+      );
       break;
     case 3:
       inputComponent = <CalendarInputComponent dataSetter={dataSetter} />;
@@ -69,7 +70,11 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
         <div className={styles.meetingOptionCard__top__data}>
           <div className={styles.meetingOptionCard__top__data__label}>{title}</div>
           <div className={styles.meetingOptionCard__top__data__value}>
-            {type === 1 ? (data as string[])?.join(", ") : data}
+            {type === 1
+              ? (data as string[])?.join(", ")
+              : type === 3 && data?.includes("T")
+              ? `${(data as string)?.split("T")[0]} ${(data as string)?.split("T")[1]}`
+              : data}
           </div>
         </div>
         <div className={styles.meetingOptionCard__top__downArrow}>
@@ -79,6 +84,17 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
 
       <div ref={contentRef} className={styles.meetingOptionCard__content}>
         {expanded && inputComponent}
+        {type === 3 && (
+          <TimePicker
+            onChange={(item) => {
+              (dataSetter as React.Dispatch<React.SetStateAction<string>>)(
+                (prev) => `${prev.split("T")[0]}T${item}`
+              );
+            }}
+            ampm={false}
+            minRange={1}
+          />
+        )}
       </div>
     </div>
   );

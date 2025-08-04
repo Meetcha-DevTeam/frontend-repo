@@ -202,4 +202,18 @@ export const handlers = [
       ],
     });
   }),
+  http.get<{ meetingId: string }>("/meeting-lists/:meetingId/alternative-times", ({ params }) => {
+    const { meetingId } = params;
+    console.log(meetingId);
+
+    return HttpResponse.json({
+      isSuccess: true,
+      code: 200,
+      message: "대안시간 후보 조회 성공",
+      data: {
+        alternativeTimes: ["2025-07-25T14:00:00Z", "2025-07-25T15:00:00Z", "2025-07-26T10:30:00Z"],
+        userSelectedTime: "2025-07-25T14:00:00Z",
+      },
+    });
+  }),
 ];
