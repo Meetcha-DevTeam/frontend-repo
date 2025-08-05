@@ -11,7 +11,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@fullcalendar/react": "^6.1.18",
     "@fullcalendar/timegrid": "^6.1.18",
     "@react-oauth/google": "^0.12.2",
@@ -20,14 +19,10 @@
     "devextreme": "24.2.8",
     "devextreme-react": "24.2.8",
     "framer-motion": "^12.23.6",
-=======
     "@fullcalendar/core": "^6.1.18",
     "@fullcalendar/interaction": "^6.1.18",
-    "@fullcalendar/react": "^6.1.18",
-    "@react-oauth/google": "^0.12.2",
     "dayjs": "^1.11.13",
     "fullcalendar": "^6.1.18",
->>>>>>> e4709493e5e1d8f5d255b41b67c4bcae8e6854d1
     "localforage": "^1.10.0",
     "luxon": "^3.7.1",
     "match-sorter": "^8.0.3",
@@ -40,10 +35,7 @@
     "react-mobile-picker": "^1.1.2",
     "react-router-dom": "^7.6.3",
     "sort-by": "^0.0.2",
-<<<<<<< HEAD
     "swiper": "^11.2.10",
-=======
->>>>>>> e4709493e5e1d8f5d255b41b67c4bcae8e6854d1
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -63,12 +55,9 @@
     "vite": "^7.0.0",
     "vite-plugin-svgr": "^4.3.0"
   },
-<<<<<<< HEAD
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.45.1"
   },
-=======
->>>>>>> e4709493e5e1d8f5d255b41b67c4bcae8e6854d1
   "msw": {
     "workerDirectory": [
       "public"
