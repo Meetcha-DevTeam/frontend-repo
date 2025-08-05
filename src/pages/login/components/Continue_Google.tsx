@@ -37,7 +37,7 @@ const Continue_Google = () => {
   useEffect(() => {
     console.log("API 응답:", response);
     console.log("API 오류:", error); // ✅ 에러 메시지 확인
-    if (response?.isSuccess) {
+    if (response?.success) {
       sessionStorage.setItem("access-token", response.data.accessToken);
       navigate("/login_complete");
     } else if (response && !response.isSuccess) {
