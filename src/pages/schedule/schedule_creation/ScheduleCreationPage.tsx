@@ -118,7 +118,7 @@ const ScheduleCreationPage = ({ clickedSpan, createMode, data }: Props) => {
         )}
         <Button
           className={allDataReserved ? styles.active : styles.inactive}
-          label={createMode ? "미팅 생성하기" : "완료"}
+          label={createMode ? "일정 생성하기" : "완료"}
           clickHandler={createMode ? sendCreationReq : sendEditReq}
         />
       </div>
