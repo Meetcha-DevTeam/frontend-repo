@@ -8,8 +8,8 @@ import { apiCall } from "@/utils/apiCall";
 export interface MeetingSendData {
   title: string;
   description: string;
+  durationMinutes: number;
   candidateDates: string[];
-  proceedTime: string;
   deadline: string;
   projectId: string;
 }

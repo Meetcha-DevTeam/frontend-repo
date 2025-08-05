@@ -5,6 +5,7 @@ import TextInputComponent from "./input_component/TextInputComponent";
 import CalendarMultipleInputComponent from "./input_component/CalendarMultipleInputComponent";
 import TimePicker from "../../../components/TimePicker/TimePicker";
 import CalendarInputComponent from "./input_component/CalendarInputComponent";
+import { parse } from "date-fns/parse";
 
 interface Props {
   title: string;
@@ -17,34 +18,54 @@ interface Props {
 }
 
 const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
-  const [active, setActive] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<boolean>(false); // 카드가 펼쳐졌는지 여부
   const contentRef = useRef<HTMLDivElement>(null); // 사용자 입력 컴포넌트 크기 영역 참조 변수
   let inputComponent; // 사용자 입력 방식에 따른 컴포넌트(input태그, 달력, ...)
 
   switch (type) {
     case 0:
-      inputComponent = <TextInputComponent dataSetter={dataSetter} />;
+      inputComponent = (
+        <TextInputComponent
+          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+        />
+      );
       break;
     case 1:
-      inputComponent = <CalendarMultipleInputComponent dataSetter={dataSetter} />;
+      inputComponent = (
+        <CalendarMultipleInputComponent
+          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string[]>>}
+        />
+      );
       break;
     case 2:
       inputComponent = (
-        <TimePicker onChange={(item) => dataSetter(item)} ampm={false} minRange={1} />
+        <TimePicker
+          onChange={(item) => {
+            dataSetter(item);
+          }}
+          ampm={false}
+          minRange={1}
+        />
       );
       break;
     case 3:
-      inputComponent = <CalendarInputComponent dataSetter={dataSetter} />;
+      inputComponent = (
+        <CalendarInputComponent
+          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+        />
+      );
   }
 
-  // useEffect(() => {
-  //   console.log(data);
-  //   if (data !== undefined && data !== null) setActive(true);
-  //   else {
-  //     setActive(false);
-  //   }
-  // }, [data]);
+  const formatData = (data: Props["data"]) => {
+    if (Array.isArray(data)) {
+      return data.join(", ");
+    }
+    if (typeof data === "string" && data.includes("T")) {
+      const [date, time] = data.split("T");
+      return `${date} ${time}`;
+    }
+    return data;
+  };
 
   // 카드의 높이를 구하는 로직(애니메이션 적용 위함)
   useEffect(() => {
@@ -69,13 +90,7 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
         <div className={styles.meetingOptionCard__top__icon}>{icon}</div>
         <div className={styles.meetingOptionCard__top__data}>
           <div className={styles.meetingOptionCard__top__data__label}>{title}</div>
-          <div className={styles.meetingOptionCard__top__data__value}>
-            {type === 1
-              ? (data as string[])?.join(", ")
-              : type === 3 && data?.includes("T")
-              ? `${(data as string)?.split("T")[0]} ${(data as string)?.split("T")[1]}`
-              : data}
-          </div>
+          <div className={styles.meetingOptionCard__top__data__value}>{formatData(data)}</div>
         </div>
         <div className={styles.meetingOptionCard__top__downArrow}>
           <DownArrow />
