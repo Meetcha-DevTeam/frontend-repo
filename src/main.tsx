@@ -14,6 +14,7 @@ async function enableMocking() {
   if(!isRealBackend){
     await worker.start();
   }
+    
 }
 await enableMocking(); 
 createRoot(document.getElementById("root")!).render(
