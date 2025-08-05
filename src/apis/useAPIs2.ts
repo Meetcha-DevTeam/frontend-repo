@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL;
+export const API_BASE2 = import.meta.env.VITE_API_BASE2_URL;
 console.log("useAPI hook 실행됨");
-export const useAPIs = (
+export const useAPIs2 = <T=any>(
   path: string,
   method = "GET",
   data?: any,
@@ -18,10 +18,11 @@ export const useAPIs = (
   
   useEffect(() => {
     if (manual && !trigger) return;
+    
     const fetchData = async () => {
       try {
         
-        const res = await fetch(`${API_BASE}${path}`, {
+        const res = await fetch(`${API_BASE2}${path}`, {
           method: method,
           headers: {
             "Content-Type": "application/json",
@@ -31,7 +32,7 @@ export const useAPIs = (
         });
         
         const jsonData = await res.json();
-        console.log(jsonData);
+       
         setResponse(jsonData);
       
       } catch (e: any) {
@@ -43,13 +44,8 @@ export const useAPIs = (
     };
     
     fetchData();
-<<<<<<< HEAD
-  }, [trigger, path, method]); // trigger 변화 시 실행
-
-=======
   }, [trigger, path, method, JSON.stringify(data)]); // trigger 변화 시 실행
   console.log("access_token:", access_token);
->>>>>>> e4709493e5e1d8f5d255b41b67c4bcae8e6854d1
   const fire = () => {
     setLoading(true);
     setTrigger((prev) => !prev); // toggle to retrigger
