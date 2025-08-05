@@ -11,6 +11,14 @@ import MeetingAlternativePage from "./pages/meeting/alternative/MeetingAlternati
 import SchedulePage from "./pages/schedule/SchedulePage";
 import MeetingPage from "./pages/meeting/MeetingPage";
 
+import Participate_timetable_ctn from "./pages/participate/Participate_timetable/Participate_timetable_ctn";
+
+import Participate_link from "./pages/participate/Participate_link/Participate_link_ctn";
+
+import Participate_completed_ctn from "./pages/participate/Participate_complete/Participate_completed_ctn";
+
+import Participate_error_ctn from "./pages/participate/Participate_error/Participate_error_ctn";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -24,9 +32,12 @@ const App = () => {
           <Route path="meeting" element={<MeetingPage />} />
         </Route>
         <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
-        <Route index path="/memoir-write" element={<Memoir_write_ctn />}></Route>
-        <Route index path="/memoir-complete" element={<Memoir_complete_ctn />}></Route>
-        <Route index path="/meeting-creation" element={<MeetingCreationPage />}></Route>
+        <Route index path="/memoir-write" element={<Memoir_write_ctn/>}></Route>
+        <Route index path="/memoir-complete" element={<Memoir_complete_ctn/>}></Route>
+        <Route index path="/timetable" element={<Participate_timetable_ctn/>}></Route>
+        <Route index path="/link" element={<Participate_link/>}></Route>
+        <Route index path="/error" element={<Participate_error_ctn/>}></Route>
+        <Route index path="/complete" element={<Participate_completed_ctn/>}></Route>
       </Routes>
     </BrowserRouter>
   );
