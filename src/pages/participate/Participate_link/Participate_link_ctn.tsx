@@ -35,32 +35,35 @@ const Participate_link = () => {
   );
 
   const handleLinkCheck = () => {
-    if (!linkText.trim()) return;
-    fire();
-  };
+  if (!linkText.trim()) return;
+  fire(); // → 응답 도착하면 useEffect에서 처리
+};
 
-  console.log(aboutMeeting);
+// 🔄 aboutMeeting 이 변경될 때 검사
+useEffect(() => {
+  if (!aboutMeeting || !Array.isArray(aboutMeeting)) return;
 
-  const chosenAboutMeeting=aboutMeeting?.find((meeting)=>{
-    return linkText===meeting.data.meetingCode;
-  });
+  const foundMeeting = aboutMeeting.find(
+    (meeting) => meeting?.data?.meetingCode === linkText
+  );
 
-  console.log(chosenAboutMeeting);
-  useEffect(() => {
-    if (!chosenAboutMeeting) return;
+  if (!foundMeeting) {
+    navigate("/error");
+    return;
+  }
 
-    if (chosenAboutMeeting.code === 200) {
-      navigate("/timetable",{
-        state:{
-          sendAboutMeeting: chosenAboutMeeting,
-        },
-      });
-    } else if (chosenAboutMeeting.code === 404) {
-      navigate("/error");
-    } else if (chosenAboutMeeting.code === 410) {
-      navigate("/complete");
-    }
-  },[chosenAboutMeeting]);
+  if (foundMeeting.code === 410) {
+    navigate("/complete");
+  } else if (foundMeeting.code === 200) {
+    navigate("/timetable", {
+      state: {
+        sendAboutMeeting: foundMeeting,
+      },
+    });
+  } else {
+    navigate("/error");
+  }
+}, [aboutMeeting]);
 
 
   return (

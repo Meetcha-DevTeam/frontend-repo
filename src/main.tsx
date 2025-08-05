@@ -10,11 +10,11 @@ async function enableMocking() {
   const {worker}=await import('./mocks/browser');
 
   const isRealBackend=import.meta.env.VITE_REAL_BACKEND_MODE==='true';
-
+/*
   if(!isRealBackend){
     await worker.start();
   }
-    
+  */
 }
 await enableMocking(); 
 createRoot(document.getElementById("root")!).render(
