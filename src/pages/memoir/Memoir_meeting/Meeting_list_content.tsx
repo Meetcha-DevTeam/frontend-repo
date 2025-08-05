@@ -1,20 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAPIs2 } from "@/apis/useAPIs2";
+import "./Memoir_meeting.scss";
 
 interface Props {
   meetingLists: any[];
 }
-import "./Memoir_meeting.scss";
-//여기에서는 post요청으로 한 부분을 해야됨... 미팅작성에서
-//부터 가져온 데이터들로 구성해야 합니둥
 
 const Meeting_list_content = ({ meetingLists }: Props) => {
   const navigate = useNavigate();
+
+  const [selectedMeetingId, setSelectedMeetingId] = useState<string | null>(
+    null
+  );
+
+  // 1. 훅은 최상단에서 선언
+  const {
+    response: chosenMemoir,
+    loading,
+    error,
+    fire,
+  } = useAPIs2(
+    selectedMeetingId ? `/meeting/${selectedMeetingId}/reflection` : "",
+    "GET",
+    undefined,
+    true,
+    false
+  );
+
+  // 2. 클릭 시 선택된 미팅 ID 저장 + fire 실행
   const handleClick = (meeting: any) => {
-    setTimeout(() => {
-    navigate("/memoir-complete", { state: meeting });
-  }, 0);
+    setSelectedMeetingId(meeting.meetingId);
+    fire();
   };
+
+  // 3. 회고 데이터 도착하면 이동
+  useEffect(() => {
+    if (chosenMemoir && chosenMemoir.success) {
+      navigate("/memoir-complete", { state: chosenMemoir });
+      
+    }
+  }, [chosenMemoir]);
+
   return (
     <div className="meetings_ctn">
       {Array.isArray(meetingLists) &&
