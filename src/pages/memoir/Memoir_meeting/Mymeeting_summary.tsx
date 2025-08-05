@@ -8,7 +8,7 @@ import Summary_card from "./Summary_card";
 
 import "./Memoir_meeting.scss";
 
-const Mymeeting_summary = ({ meetingLists }) => {
+const Mymeeting_summary = ({ meetingLists,memoirLists }) => {
   const [meetingCount, setMeetingCount] = useState<number>(0);
   const [mainRole, setMainRole] = useState<string>("");
   const [averageContribution, setAverageContribution] = useState<string>("");
@@ -27,7 +27,7 @@ const Mymeeting_summary = ({ meetingLists }) => {
     /* 3) 평균 기여도 */
     
     setAverageContribution(`0%`);
-  }, [meetingLists]); // meetingLists가 바뀔 때만 실행
+  }, [memoirLists]); // meetingLists가 바뀔 때만 실행
 
   return (
     <div className="meeting_summary_ctn">

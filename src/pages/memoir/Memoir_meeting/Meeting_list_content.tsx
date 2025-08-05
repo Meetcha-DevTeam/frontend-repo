@@ -26,15 +26,15 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
               onClick={() => handleClick(meeting)}
             >
               <div className="meeting_intro">
-                <div className="meeting_study">{meeting.title}</div>
-                <p className="meeting_date">{meeting.created_at}</p>
+                <div className="meeting_study">{meeting.projectName}</div>
+                <p className="meeting_date">{meeting.confirmedTime}</p>
               </div>
               <div className="meeting_main">
                 <p className="meeting_title">{meeting.title}</p>
               </div>
               <div className="meeting_last">
-                <p className="meeting_lastWeekDone"></p>
-                <p className="meeting_nextWeekDone"></p>
+                <p className="meeting_lastWeekDone">{meeting.completedWork}</p>
+                <p className="meeting_nextWeekDone">{meeting.plannedWork}</p>
               </div>
             </div>
           );
