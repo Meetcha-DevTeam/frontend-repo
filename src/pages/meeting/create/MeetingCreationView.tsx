@@ -6,6 +6,7 @@ import Clock from "@assets/clock.svg?react";
 import Watch from "@assets/watch.svg?react";
 import MeetingOptionCard from "./MeetingOptionCard";
 import type { MeetingSendData } from "./MeetingCreationPage";
+import { parse } from "date-fns/parse";
 
 interface Props {
   setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,7 +17,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   const [meetingTitle, setMeetingTitle] = useState<string>("");
   const [meetingDescription, setMeetingDescription] = useState<string>();
   const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>();
-  const [meetingProceedTime, setMeetingProceedTime] = useState<string>();
+  const [durationMinutes, setDurationMinutes] = useState<string>();
   const [deadline, setDeadline] = useState<string>("");
 
   const cardDataSet = [
@@ -38,8 +39,8 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       id: 2,
       title: "미팅 진행 시간",
       icon: <Clock />,
-      data: meetingProceedTime,
-      dataSetter: setMeetingProceedTime,
+      data: durationMinutes,
+      dataSetter: setDurationMinutes,
     },
     {
       id: 3,
@@ -55,20 +56,22 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       meetingTitle &&
       meetingDescription &&
       meetingCandidateDates &&
-      meetingProceedTime &&
+      durationMinutes &&
       deadline
     ) {
       setAllDataReserved(true);
+      const parsedDate = parse(durationMinutes, "HH:mm", new Date()); // duration은 숫자로 파싱하면서 총 "분"으로 변환
       setCompleteData({
         title: meetingTitle,
         description: meetingDescription,
         candidateDates: meetingCandidateDates,
-        proceedTime: meetingProceedTime,
+        durationMinutes: parsedDate.getHours() * 60 + parsedDate.getMinutes(),
         deadline: deadline,
-        projectId: crypto.randomUUID(),
+        // projectId: crypto.randomUUID(),
+        projectId: null,
       });
     }
-  }, [meetingTitle, meetingDescription, meetingCandidateDates, meetingProceedTime, deadline]);
+  }, [meetingTitle, meetingDescription, meetingCandidateDates, durationMinutes, deadline]);
 
   return (
     <div className={styles.meetingCreationView}>

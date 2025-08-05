@@ -33,9 +33,6 @@ const ScheduleCreationPage = ({ clickedSpan, createMode, data }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log("1: ", scheduleTitle);
-    console.log("2: ", scheduleTime);
-    console.log("3: ", repetition);
     if (scheduleTitle && scheduleTime && repetition) setAllDataReserved(true);
   }, [scheduleTitle, scheduleTime, repetition]);
 
