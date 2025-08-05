@@ -4,59 +4,64 @@ import "./Participate_link.scss";
 
 import Top_banner from "../common/Top_banner";
 
-import { useMeetingStore } from "@/store/meetingStore";
+import { useAPIs2 } from "@/apis/useAPIs2";
+import { useAPIs } from "@/apis/useAPIs";
+//여기서 meetingcode를 가진 meetingdata를 불러와야함
+//msw사용
 
-import type { MeetingDataType } from "@/types/meeting-data-type";
+
 
 const Participate_link = () => {
   const top_text = "미팅 참가";
-
-  const userId=3;
-  const [linkText, setLinkText] = useState<string>("");
   const navigate = useNavigate();
-  //이친구는 지금 상태임...
-  //내가 입력한 링크와 같은 미팅을 map을 통해 추출해낸 다음에..
-  //그 미팅에 대한 정보를 얻어 내어서 미팅 정보를 다음페이지에
-  // 전송한다. 만약 해당 미팅이 존재하지 않을 시
-  //error로 navigate되고
-  //만약 meetingstatus가 완료일시 completed로 이동한다.
 
-  const {meetingList,fetchMeetings}=useMeetingStore();
-
-  useEffect(()=>{
-    fetchMeetings(userId);
-  },[userId]);
+  const [linkText, setLinkText] = useState<string>("");
 
   const handletextchange = (e) => {
     setLinkText(e.target.value);
   };
-  let chosenMeeting: MeetingDataType | null = null;
-  const LinkCheck = () => {
-    const found = meetingList.find(
-      (meeting) => meeting.meeting_code === linkText
-    );
-    chosenMeeting = found ?? null;
-  }; //chosenmeeting이 정해짐
+
+  const {
+    response: aboutMeeting,
+    loading,
+    error,
+    fire
+  } = useAPIs(
+    `/participate_list`,
+    "GET",
+    undefined,
+    false,
+    true
+  );
 
   const handleLinkCheck = () => {
-    LinkCheck();
-    //chosenmeeting의 status의 값에는
-    // "매칭 중", 진행중" "매칭 실패" "완료" "시작 전"
-    //만약 chosenmeeting의 status값이
-    if (!chosenMeeting) {
-      navigate("/error");
-    } else if (chosenMeeting.meeting_status === "종료") {
-      navigate("/complete");
-    } else {
-      navigate("/timetable", {
-        state: {
-          chosenMeeting: chosenMeeting,
+    if (!linkText.trim()) return;
+    fire();
+  };
+
+  console.log(aboutMeeting);
+
+  const chosenAboutMeeting=aboutMeeting?.find((meeting)=>{
+    return linkText===meeting.data.meetingCode;
+  });
+
+  console.log(chosenAboutMeeting);
+  useEffect(() => {
+    if (!chosenAboutMeeting) return;
+
+    if (chosenAboutMeeting.code === 200) {
+      navigate("/timetable",{
+        state:{
+          sendAboutMeeting: chosenAboutMeeting,
         },
       });
+    } else if (chosenAboutMeeting.code === 404) {
+      navigate("/error");
+    } else if (chosenAboutMeeting.code === 410) {
+      navigate("/complete");
     }
-  };
-  //chosen meeting이 어느 상태인지
-  //아니면 null인지에 따라서 로직을 다르게 구현
+  },[chosenAboutMeeting]);
+
 
   return (
     <div className="partici_link_ctn">

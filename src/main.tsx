@@ -5,11 +5,15 @@ import "./assets/styles/main.scss";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 async function enableMocking() {
-  if (process.env.NODE_ENV !== "development") {
-    return;
+  if(import.meta.env.MODE!=='development') return;
+
+  const {worker}=await import('./mocks/browser');
+
+  const isRealBackend=import.meta.env.VITE_REAL_BACKEND_MODE==='true';
+
+  if(!isRealBackend){
+    await worker.start();
   }
-  const { worker } = await import("./mocks/browser");
-  return worker.start();
 }
 await enableMocking(); 
 createRoot(document.getElementById("root")!).render(

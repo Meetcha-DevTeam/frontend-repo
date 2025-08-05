@@ -23,13 +23,10 @@ const Must_write = ({ meetingLists }) => {
       <div className="meetingcard_container">
         {Array.isArray(meetingLists) &&
           meetingLists
-            .filter((meeting) => {
-              return meeting.meeting_status === "종료";
-            })
             .map((meeting) => (
-              <div key={meeting.meeting_id} className="meetingcard">
+              <div key={meeting.meetingId} className="meetingcard">
                 <p>{meeting.title}</p>
-                <p>{meeting.created_at}</p>
+                <p>{meeting.createdAt}</p>
                 <button
                   className="writeMemoir_button"
                   onClick={() => handleClick(meeting)}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Memoir_write.scss";
 
@@ -6,7 +6,7 @@ import LowChevron from "@/assets/LowChevron.svg";
 
 import Plus from "@/assets/plus.svg";
 
-const Project_container = ({ projectsAll }) => {
+const Project_container = ({ projectsAll, projectId, setProjectId }) => {
   const [chosenProject, setChosenProject] = useState<string>("");
   const [chosenProjectTextColor, setChosenProjectTextColor] =
     useState<string>("");
@@ -16,11 +16,19 @@ const Project_container = ({ projectsAll }) => {
   const [newProject, setNewProject] = useState<string>("");
 
   const [projectList, setProjectList] = useState(projectsAll || []);
-
+  useEffect(() => {
+    setProjectList(projectsAll || []);
+  }, [projectsAll]);
   //여기서 새로 생성된 프로젝트는 id또한 가져야함
   //id는 랜덤의 값으로 하나 부여 data()함수 사용
   const updateProjectsAll = () => {
-    if (!newProject.trim()) return;
+    const trimmedName = newProject.trim();
+    if (!trimmedName) return;
+
+    if (projectList.some((p) => p.projectName === trimmedName)) {
+      alert("같은 이름의 프로젝트가 이미 존재합니다.");
+      return;
+    }
 
     const newId = `local-${Date.now()}`;
 
@@ -68,11 +76,22 @@ const Project_container = ({ projectsAll }) => {
     "#FFF4ED",
     "#FFF8EB",
   ];
+  //projectList에 내가 설정한(추가한)프로젝트 전부가 들어있음
+  const handleProjectClick = (project) => {
+    //여기서 projectId 설정해야한다.
+
+    setProjectId(project.projectId);
+  };
+
   const handleChosenProject = (project, bgColor, textColor) => {
     setChosenProject(project.projectName);
+    handleProjectClick(project);
     setChosenProjectBgColor(bgColor);
     setChosenProjectTextColor(textColor);
   };
+  useEffect(() => {
+    console.log("선택된 projectId:", projectId);
+  }, [projectId]);
   return (
     <div className="ctn_in_common to_write_meeting">
       <p className="write_title">프로젝트</p>
