@@ -21,7 +21,7 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
         meetingLists.map((meeting) => {
           return (
             <div
-              key={meeting.meeting_id}
+              key={meeting.meetingId}
               className="meeting_ctn"
               onClick={() => handleClick(meeting)}
             >

@@ -27,7 +27,7 @@ const Meeting_card = ({ meeting }) => {
           </div>
         </div> */}
         <p>{meeting.title}</p>
-        <p>{meeting.created_at}</p>
+        <p>{meeting.confirmedTime}</p>
        
         <div
           className="description"
@@ -38,7 +38,7 @@ const Meeting_card = ({ meeting }) => {
             transition: "max-height 0.3s ease",
           }}
         >
-          {meeting.thought || "이 미팅은 설명이 없습니다."}
+          {meeting.description || "이 미팅은 설명이 없습니다."}
         </div>
 
         <div className="expand_btn" onClick={toggleExpand}>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export const API_BASE2 = import.meta.env.VITE_API_BASE2_URL;
 console.log("useAPI hook 실행됨");
-export const useAPIs2 = (
+export const useAPIs2 = <T=any>(
   path: string,
   method = "GET",
   data?: any,

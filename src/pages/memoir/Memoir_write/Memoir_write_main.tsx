@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+
 import Meeting_card from "../Memoir_common/Meeting_card";
 import Project_container from "./Project_container";
 import "./Memoir_write.scss";
-
+import { useNavigate } from "react-router-dom";
 const Memoir_write_main = ({
   projectsAll,
   contribution,
@@ -12,16 +12,19 @@ const Memoir_write_main = ({
   setRole,
   feeling,
   setFeeling,
+  done,
+  setDone,
+  todo,
+  setTodo,
+  projectId,
+  setProjectId,
+  meeting//meetingid받기위해서...
 }) => {
-  const [projects, setProjects] = useState<[string]>();
-
-  const location = useLocation();
-  const { meeting, meetingLists } = location.state || {};
+  
 
 
-  const [done, setDone] = useState<string>("");
-  const [todo, setTodo] = useState<string>("");
-
+  const navigate=useNavigate();
+  
   return (
     <div className="main_ctn">
       <div className="meeting_card_ctn">
@@ -37,7 +40,7 @@ const Memoir_write_main = ({
             type="text"
             className="in-common contribution_input"
             value={contribution}
-            placeholder="0%"
+            placeholder="0"
             onChange={(e) => setContribution(e.target.value)}
           />
         </div>
@@ -85,7 +88,7 @@ const Memoir_write_main = ({
           onChange={(e) => setTodo(e.target.value)}
         />
       </div>
-      <Project_container projectsAll={projectsAll} />
+      <Project_container projectsAll={projectsAll} projectId={projectId} setProjectId={setProjectId} />
     </div>
   );
 };
