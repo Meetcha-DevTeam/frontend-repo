@@ -41,6 +41,11 @@
   &__listSection {
     width: 100%;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 3px;
+
     overflow-y: scroll;
   }
 }

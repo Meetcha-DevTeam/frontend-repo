@@ -20,7 +20,9 @@ const ProjectInputComponentRow = ({ projectName, projectId, dataSetter }: Props)
           onChange={handleChange}
           name="project"
         />
-        {projectName}
+        <div className={styles.projectInputComponentRow__buttonContainer__projectName}>
+          {projectName}
+        </div>
       </label>
     </div>
   );
