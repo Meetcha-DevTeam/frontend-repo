@@ -5,7 +5,7 @@ import styles from "./TimePicker.module.scss";
 const ITEM_HEIGHT = 40;
 
 export default function TimePicker({ onChange, ampm, minRange }) {
-  const [value, setValue] = useState({ ampm: "오전", hour: "12", minute: "02" }); // 현재 선택된 값
+  const [value, setValue] = useState({ ampm: "오전", hour: "00", minute: "00" }); // 현재 선택된 값
   const ampmRef = useRef(null);
   const hourRef = useRef(null);
   const minRef = useRef(null);
