@@ -20,7 +20,7 @@ interface Props {
 const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
   const [expanded, setExpanded] = useState<boolean>(false); // 카드가 펼쳐졌는지 여부
   const contentRef = useRef<HTMLDivElement>(null); // 사용자 입력 컴포넌트 크기 영역 참조 변수
-  let inputComponent; // 사용자 입력 방식에 따른 컴포넌트(input태그, 달력, ...)
+  let inputComponent = null; // 사용자 입력 방식에 따른 컴포넌트(input태그, 달력, ...)
 
   switch (type) {
     case 0:
@@ -57,7 +57,7 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
           <TimePicker
             onChange={(item) => {
               (dataSetter as React.Dispatch<React.SetStateAction<string>>)(
-                (prev) => `${prev.split("T")[0]}T${item}`
+                (prev) => `${prev?.split("T")[0]}T${item}`
               );
             }}
             ampm={false}
@@ -122,7 +122,7 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       </div>
 
       <div ref={contentRef} className={styles.meetingOptionCard__content}>
-        {expanded && inputComponent}
+        {inputComponent}
       </div>
     </div>
   );

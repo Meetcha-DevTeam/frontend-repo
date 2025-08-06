@@ -17,7 +17,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   const [meetingTitle, setMeetingTitle] = useState<string>("");
   const [meetingDescription, setMeetingDescription] = useState<string>();
   const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>();
-  const [durationMinutes, setDurationMinutes] = useState<string>();
+  const [durationMinutes, setDurationMinutes] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
   const [projectData, setProjectData] = useState<string>("");
 
@@ -58,7 +58,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       dataSetter: setProjectData,
     },
   ];
-
+  //
   const projectDataParse = (project) => {
     const index = project.indexOf(" ");
     return project.slice(0, index);
@@ -68,7 +68,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
     const parsedDate = parse(durationMinutes, "HH:mm", new Date()); // duration은 숫자로 파싱하면서 총 "분"으로 변환
     return parsedDate.getHours() * 60 + parsedDate.getMinutes();
   };
-
+  //
   useEffect(() => {
     if (
       meetingTitle &&
