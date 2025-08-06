@@ -32,12 +32,13 @@ const App = () => {
           <Route path="meeting" element={<MeetingPage />} />
         </Route>
         <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
-        <Route index path="/memoir-write" element={<Memoir_write_ctn/>}></Route>
-        <Route index path="/memoir-complete" element={<Memoir_complete_ctn/>}></Route>
-        <Route index path="/timetable" element={<Participate_timetable_ctn/>}></Route>
-        <Route index path="/link" element={<Participate_link/>}></Route>
-        <Route index path="/error" element={<Participate_error_ctn/>}></Route>
-        <Route index path="/complete" element={<Participate_completed_ctn/>}></Route>
+        <Route index path="/memoir-write" element={<Memoir_write_ctn />}></Route>
+        <Route index path="/memoir-complete" element={<Memoir_complete_ctn />}></Route>
+        <Route index path="/timetable" element={<Participate_timetable_ctn />}></Route>
+        <Route index path="/link" element={<Participate_link />}></Route>
+        <Route index path="/error" element={<Participate_error_ctn />}></Route>
+        <Route index path="/complete" element={<Participate_completed_ctn />}></Route>
+        <Route index path="/meeting-creation" element={<MeetingCreationPage />}></Route>
       </Routes>
     </BrowserRouter>
   );
