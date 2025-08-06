@@ -19,6 +19,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>();
   const [durationMinutes, setDurationMinutes] = useState<string>();
   const [deadline, setDeadline] = useState<string>("");
+  const [projectData, setProjectData] = useState<string>("");
 
   const cardDataSet = [
     {
@@ -49,7 +50,24 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       data: deadline,
       dataSetter: setDeadline,
     },
+    {
+      id: 4,
+      title: "프로젝트",
+      icon: <Watch />,
+      data: projectData,
+      dataSetter: setProjectData,
+    },
   ];
+
+  const projectDataParse = (project) => {
+    const index = project.indexOf(" ");
+    return project.slice(0, index);
+  };
+
+  const durationMinutesParse = (durationMinutes) => {
+    const parsedDate = parse(durationMinutes, "HH:mm", new Date()); // duration은 숫자로 파싱하면서 총 "분"으로 변환
+    return parsedDate.getHours() * 60 + parsedDate.getMinutes();
+  };
 
   useEffect(() => {
     if (
@@ -60,18 +78,24 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       deadline
     ) {
       setAllDataReserved(true);
-      const parsedDate = parse(durationMinutes, "HH:mm", new Date()); // duration은 숫자로 파싱하면서 총 "분"으로 변환
+
       setCompleteData({
         title: meetingTitle,
         description: meetingDescription,
         candidateDates: meetingCandidateDates,
-        durationMinutes: parsedDate.getHours() * 60 + parsedDate.getMinutes(),
+        durationMinutes: durationMinutesParse(durationMinutes),
         deadline: deadline,
-        // projectId: crypto.randomUUID(),
-        projectId: null,
+        projectId: projectDataParse(projectData),
       });
     }
-  }, [meetingTitle, meetingDescription, meetingCandidateDates, durationMinutes, deadline]);
+  }, [
+    meetingTitle,
+    meetingDescription,
+    meetingCandidateDates,
+    durationMinutes,
+    deadline,
+    projectData,
+  ]);
 
   return (
     <div className={styles.meetingCreationView}>

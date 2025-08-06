@@ -5,7 +5,7 @@ import TextInputComponent from "./input_component/TextInputComponent";
 import CalendarMultipleInputComponent from "./input_component/CalendarMultipleInputComponent";
 import TimePicker from "../../../components/TimePicker/TimePicker";
 import CalendarInputComponent from "./input_component/CalendarInputComponent";
-import { parse } from "date-fns/parse";
+import ProjectInputComponent from "./input_component/ProjectInputComponent/ProjectInputComponent";
 
 interface Props {
   title: string;
@@ -50,19 +50,42 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       break;
     case 3:
       inputComponent = (
-        <CalendarInputComponent
+        <>
+          <CalendarInputComponent
+            dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+          />
+          <TimePicker
+            onChange={(item) => {
+              (dataSetter as React.Dispatch<React.SetStateAction<string>>)(
+                (prev) => `${prev.split("T")[0]}T${item}`
+              );
+            }}
+            ampm={false}
+            minRange={1}
+          />
+        </>
+      );
+      break;
+    case 4:
+      inputComponent = (
+        <ProjectInputComponent
           dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
         />
       );
   }
 
+  // UI상의 데이터 표시를 위한 데이터 포맷 로직
   const formatData = (data: Props["data"]) => {
     if (Array.isArray(data)) {
       return data.join(", ");
     }
     if (typeof data === "string" && data.includes("T")) {
-      const [date, time] = data.split("T");
+      const [date, time] = data?.split("T");
       return `${date} ${time}`;
+    }
+    if (type === 4) {
+      const index = data.indexOf(" ");
+      return data.slice(index);
     }
     return data;
   };
@@ -73,10 +96,11 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
     if (!el) return;
 
     if (expanded) {
-      // console.log(el.scrollHeight);
+      el.style.display = "inline";
       el.style.height = el.scrollHeight + "px"; // 펼침
     } else {
       el.style.height = "0px"; // 접힘
+      el.style.display = "none";
     }
   }, [expanded]);
 
@@ -99,17 +123,6 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
 
       <div ref={contentRef} className={styles.meetingOptionCard__content}>
         {expanded && inputComponent}
-        {type === 3 && (
-          <TimePicker
-            onChange={(item) => {
-              (dataSetter as React.Dispatch<React.SetStateAction<string>>)(
-                (prev) => `${prev.split("T")[0]}T${item}`
-              );
-            }}
-            ampm={false}
-            minRange={1}
-          />
-        )}
       </div>
     </div>
   );
