@@ -86,6 +86,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       deadline &&
       projectData
     ) {
+      console.log("ㅇㅇㅇ");
       setAllDataReserved(true);
       setCompleteData({
         title: meetingTitle,
