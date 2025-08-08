@@ -29,7 +29,7 @@ const MeetingAlternativePage = () => {
   return (
     <div className={styles.meetingAlternativePage}>
       <TopNav className={styles.topNav} />
-      <MeetingAlternativeView alternativeTimes={alternativeTimes} />
+      <MeetingAlternativeView alternativeTimes={alternativeTimes} meetingId={id} />
     </div>
   );
 };

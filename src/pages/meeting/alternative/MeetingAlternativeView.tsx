@@ -11,6 +11,7 @@ import Loading from "@/components/Loading/Loading";
 import Check from "@assets/check.svg?react";
 import ReactDOM from "react-dom";
 import type { AlternativeScheduleDataType } from "@/types/meeting-data-type";
+import { apiCall } from "@/utils/apiCall";
 
 interface EventInput {
   title?: string;
@@ -20,16 +21,17 @@ interface EventInput {
   extendedProps?: any; // 추가 데이터
 }
 
-const MeetingAlternativeView = ({
-  alternativeTimes,
-}: {
+interface Props {
   alternativeTimes: AlternativeScheduleDataType[];
-}) => {
+  meetingId: string;
+}
+
+const MeetingAlternativeView = ({ alternativeTimes, meetingId }: Props) => {
   const [data, setData] = useState<EventInput[]>();
   const [firstDate, setFirstDate] = useState<Date>();
   const [duration, setDuration] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [clickedEventNum, setClickedEventNum] = useState<number>(null);
+  const [clickedEventNum, setClickedEventNum] = useState(null);
   const [popupInfo, setPopupInfo] = useState<{
     top: number;
     left: number;
@@ -61,8 +63,8 @@ const MeetingAlternativeView = ({
           index: index,
           failMembers: item.excludedUserNames,
           adjustedTime: item.adjustedDurationMinutes,
-          startTime: item?.startTime.split("T")[1].slice(0, -1),
-          endTime: item?.endTime.split("T")[1].slice(0, -1),
+          startTime: item?.startTime.split("T")[1].slice(0, -4),
+          endTime: item?.endTime.split("T")[1].slice(0, -4),
           availableNum: item.includedUserNames.length,
           totalNum: item.includedUserNames.length + item.excludedUserNames.length,
           date: item?.startTime.split("T")[0],
@@ -70,7 +72,6 @@ const MeetingAlternativeView = ({
       };
     });
 
-    // 상태 업데이트
     setFirstDate(first);
     setDuration(diff);
     setData(events);
@@ -78,7 +79,7 @@ const MeetingAlternativeView = ({
   }, [alternativeTimes]);
 
   const handleButtonClick = (e) => {
-    setClickedEventNum(e._def.extendedProps.index);
+    setClickedEventNum(e._def.extendedProps);
     setPopupInfo(null);
   };
 
@@ -119,7 +120,6 @@ const MeetingAlternativeView = ({
       if (!popupInfo) return; // 팝업이 없으면 무시
       const target = e.target as HTMLElement;
 
-      console.log("handleDocClick");
       // 팝업 내부 or 선택버튼 or 이벤트 블록이면 닫지 않음
       if (popupRef.current?.contains(target)) {
         return;
@@ -135,11 +135,27 @@ const MeetingAlternativeView = ({
     return () => document.removeEventListener("click", handleDocClick, true);
   }, [popupInfo]);
 
-  const completeButtonClickHandler = () => {
+  const completeButtonClickHandler = async () => {
     if (!clickedEventNum) {
       alert("대안 시간을 하나 선정하세요!");
     } else {
-      alert("완료되었습니다");
+      const data = {
+        alternativeTime: `${clickedEventNum.date}T${clickedEventNum.startTime}Z`,
+      };
+      const response = await apiCall(
+        `/meeting-lists/${meetingId}/alternative-vote`,
+        "POST",
+        data,
+        true
+      );
+
+      switch (response.code) {
+        case 200:
+          alert(response.message);
+          break;
+        default:
+          alert(response.message);
+      }
     }
   };
 
@@ -165,12 +181,12 @@ const MeetingAlternativeView = ({
             initialDate={firstDate}
             events={data}
             eventClassNames={(arg) =>
-              arg.event._def.extendedProps.index === clickedEventNum
+              arg.event._def.extendedProps.index === clickedEventNum.index
                 ? [styles.selectedEvent] // 선택된 대인시간만 클래스를 부여
                 : []
             }
             eventContent={(arg) =>
-              arg.event._def.extendedProps.index === clickedEventNum ? (
+              arg.event._def.extendedProps.index === clickedEventNum.index ? (
                 <Check className={styles.checkButton} />
               ) : (
                 <button
