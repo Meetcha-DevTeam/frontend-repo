@@ -18,6 +18,7 @@
     align-items: center;
 
     padding: 1rem 1rem;
+    margin-bottom: 1rem;
 
     flex: 1;
     min-height: 0;
@@ -46,6 +47,8 @@
         color: #ff6200;
 
         font-family: InriaSerif;
+
+        cursor: pointer;
       }
     }
   }
@@ -54,10 +57,4 @@
 .active {
   background-color: #ff6200;
   color: white;
-}
-
-.writeButton {
-  position: fixed;
-  bottom: 103px;
-  right: 16px;
 }

@@ -1,24 +1,43 @@
-export interface MeetingDataType{
-    meeting_id:string;
-    title:string;
-    description: string|null;
-    duration_minutes:number|null;
-    deadline:string|null;
-    created_at:string;
-    meeting_status:"생성중"|"진행중"|"종료"|"실패";
-    confirmed_time: string|null;
-    meeting_code:string;
-    created_by:string;
-    project_id:string;
-
+export interface MeetingDataType {
+  meetingId: string; // UUID
+  title: string; // VARCHAR, NOT NULL
+  description: string | null; // TEXT, NULL 허용
+  durationMinutes: number | null; // INT, NULL 허용
+  deadline: string | null; // DATETIME (ISO 8601 형식), NULL 허용
+  createdAt: string; // DATETIME (ISO 8601 형식)
+  meetingStatus: "매칭 중" | "진행 중" | "완료" | "매칭 실패"; // ENUM 타입 지정
+  confirmedTime: string | null; // DATETIME (ISO 8601 형식), NULL 허용
 }
 
-export interface AlternativeScheduleDateType{
-    date:string;
-    startTime:string;
-    endTime: string;
-    availableNum: number;
-    totalNum:number;
-    failMembers:string[];
-    adjustedTime: string;
+export interface MeetingDetailType {
+  meetingId: string;
+  title: string;
+  description: string;
+  status: string;
+  deadline: string;
+  durationMinutes: number;
+  participants: Participant[];
+  finalSchedule: FinalSchedule;
+}
+
+export interface Participant {
+  participantId: string;
+  nickname: string;
+  profileImageUrl: string;
+}
+
+interface FinalSchedule {
+  type: "success" | "fail"; // 필요에 따라 union 확장
+  startAt: string; // ISO date string
+  endAt: string; // ISO date string
+}
+
+export interface AlternativeScheduleDataType {
+  date: string; // "YYYY/MM/DD"
+  startTime: string; // "HH:MM"
+  endTime: string; // "HH:MM"
+  availableNum: number;
+  totalNum: number;
+  failMembers: string[];
+  adjustedTime: string; // e.g., "2:30"
 }

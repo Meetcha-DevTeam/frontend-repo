@@ -1,0 +1,22 @@
+import { useEffect } from "react";
+import styles from "./ParticipantInfoPage.module.scss";
+import ParticipantInfoView from "./ParticipantInfoView";
+import type { Participant } from "@/types/meeting-data-type";
+
+interface Props {
+  participants: Participant[];
+}
+
+const ParticipantInfoPage = ({ participants }: Props) => {
+  useEffect(() => {
+    console.log("InfoPage:", participants);
+  }, []);
+  return (
+    <div className={styles.participantInfoPage}>
+      <div className={styles.participantInfoPage__title}>참여자 목록</div>
+      <ParticipantInfoView data={participants} />
+    </div>
+  );
+};
+
+export default ParticipantInfoPage;
