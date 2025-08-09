@@ -6,6 +6,8 @@ import LowChevron from "@/assets/LowChevron.svg";
 
 import Plus from "@/assets/plus.svg";
 
+import { useAPIs2 } from "@/apis/useAPIs2";
+
 const Project_container = ({ projectsAll, projectId, setProjectId }) => {
   const [chosenProject, setChosenProject] = useState<string>("");
   const [chosenProjectTextColor, setChosenProjectTextColor] =
@@ -21,7 +23,21 @@ const Project_container = ({ projectsAll, projectId, setProjectId }) => {
   }, [projectsAll]);
   //여기서 새로 생성된 프로젝트는 id또한 가져야함
   //id는 랜덤의 값으로 하나 부여 data()함수 사용
+
+  const newProjectName = {
+    name: newProject,
+  };
+
+  const {
+    response: postNewMeeting,
+    loading,
+    error,
+    fire,
+  } = useAPIs2(`/projects/create`, "POST", newProjectName, true, true);
+
   const updateProjectsAll = () => {
+    fire();
+    console.log(postNewMeeting);
     const trimmedName = newProject.trim();
     if (!trimmedName) return;
 
@@ -30,14 +46,13 @@ const Project_container = ({ projectsAll, projectId, setProjectId }) => {
       return;
     }
 
-    const newId = `local-${Date.now()}`;
-
-    const newItem = {
-      projectId: newId,
-      projectName: newProject,
-    };
-
-    setProjectList([...projectList, newItem]);
+    setProjectList([
+      ...projectList,
+      {
+        projectId: postNewMeeting.data.projectId,
+        projectName: postNewMeeting.data.name,
+      },
+    ]);
     setNewProject("");
   };
 
