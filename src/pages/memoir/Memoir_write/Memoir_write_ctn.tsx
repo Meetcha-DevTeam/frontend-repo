@@ -38,7 +38,7 @@ const Memoir_write_ctn = () => {
 
 
   console.log(projectsAll);
-
+  console.log(meeting);
   const navigate = useNavigate();
  
   const data = {
@@ -62,18 +62,19 @@ const Memoir_write_ctn = () => {
     true,
     true
   );
-  console.log(postResponse);
+  
   const handleSubmitBtnClick = () => {
     if (!meeting?.meetingId) {
       alert("미팅 정보가 없습니다.");
       return;
     }
-
+    navigate("/memoir");
     postReflection();
-    console.log(meeting);
-    console.log(role.length, role);
-    console.log(data);
-    console.log(meeting?.meetingId);
+    
+    // console.log(meeting);
+    // console.log(role.length, role);
+    // console.log(data);
+    // console.log(meeting?.meetingId);
   };
 
   useEffect(() => {
