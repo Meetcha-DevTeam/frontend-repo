@@ -1,8 +1,5 @@
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import "./Calendar.scss";
-import styles from "./MonthlyScheduleView.module.scss";
-import { useAPIs } from "@/apis/useAPIs";
 import EventTagBox from "./EventTagBox";
 import { dateFormatter } from "@/utils/dateFormatter";
 
@@ -11,16 +8,20 @@ interface Props {
 }
 
 const MonthlyScheduleView = ({ schedules }: Props) => {
+  // console.log(schedules);
   return (
-    <div className={styles.monthlyScheduleView}>
+    <div className="monthlyScheduleView">
       <Calendar
         tileContent={({ date, view }) => {
           const eventName = new Array();
 
           schedules &&
-            schedules.map((user) => {
-              if (user.date === dateFormatter(date)) {
-                eventName.push(user.scheduleName);
+            schedules.map((schedule) => {
+              const date1 = dateFormatter(new Date(schedule.startAt)); // 서버에서 받아온 일정의 날짜
+              const date2 = dateFormatter(new Date(date));
+
+              if (date1 === date2) {
+                eventName.push(schedule.title);
               }
             });
           return <EventTagBox eventName={eventName} />;

@@ -15,13 +15,11 @@ export const useAPIs = (
   const [trigger, setTrigger] = useState(false); // 실행 트리거
 
   const access_token = sessionStorage.getItem("access-token");
-  
+
   useEffect(() => {
     if (manual && !trigger) return;
-    
     const fetchData = async () => {
       try {
-        
         const res = await fetch(`${API_BASE}${path}`, {
           method: method,
           headers: {
@@ -30,19 +28,17 @@ export const useAPIs = (
           },
           ...(data && { body: JSON.stringify(data) }),
         });
-        
+
         const jsonData = await res.json();
-       
+        console.log(jsonData);
         setResponse(jsonData);
-      
       } catch (e: any) {
         setError(e.message);
       } finally {
         setLoading(false);
       }
-  
     };
-    
+
     fetchData();
   }, [trigger, path, method, JSON.stringify(data)]); // trigger 변화 시 실행
   console.log("access_token:", access_token);

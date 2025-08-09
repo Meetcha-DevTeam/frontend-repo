@@ -38,7 +38,6 @@ const Continue_Google = () => {
     console.log("API 응답:", response);
     console.log("API 오류:", error); // ✅ 에러 메시지 확인
     if (response?.success) {
-      console.log("로그인 성공");
       sessionStorage.setItem("access-token", response.data.accessToken);
       navigate("/login_complete");
     } else if (response && !response.isSuccess) {

@@ -5,26 +5,37 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/react": "^6.1.18",
+    "@fullcalendar/timegrid": "^6.1.18",
+    "@react-oauth/google": "^0.12.2",
+    "@types/node": "^24.0.7",
+    "date-fns": "^4.1.0",
+    "devextreme": "24.2.8",
+    "devextreme-react": "24.2.8",
+    "framer-motion": "^12.23.6",
     "@fullcalendar/core": "^6.1.18",
     "@fullcalendar/interaction": "^6.1.18",
-    "@fullcalendar/react": "^6.1.18",
-    "@react-oauth/google": "^0.12.2",
     "dayjs": "^1.11.13",
     "fullcalendar": "^6.1.18",
     "localforage": "^1.10.0",
     "luxon": "^3.7.1",
     "match-sorter": "^8.0.3",
+    "msw": "^2.10.4",
     "react": "^19.1.0",
     "react-big-calendar": "^1.19.4",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "react-mobile-picker": "^1.1.2",
     "react-router-dom": "^7.6.3",
     "sort-by": "^0.0.2",
+    "swiper": "^11.2.10",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -43,6 +54,9 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",
     "vite-plugin-svgr": "^4.3.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.45.1"
   },
   "msw": {
     "workerDirectory": [
