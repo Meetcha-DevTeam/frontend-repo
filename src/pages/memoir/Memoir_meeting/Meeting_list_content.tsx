@@ -53,7 +53,7 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
               onClick={() => handleClick(meeting)}
             >
               <div className="meeting_intro">
-                <div className="meeting_study">{meeting.projectName}</div>
+                <div className="meeting_study">{meeting.projectName??"프로젝트 없음"}</div>
                 <p className="meeting_date">{meeting.confirmedTime}</p>
               </div>
               <div className="meeting_main">
