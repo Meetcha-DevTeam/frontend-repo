@@ -4,6 +4,12 @@
   button {
     all: unset;
   }
+  
+}
+*.ellipsis {
+  white-space: nowrap;      /* 줄바꿈 방지 */
+  overflow: hidden;         /* 넘치는 부분 숨기기 */
+  text-overflow: ellipsis;  /* 말줄임표(...) 표시 */
 }
 
 .meeting_summary_ctn {
