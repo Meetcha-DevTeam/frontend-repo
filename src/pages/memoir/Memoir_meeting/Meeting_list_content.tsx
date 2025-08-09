@@ -38,34 +38,43 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
   useEffect(() => {
     if (chosenMemoir && chosenMemoir.success) {
       navigate("/memoir-complete", { state: chosenMemoir });
-      
     }
   }, [chosenMemoir]);
 
   return (
     <div className="meetings_ctn">
       {Array.isArray(meetingLists) &&
-        meetingLists.map((meeting) => {
-          return (
-            <div
-              key={meeting.meetingId}
-              className="meeting_ctn"
-              onClick={() => handleClick(meeting)}
-            >
-              <div className="meeting_intro">
-                <div className="meeting_study">{meeting.projectName??"프로젝트 없음"}</div>
-                <p className="meeting_date">{meeting.confirmedTime}</p>
+        [...meetingLists]
+          .sort(
+            (a, b) =>
+              new Date(a.confirmedTime).getTime() -
+              new Date(b.confirmedTime).getTime()
+          )
+          .map((meeting) => {
+            return (
+              <div
+                key={meeting.meetingId}
+                className="meeting_ctn"
+                onClick={() => handleClick(meeting)}
+              >
+                <div className="meeting_intro">
+                  <div className="meeting_study">
+                    {meeting.projectName ?? "프로젝트 없음"}
+                  </div>
+                  <p className="meeting_date">{meeting.confirmedTime}</p>
+                </div>
+                <div className="meeting_main">
+                  <p className="meeting_title">{meeting.title}</p>
+                </div>
+                <div className="meeting_last">
+                  <p className="meeting_lastWeekDone">
+                    {meeting.completedWork}
+                  </p>
+                  <p className="meeting_nextWeekDone">{meeting.plannedWork}</p>
+                </div>
               </div>
-              <div className="meeting_main">
-                <p className="meeting_title">{meeting.title}</p>
-              </div>
-              <div className="meeting_last">
-                <p className="meeting_lastWeekDone">{meeting.completedWork}</p>
-                <p className="meeting_nextWeekDone">{meeting.plannedWork}</p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
     </div>
   );
 };
