@@ -3,15 +3,20 @@ import styles from "./SchedulePage.module.scss";
 import MonthlyScheduleView from "./monthly_schedule/MonthlyScheduleView";
 import WeeklyScheduleView from "./weekly_schedule/WeeklyScheduleView";
 import { useScheduleStore } from "@/store/scheduleStore";
+import { getMonth, getYear } from "date-fns";
 
 const SchedulePage = () => {
   const [viewNum, setViewNum] = useState<number>(0);
   const schedules = useScheduleStore((state) => state.scheduleList);
   const fetchSchedules = useScheduleStore((state) => state.fetchSchedules);
+  const [fetchStandardDate, setFetchStandardDate] = useState<string>(
+    `${getYear(new Date())} ${getMonth(new Date()) + 1}`
+  ); // 달이 바뀔 때 api 호출을 위한 month 상태 변수
 
   useEffect(() => {
-    fetchSchedules();
-  }, []);
+    console.log(fetchStandardDate);
+    fetchSchedules(fetchStandardDate);
+  }, [fetchStandardDate]);
   return (
     <div className={styles.schedulePage}>
       <div className={styles.schedulePage__viewBox}>
@@ -38,9 +43,9 @@ const SchedulePage = () => {
           </div>
         </div>
         {viewNum === 0 ? (
-          <MonthlyScheduleView schedules={schedules} />
+          <MonthlyScheduleView schedules={schedules} setFetchStandardDate={setFetchStandardDate} />
         ) : (
-          <WeeklyScheduleView schedules={schedules} />
+          <WeeklyScheduleView schedules={schedules} setFetchStandardDate={setFetchStandardDate} />
         )}
       </div>
     </div>
