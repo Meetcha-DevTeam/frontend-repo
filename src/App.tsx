@@ -31,8 +31,9 @@ const App = () => {
         <Route path="/" element={<BackgroundPage />}>
           <Route index path="schedule" element={<SchedulePage />} />
           <Route path="meeting" element={<MeetingPage />} />
+          <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
         </Route>
-        <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
+        
         <Route index path="/memoir-write" element={<Memoir_write_ctn />}></Route>
         <Route index path="/memoir-complete" element={<Memoir_complete_ctn />}></Route>
         <Route index path="/timetable" element={<Participate_timetable_ctn />}></Route>

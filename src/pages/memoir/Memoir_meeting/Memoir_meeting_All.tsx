@@ -63,6 +63,7 @@ const Memoir_meeting_All = () => {
         meetingLists={Array.isArray(meetingLists.data) ? meetingLists.data : []}
         memoirLists={Array.isArray(memoirLists?.data) ? memoirLists.data : []}
       />
+      
     </>
   );
 };
