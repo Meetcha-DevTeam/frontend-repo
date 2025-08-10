@@ -18,7 +18,7 @@ const Mymeeting_summary = ({ meetingLists,memoirLists }) => {
 
    
     /* 1) 미팅 건수 */
-    setMeetingCount(meetingLists.length);
+    setMeetingCount(meetingLists.length+memoirLists.length);
 
     /* 2) 주요 역할 */
    

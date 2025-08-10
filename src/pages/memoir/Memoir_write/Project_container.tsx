@@ -8,11 +8,16 @@ import Plus from "@/assets/plus.svg";
 
 import { useAPIs2 } from "@/apis/useAPIs2";
 
-const Project_container = ({ projectsAll, projectId, setProjectId }) => {
+const Project_container = ({
+  projectsAll,
+  projectId,
+  setProjectId,
+  chosenProjectBgColor,
+  chosenProjectTextColor,
+  setChosenProjectBgColor,
+  setChosenProjectTextColor,
+}) => {
   const [chosenProject, setChosenProject] = useState<string>("");
-  const [chosenProjectTextColor, setChosenProjectTextColor] =
-    useState<string>("");
-  const [chosenProjectBgColor, setChosenProjectBgColor] = useState<string>("");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [newProject, setNewProject] = useState<string>("");

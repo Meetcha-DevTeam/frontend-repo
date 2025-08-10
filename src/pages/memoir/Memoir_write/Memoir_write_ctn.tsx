@@ -18,6 +18,16 @@ const Memoir_write_ctn = () => {
   const [todo, setTodo] = useState<string>("");
   const [projectId, setProjectId] = useState<string>("");
 
+  const [chosenProjectTextColor, setChosenProjectTextColor] =
+    useState<string>("");
+  const [chosenProjectBgColor, setChosenProjectBgColor] = useState<string>("");
+
+  const [chosenProjectColorInfo, setChosenProjectColorInfo] = useState({
+    projectId: projectId,
+    bgColor: chosenProjectBgColor,
+    textColor: chosenProjectTextColor,
+  });
+
   const location = useLocation();
   const { meeting } = location.state || {};
   const isReadyToSubmit = !!(
@@ -36,11 +46,10 @@ const Memoir_write_ctn = () => {
     fire,
   } = useAPIs2("/user/projects", "GET", undefined, true, false);
 
-
   console.log(projectsAll);
   console.log(meeting);
   const navigate = useNavigate();
- 
+
   const data = {
     contribution: Number(contribution),
     role: role.trim(),
@@ -62,15 +71,15 @@ const Memoir_write_ctn = () => {
     true,
     true
   );
-  
+
   const handleSubmitBtnClick = () => {
     if (!meeting?.meetingId) {
       alert("미팅 정보가 없습니다.");
       return;
     }
-    navigate("/memoir");
+    navigate("/memoir",{state:chosenProjectColorInfo});
     postReflection();
-    
+
     // console.log(meeting);
     // console.log(role.length, role);
     // console.log(data);
@@ -104,6 +113,10 @@ const Memoir_write_ctn = () => {
           projectId={projectId}
           setProjectId={setProjectId}
           meeting={meeting}
+          chosenProjectTextColor={chosenProjectTextColor}
+          setChosenProjectTextColor={setChosenProjectTextColor}
+          chosenProjectBgColor={chosenProjectBgColor}
+          setChosenProjectBgColor={setChosenProjectBgColor}
         />
       </div>
 
