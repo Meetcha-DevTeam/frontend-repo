@@ -22,11 +22,13 @@ const Memoir_write_ctn = () => {
     useState<string>("");
   const [chosenProjectBgColor, setChosenProjectBgColor] = useState<string>("");
 
-  const [chosenProjectColorInfo, setChosenProjectColorInfo] = useState({
+  const chosenProjectColorInfo = {
     projectId: projectId,
     bgColor: chosenProjectBgColor,
     textColor: chosenProjectTextColor,
-  });
+  };
+
+  console.log(chosenProjectColorInfo);
 
   const location = useLocation();
   const { meeting } = location.state || {};
@@ -88,7 +90,7 @@ const Memoir_write_ctn = () => {
 
   useEffect(() => {
     if (postResponse?.isSuccess) {
-      navigate("/memoir");
+      navigate("/memoir",{state:chosenProjectColorInfo});
     }
   }, [postResponse]);
 
