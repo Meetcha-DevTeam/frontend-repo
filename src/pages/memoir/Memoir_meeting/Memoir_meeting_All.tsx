@@ -26,6 +26,7 @@ const Memoir_meeting_All = () => {
 
   let chosenProjectColorInfos=[];
   chosenProjectColorInfos.push(chosenProjectColorInfo);
+  console.log(chosenProjectColorInfo);
   console.log(chosenProjectColorInfos);
   
   useEffect(() => {
