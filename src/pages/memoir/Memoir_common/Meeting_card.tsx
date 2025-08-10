@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./Meeting_card.scss"
+import "./Meeting_card.scss";
 import LowChevron from "@assets/LowChevron.svg";
 
 const Meeting_card = ({ meeting }) => {
@@ -21,14 +21,15 @@ const Meeting_card = ({ meeting }) => {
     <div className="study_info">
       <div className="spare_ctn"></div>
       <div className="study_banner_ctn">
-         {/* <div className="project_name">
+        <div className="project_name">
           <div className="p_container">
-            <p>{meeting.projectName}</p>
+            <p>{meeting.projectName??
+              "프로젝트 없음"}</p>
           </div>
-        </div>  */}
+        </div>
         <p>{meeting.title}</p>
         <p>{meeting.confirmedTime}</p>
-       
+
         <div
           className="description"
           ref={descRef}

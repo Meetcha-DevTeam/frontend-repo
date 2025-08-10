@@ -18,13 +18,14 @@ const Memoir_write_main = ({
   setTodo,
   projectId,
   setProjectId,
-  meeting//meetingid받기위해서...
+  chosenProjectBgColor,
+  chosenProjectTextColor,
+  setChosenProjectBgColor,
+  setChosenProjectTextColor,
+  meeting, //meetingid받기위해서...
 }) => {
-  
+  const navigate = useNavigate();
 
-
-  const navigate=useNavigate();
-  
   return (
     <div className="main_ctn">
       <div className="meeting_card_ctn">
@@ -88,7 +89,15 @@ const Memoir_write_main = ({
           onChange={(e) => setTodo(e.target.value)}
         />
       </div>
-      <Project_container projectsAll={projectsAll} projectId={projectId} setProjectId={setProjectId} />
+      <Project_container
+        projectsAll={projectsAll}
+        projectId={projectId}
+        setProjectId={setProjectId}
+        chosenProjectBgColor={chosenProjectBgColor}
+        chosenProjectTextColor={chosenProjectTextColor}
+        setChosenProjectTextColor={setChosenProjectTextColor}
+        setChosenProjectBgColor={setChosenProjectBgColor}
+      />
     </div>
   );
 };

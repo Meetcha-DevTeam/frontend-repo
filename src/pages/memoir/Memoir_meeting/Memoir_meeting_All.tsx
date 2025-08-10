@@ -3,22 +3,30 @@ import Memoir_meeting_ctn from "./Memoir_meeting_ctn";
 import Memoir_bottom_fixed from "../Memoir_common/Memoir_bottom_fixed";
 
 import { useAPIs2 } from "@/apis/useAPIs2";
+import { useLocation } from "react-router-dom";
 
 const Memoir_meeting_All = () => {
   const userId = 3;
   const {
     response: meetingLists,
-    loading:meetingLoading,
-    error:meetingError,
+    loading: meetingLoading,
+    error: meetingError,
     fire: execMeetingAll,
   } = useAPIs2(`/meeting-lists/need-reflection`, "GET", undefined, true, false);
 
   const {
     response: memoirLists,
-    loading:memoirLoading,
-    error:memoirError,
+    loading: memoirLoading,
+    error: memoirError,
     fire: execMemoirAll,
   } = useAPIs2(`/meeting/reflections`, "GET", undefined, true, false);
+
+  const location = useLocation();
+  const { chosenProjectColorInfo } = location.state || {};
+
+  let chosenProjectColorInfos=[];
+  chosenProjectColorInfos.push(chosenProjectColorInfo);
+  console.log(chosenProjectColorInfos);
   
   useEffect(() => {
     execMeetingAll();
@@ -27,7 +35,7 @@ const Memoir_meeting_All = () => {
 
   //여기서 meetingLists중 meeting_status가 "종료인것만 남긴다."
 
-  if ((meetingLoading || memoirLoading)) {
+  if (meetingLoading || memoirLoading) {
     return (
       <>
         <p style={{ textAlign: "center", marginTop: "2rem" }}>⌛ 로딩 중…</p>
