@@ -15,8 +15,8 @@ interface Props {
 
 const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => {
   const [meetingTitle, setMeetingTitle] = useState<string>("");
-  const [meetingDescription, setMeetingDescription] = useState<string>();
-  const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>();
+  const [meetingDescription, setMeetingDescription] = useState<string>("");
+  const [meetingCandidateDates, setMeetingCandidateDates] = useState<string[]>([]);
   const [durationMinutes, setDurationMinutes] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
   const [projectData, setProjectData] = useState<string>("");
@@ -70,12 +70,12 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   };
 
   const deadlineParse = (deadline) => {
+    console.log(deadline);
     const [date, time] = deadline?.split("T");
     const [hour, minute] = time?.split(":");
     const paddedTime = hour?.padStart(2, "0") + ":" + minute;
     return date + "T" + paddedTime;
   };
-
   //
   useEffect(() => {
     if (
@@ -86,7 +86,6 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
       deadline &&
       projectData
     ) {
-      console.log("ㅇㅇㅇ");
       setAllDataReserved(true);
       setCompleteData({
         title: meetingTitle,
