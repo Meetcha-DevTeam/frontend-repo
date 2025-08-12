@@ -57,7 +57,6 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
           <TimePicker
             onChange={(item) => {
               (dataSetter as React.Dispatch<React.SetStateAction<string>>)((prev) => {
-                console.log("prev:", prev);
                 if (!prev) {
                   // 초기의 빈 문자열인 경우
                   return item;
@@ -93,7 +92,6 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       return data.join(", ");
     }
     if (type === 3 && data && data.includes("T")) {
-      console.log("data:", data);
       const [date, time] = data?.split("T");
       return `${date} ${time}`;
     }
