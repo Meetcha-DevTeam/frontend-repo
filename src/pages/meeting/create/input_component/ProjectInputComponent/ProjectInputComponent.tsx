@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 import styles from "./ProjectInputComponenet.module.scss";
 import { useEffect, useRef, useState } from "react";
 import Plus from "@assets/plus.svg?react";

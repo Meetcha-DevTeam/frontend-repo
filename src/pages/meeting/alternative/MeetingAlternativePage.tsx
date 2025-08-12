@@ -2,7 +2,7 @@ import TopNav from "@/components/TopNav";
 import styles from "./MeetingAlternativePage.module.scss";
 import MeetingAlternativeView from "./MeetingAlternativeView";
 import { useEffect, useState } from "react";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 import { useParams } from "react-router-dom";
 import type { AlternativeScheduleDataType } from "@/types/meeting-data-type";
 

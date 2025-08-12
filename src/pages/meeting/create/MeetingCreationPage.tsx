@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import TopNav from "@/components/TopNav";
 import MeetingCreationView from "./MeetingCreationView";
 import { useEffect, useState } from "react";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 
 export interface MeetingSendData {
   title: string;

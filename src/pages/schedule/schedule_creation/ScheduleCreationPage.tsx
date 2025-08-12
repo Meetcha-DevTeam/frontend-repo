@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 import styles from "./ScheduleCreationPage.module.scss";
 import ScheduleCreationView from "./ScheduleCreationView";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 import type { ScheduleDataType } from "@/types/schedule-data-type";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 

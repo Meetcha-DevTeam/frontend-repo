@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MeetingDetailRow.module.scss";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 import { AnimatePresence, motion } from "framer-motion";
 import ParticipantInfoPage from "../participant/ParticipantInfoPage";
 import ReactDOM from "react-dom";

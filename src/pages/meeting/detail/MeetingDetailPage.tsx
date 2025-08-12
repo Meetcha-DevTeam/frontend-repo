@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import MeetingDetailView from "./MeetingDetailView";
 import Button from "@/components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 import type { MeetingDetailType } from "@/types/meeting-data-type";
 
 const MeetingDetailPage = () => {
