@@ -11,7 +11,7 @@ import Loading from "@/components/Loading/Loading";
 import Check from "@assets/check.svg?react";
 import ReactDOM from "react-dom";
 import type { AlternativeScheduleDataType } from "@/types/meeting-data-type";
-import { apiCall } from "@/utils/apiCall";
+import { apiCall } from "@/apis/apiCall";
 
 interface EventInput {
   title?: string;
