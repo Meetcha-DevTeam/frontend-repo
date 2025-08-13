@@ -9,8 +9,8 @@ const MeetingPage = () => {
   const fetchMeetings = useMeetingStore((state) => state.fetchMeetings);
 
   useEffect(() => {
-    const userId = 3;
-    fetchMeetings(userId);
+    fetchMeetings();
+    console.log("meetings: ", meetings);
   }, []);
 
   return (

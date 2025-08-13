@@ -5,7 +5,7 @@ export interface MeetingDataType {
   durationMinutes: number | null; // INT, NULL 허용
   deadline: string | null; // DATETIME (ISO 8601 형식), NULL 허용
   createdAt: string; // DATETIME (ISO 8601 형식)
-  meetingStatus: "매칭 중" | "진행 중" | "완료" | "매칭 실패"; // ENUM 타입 지정
+  meetingStatus: "MATCHING" | "ONGOING" | "DONE" | "MATCH_FAILED" | "BEFORE"; // ENUM 타입 지정
   confirmedTime: string | null; // DATETIME (ISO 8601 형식), NULL 허용
 }
 
@@ -40,4 +40,8 @@ export interface AlternativeScheduleDataType {
   excludedUserNames: string[];
   adjustedDurationMinutes: number;
   checked: boolean;
+}
+
+export interface AlternativeDataObj {
+  alternativeTimes: AlternativeScheduleDataType[];
 }
