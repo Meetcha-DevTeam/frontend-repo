@@ -22,16 +22,9 @@ const Memoir_write_ctn = () => {
     useState<string>("");
   const [chosenProjectBgColor, setChosenProjectBgColor] = useState<string>("");
 
-  const chosenProjectColorInfo = {
-    projectId: projectId,
-    bgColor: chosenProjectBgColor,
-    textColor: chosenProjectTextColor,
-  };
-
-  console.log(chosenProjectColorInfo);
-
   const location = useLocation();
   const { meeting } = location.state || {};
+
   const isReadyToSubmit = !!(
     contribution &&
     role &&
@@ -50,6 +43,7 @@ const Memoir_write_ctn = () => {
 
   console.log(projectsAll);
   console.log(meeting);
+
   const navigate = useNavigate();
 
   const data = {
@@ -61,6 +55,7 @@ const Memoir_write_ctn = () => {
     ...(projectId && { projectId: projectId }),
   };
   console.log(meeting.meetingId);
+
   const {
     response: postResponse,
     loading: postLoading,
@@ -79,7 +74,7 @@ const Memoir_write_ctn = () => {
       alert("미팅 정보가 없습니다.");
       return;
     }
-    navigate("/memoir",{state:chosenProjectColorInfo});
+
     postReflection();
 
     // console.log(meeting);
@@ -90,9 +85,14 @@ const Memoir_write_ctn = () => {
 
   useEffect(() => {
     if (postResponse?.isSuccess) {
-      navigate("/memoir",{state:chosenProjectColorInfo});
+      navigate("/memoir", {
+        replace: true,
+        state: {
+          refetchMemoirs: true,
+        },
+      });
     }
-  }, [postResponse]);
+  }, [postResponse, navigate, meeting?.meetingId]);
 
   if (loading) return <p>⌛ 프로젝트 목록 불러오는 중...</p>;
   if (error) return <p>❌ 프로젝트 목록 불러오기 실패: {error}</p>;

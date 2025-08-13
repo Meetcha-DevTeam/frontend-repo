@@ -6,10 +6,24 @@ import Top_banner from "../common/Top_banner";
 
 import { useAPIs2 } from "@/apis/useAPIs2";
 import { useAPIs } from "@/apis/useAPIs";
+import { apiCall } from "@/utils/apiCall";
 //여기서 meetingcode를 가진 meetingdata를 불러와야함
 //msw사용
 
+interface MeetingData {
+  meetingId: string;
+  title: string;
+  description: string;
+  deadline: string;
+  isClosed: boolean;
+}
 
+interface aboutMeeting {
+  isSuccess: boolean;
+  code: number;
+  message: string;
+  data: MeetingData;
+}
 
 const Participate_link = () => {
   const top_text = "미팅 참가";
@@ -20,51 +34,61 @@ const Participate_link = () => {
   const handletextchange = (e) => {
     setLinkText(e.target.value);
   };
+  const debugMeetingCode = async (raw: string) => {
+    const codeUpper = raw.trim().toUpperCase();
+    const codeRaw = raw.trim();
 
-  const {
-    response: aboutMeeting,
-    loading,
-    error,
-    fire
-  } = useAPIs(
-    `/participate_list`,
-    "GET",
-    undefined,
-    false,
-    true
-  );
+    const paths = [
+      `/meeting/code/${encodeURIComponent(codeRaw)}`, // 단수 + 원본
+      `/meeting/code/${encodeURIComponent(codeUpper)}`, // 단수 + 대문자
+      `/meetings/code/${encodeURIComponent(codeRaw)}`, // 복수 + 원본
+      `/meetings/code/${encodeURIComponent(codeUpper)}`, // 복수 + 대문자
+    ];
 
-  const handleLinkCheck = () => {
-  if (!linkText.trim()) return;
-  fire(); // → 응답 도착하면 useEffect에서 처리
-};
+    for (const p of paths) {
+      for (const auth of [false, true]) {
+        try {
+          const res = await apiCall(p, "GET", undefined, auth);
+          console.log(`[OK] url=${p} withAuth=${auth}`, res);
+        } catch (e) {
+          console.log(`[ERR] url=${p} withAuth=${auth}`, e);
+        }
+      }
+    }
+  };
 
-// 🔄 aboutMeeting 이 변경될 때 검사
-useEffect(() => {
-  if (!aboutMeeting || !Array.isArray(aboutMeeting)) return;
+  const requestLinkCheck = async () => {
+    debugMeetingCode;
+    const code = linkText.trim(); // 공백 제거
+    if (!code) return; // 빈 값 방지
 
-  const foundMeeting = aboutMeeting.find(
-    (meeting) => meeting?.data?.meetingCode === linkText
-  );
+    try {
+      const res = await apiCall(
+        `/meeting/code/${encodeURIComponent(code)}`, // ← 복수형 + 슬러그
+        "GET",
+        undefined,
+        true // 인증 필요
+        // ← GET이므로 data 인자 넣지 않음!
+      );
 
-  if (!foundMeeting) {
-    navigate("/error");
-    return;
-  }
-
-  if (foundMeeting.code === 410) {
-    navigate("/complete");
-  } else if (foundMeeting.code === 200) {
-    navigate("/timetable", {
-      state: {
-        sendAboutMeeting: foundMeeting,
-      },
-    });
-  } else {
-    navigate("/error");
-  }
-}, [aboutMeeting]);
-
+      if (!res) return;
+      
+      if (res.code === 410) {
+        navigate("/complete");
+      } else if (res.code === 200) {
+        navigate("/timetable", { state: { sendAboutMeeting: res } });
+      } else {
+        // 404 등
+        navigate("/error");
+      }
+    } catch (e) {
+      // 500 등 서버 에러
+      navigate("/error");
+    }
+  };
+ 
+  // 사용: 버튼 클릭 전에 일단 한 번 호출
+  // debugMeetingCode(linkText);
 
   return (
     <div className="partici_link_ctn">
@@ -86,7 +110,7 @@ useEffect(() => {
       </div>
 
       <div className="button_ctn">
-        <button className="button" onClick={handleLinkCheck}>
+        <button className="button" onClick={requestLinkCheck}>
           <div className="button_p_ctn">
             <p>다음</p>
           </div>

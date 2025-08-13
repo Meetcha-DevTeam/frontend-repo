@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Meeting_card from "../Memoir_common/Meeting_card";
 import Project_container from "./Project_container";
@@ -26,11 +26,29 @@ const Memoir_write_main = ({
 }) => {
   const navigate = useNavigate();
 
+  const [chosenProject, setChosenProject] = useState<string>("");
+  
+  useEffect(() => {
+  if (meeting?.projectId) {
+    setProjectId(meeting.projectId);   // 페이지 진입/meeting 로드 시 1회 반영
+  }
+}, [meeting?.projectId]);
+
+  useEffect(() => {
+    setChosenProject(meeting?.projectName ?? "");
+  }, [meeting?.projectName]);
+
   return (
     <div className="main_ctn">
       <div className="meeting_card_ctn">
         <p className="write_title">작성할 회의</p>
-        <Meeting_card meeting={meeting} />
+        <Meeting_card
+          chosenProject={chosenProject}
+          setChosenProject={setChosenProject}
+          chosenProjectBgColor={chosenProjectBgColor}
+          chosenProjectTextColor={chosenProjectTextColor}
+          meeting={meeting}
+        />
       </div>
       <div className="contribution_role">
         <div className="ctn_in_common contribution">
@@ -97,6 +115,9 @@ const Memoir_write_main = ({
         chosenProjectTextColor={chosenProjectTextColor}
         setChosenProjectTextColor={setChosenProjectTextColor}
         setChosenProjectBgColor={setChosenProjectBgColor}
+        meeting={meeting}
+        chosenProject={chosenProject}
+        setChosenProject={setChosenProject}
       />
     </div>
   );
