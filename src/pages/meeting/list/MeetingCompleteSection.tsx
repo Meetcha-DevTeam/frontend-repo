@@ -4,7 +4,7 @@ import type { MeetingDataType } from "@/types/meeting-data-type";
 
 const MeetingCompleteSection = ({ meetingList }: { meetingList: MeetingDataType[] }) => {
   const completeDataList = meetingList?.filter((item) => {
-    return item.meetingStatus === "완료";
+    return item.meetingStatus === "DONE";
   });
 
   return (

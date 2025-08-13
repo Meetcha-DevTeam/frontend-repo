@@ -10,7 +10,7 @@ const MeetingIncompleteSection = ({ meetingList }: { meetingList: MeetingDataTyp
     setIncompleteMeetings(
       meetingList
         .filter((item: MeetingDataType) => {
-          return item.meetingStatus === "매칭 중" || item.meetingStatus === "매칭 실패";
+          return item.meetingStatus === "MATCHING" || item.meetingStatus === "MATCH_FAILED";
         })
         .sort((a, b) => a.meetingStatus.localeCompare(b.meetingStatus))
     );

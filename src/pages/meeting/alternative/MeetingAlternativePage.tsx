@@ -4,14 +4,20 @@ import MeetingAlternativeView from "./MeetingAlternativeView";
 import { useEffect, useState } from "react";
 import { apiCall } from "@/apis/apiCall";
 import { useParams } from "react-router-dom";
-import type { AlternativeScheduleDataType } from "@/types/meeting-data-type";
+import type { AlternativeScheduleDataType, AlternativeDataObj } from "@/types/meeting-data-type";
+import type { ApiResponse } from "@/apis/common/types";
 
 const MeetingAlternativePage = () => {
   const { id } = useParams();
   const [alternativeTimes, setAlternativeTimes] = useState<AlternativeScheduleDataType[]>([]);
 
   const fetchAlternativeTimes = async () => {
-    const response = await apiCall(`/meeting-lists/${id}/alternative-times`, "GET", null, true);
+    const response: ApiResponse<AlternativeDataObj> = await apiCall(
+      `/meeting-lists/${id}/alternative-times`,
+      "GET",
+      null,
+      true
+    );
     console.log("data:", response.data);
     switch (response.code) {
       case 200:
