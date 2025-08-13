@@ -31,7 +31,9 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
   // 2. 클릭 시 선택된 미팅 ID 저장 + fire 실행
   const handleClick = (meeting: any) => {
     setSelectedMeetingId(meeting.meetingId);
+
     fire();
+   
   };
 
   // 3. 회고 데이터 도착하면 이동
@@ -40,7 +42,7 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
       navigate("/memoir-complete", { state: chosenMemoir });
     }
   }, [chosenMemoir]);
-
+  console.log(meetingLists);
   return (
     <div className="meetings_ctn">
       {Array.isArray(meetingLists) &&
@@ -57,8 +59,14 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
                 className="meeting_ctn"
                 onClick={() => handleClick(meeting)}
               >
-                <div className="meeting_intro">
-                  <div className="meeting_study">
+                <div style={{}} className="meeting_intro">
+                  <div
+                    style={{
+                      color: meeting.theme?.text,
+                      backgroundColor: meeting.theme?.bg,
+                    }}
+                    className="meeting_study"
+                  >
                     {meeting.projectName ?? "프로젝트 없음"}
                   </div>
                   <p className="meeting_date">{meeting.confirmedTime}</p>

@@ -8,6 +8,8 @@ import Plus from "@/assets/plus.svg";
 
 import { useAPIs2 } from "@/apis/useAPIs2";
 
+import { getProjectTheme } from "@/utils/theme";
+
 const Project_container = ({
   projectsAll,
   projectId,
@@ -16,9 +18,10 @@ const Project_container = ({
   chosenProjectTextColor,
   setChosenProjectBgColor,
   setChosenProjectTextColor,
+  meeting,
+  chosenProject,
+  setChosenProject,
 }) => {
-  const [chosenProject, setChosenProject] = useState<string>("");
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [newProject, setNewProject] = useState<string>("");
 
@@ -63,55 +66,28 @@ const Project_container = ({
 
   const toggleBannerBox = () => setIsOpen(!isOpen);
 
-  const textColors = [
-    "#ED7014",
-    "#F98228",
-    "#FDAE1D",
-    "#BC2D02",
-    "#FC6B02",
-    "#DD5612",
-    "#B2560D",
-    "#FF9A66",
-    "#EF820E",
-    "#7F400B",
-    "#EC9706",
-    "#ED7117",
-    "#891E01",
-    "#891E01",
-  ];
-
-  const bgColors = [
-    "#E8CCB6",
-    "#F4EBE8",
-    "#F4EEE9",
-    "#FAD4B9",
-    "#FCF0EB",
-    "#FDDABF",
-    "#FDF2EA",
-    "#FDF4E9",
-    "#FDF6E8",
-    "#FFE4DB",
-    "#FFEEE3",
-    "#FFF2E8",
-    "#FFF4ED",
-    "#FFF8EB",
-  ];
-  //projectList에 내가 설정한(추가한)프로젝트 전부가 들어있음
-  const handleProjectClick = (project) => {
-    //여기서 projectId 설정해야한다.
-
-    setProjectId(project.projectId);
-  };
-
-  const handleChosenProject = (project, bgColor, textColor) => {
-    setChosenProject(project.projectName);
-    handleProjectClick(project);
-    setChosenProjectBgColor(bgColor);
-    setChosenProjectTextColor(textColor);
-  };
   useEffect(() => {
-    console.log("선택된 projectId:", projectId);
-  }, [projectId]);
+    if (!projectId) {
+      setChosenProject("");
+      setChosenProjectBgColor(undefined as any);
+      setChosenProjectTextColor(undefined as any);
+      return;
+    }
+    const p = projectList.find((x) => x.projectId === projectId);
+    if (p) {
+      const t = getProjectTheme(p.projectId);
+      setChosenProject(p.projectName);
+      setChosenProjectBgColor(t.bg);
+      setChosenProjectTextColor(t.text);
+    }
+  }, [
+    projectId,
+    projectList,
+    setChosenProject,
+    setChosenProjectBgColor,
+    setChosenProjectTextColor,
+  ]);
+
   return (
     <div className="ctn_in_common to_write_meeting">
       <p className="write_title">프로젝트</p>
@@ -149,25 +125,21 @@ const Project_container = ({
             <img src={Plus} alt="plus" onClick={updateProjectsAll}></img>
           </div>
           {projectList.map((project, index) => {
-            const bgColor = bgColors[index % bgColors.length];
-            const textColor = textColors[index % textColors.length];
-
+            const t = getProjectTheme(project.projectId);
             return (
               <div key={project.projectId} className="checkbox_ctn">
                 <input
                   className="study_checkbox"
                   type="radio"
                   name="project"
-                  checked={chosenProject === project.projectName}
-                  onChange={() =>
-                    handleChosenProject(project, bgColor, textColor)
-                  }
+                  checked={projectId == project.projectId}
+                  onChange={() => setProjectId(project.projectId)}
                 ></input>
                 <div
                   className="banner_name_ctn"
-                  style={{ backgroundColor: bgColor }}
+                  style={{ backgroundColor: t.bg }}
                 >
-                  <p className="banner_name" style={{ color: textColor }}>
+                  <p className="banner_name" style={{ color: t.text }}>
                     {project.projectName}
                   </p>
                 </div>
