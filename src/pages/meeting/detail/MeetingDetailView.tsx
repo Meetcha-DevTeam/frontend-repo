@@ -5,7 +5,6 @@ import Clock from "@assets/clock.svg?react";
 import People from "@assets/people-hollow.svg?react";
 import MeetingStateCard from "./MeetingStateCard";
 import MeetingInfoCard from "./MeetingInfoCard";
-import { completedMeetingDateFormatter } from "@/utils/dateFormatter";
 import type { MeetingDetail } from "@/apis/meeting/meetingTypes";
 
 const MeetingDetailView = ({ data }: { data: MeetingDetail }) => {

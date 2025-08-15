@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import styles from "./MeetingStateCard.module.scss";
 import RunningMatching from "@assets/runningMatching.svg?react";
 import CompletedMatching from "@assets/completedMatching.svg?react";
@@ -33,6 +33,7 @@ const MeetingStateCard = ({ meeting_status }: Props) => {
   };
 
   useEffect(() => {
+    console.log("ms:", meeting_status);
     stateResolver();
   }, [meeting_status]);
 

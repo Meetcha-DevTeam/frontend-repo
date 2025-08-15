@@ -4,7 +4,7 @@ import MeetingItemCard from "./MeetingItemCard";
 
 const MeetingCompleteSection = ({ meetingList }: { meetingList: Meeting[] }) => {
   const completeDataList = meetingList?.filter((item) => {
-    return item.meetingStatus === "DONE";
+    return item.meetingStatus === "BEFORE";
   });
 
   return (
