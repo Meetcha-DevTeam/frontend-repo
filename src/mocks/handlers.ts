@@ -44,7 +44,7 @@ export const handlers = [
             meetingId: "a8f2b6f7-43a7-4a83-b57e-7dc99c3a9d3d",
             title: "전공 기초 프로젝트",
             description: "1학년 전공 기초 팀 프로젝트를 위한 회의",
-            status: "IN_PROGRESS",
+            meetingStatus: "MATCHING",
             deadline: "2024-05-31T13:00:00+09:00",
             durationMinutes: 120,
             participants: [
@@ -76,7 +76,7 @@ export const handlers = [
             meetingId: "a8f2b6f7-43a7-4a83-b57e-7dc99c67cn13",
             title: "모바일 프로그래밍",
             description: "앱 개발 결과물 시연 및 피드백 회의",
-            status: "COMPLETE",
+            meetingStatus: "MATCHING",
             deadline: "2025-08-01T13:00:00+09:00",
             durationMinutes: 120,
             participants: [
@@ -108,7 +108,7 @@ export const handlers = [
             meetingId: "6c3d43e4-2de2-4bd7-8b92-5c1c2e3bc18e",
             title: "코딩 스터디",
             description: "알고리즘 문제풀이 정기 모임",
-            status: "MATCH_FAIL",
+            meetingStatus: "MATCH_FAILED",
             deadline: "2024-06-01T13:00:00+09:00",
             durationMinutes: 90,
             participants: [],
@@ -129,7 +129,7 @@ export const handlers = [
             meetingId: "6c3d1111-2de2-4bd7-8b92-5c1c2e3bc18e",
             title: "자바스크립트 스터디",
             description: "자바스크립트 심화 주제 스터디",
-            status: "IN_PROGRESS",
+            meetingStatus: "BEFORE",
             deadline: "2024-06-01T13:00:00+09:00",
             durationMinutes: 90,
             participants: [
@@ -173,7 +173,7 @@ export const handlers = [
           deadline: "2024-05-31T13:00:00+09:00",
           confirmedTime: "2024-05-27T13:00:00+09:00",
           durationMinutes: 120,
-          meetingStatus: "진행 중",
+          meetingStatus: "MATCHING",
         },
         {
           meetingId: "a8f2b6f7-43a7-4a83-b57e-7dc99c67cn13",
@@ -181,7 +181,7 @@ export const handlers = [
           deadline: "2025-08-01T13:00:00+09:00",
           confirmedTime: "2024-08-03T13:00:00+09:00",
           durationMinutes: 120,
-          meetingStatus: "완료",
+          meetingStatus: "MATCH_FAILED",
         },
         {
           meetingId: "6c3d43e4-2de2-4bd7-8b92-5c1c2e3bc18e",
@@ -189,7 +189,7 @@ export const handlers = [
           deadline: "2024-06-01T13:00:00+09:00",
           confirmedTime: null,
           durationMinutes: 90,
-          meetingStatus: "매칭 실패",
+          meetingStatus: "BEFORE",
         },
         {
           meetingId: "6c3d1111-2de2-4bd7-8b92-5c1c2e3bc18e",
