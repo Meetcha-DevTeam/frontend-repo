@@ -14,20 +14,17 @@ export const apiCall = async <T>(
     const res = await fetch(`${API_BASE}${path}`, {
       method: method,
       headers: {
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         ...(withAuth && { Authorization: `Bearer ${access_token}` }),
       },
       ...(data && { body: JSON.stringify(data) }),
     });
 
-    console.log("is this working?");
-
-    switch (res.status) {
-      case 200:
-        console.log("Api Call Success");
-        break;
-      default:
-        throw new Error(`${res.status} ${res.statusText}`);
+    if (res.ok) {
+      console.log(`Api Call Success: ${res.status} ${res.statusText}`);
+    } else {
+      console.error(`Api Call Failed: ${res.status} ${res.statusText}`);
+      throw new Error(`${res.status} ${res.statusText}`);
     }
 
     return res.json();

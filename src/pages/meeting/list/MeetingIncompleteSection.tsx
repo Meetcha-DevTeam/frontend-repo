@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styles from "./MeetingIncompleteSection.module.scss";
 import MeetingItemCard from "./MeetingItemCard";
-import type { MeetingDataType } from "@/types/meeting-data-type";
+import type { Meeting } from "@/apis/meeting/meetingTypes";
 
-const MeetingIncompleteSection = ({ meetingList }: { meetingList: MeetingDataType[] }) => {
-  const [incompleteMeetings, setIncompleteMeetings] = useState<MeetingDataType[]>([]);
+const MeetingIncompleteSection = ({ meetingList }: { meetingList: Meeting[] }) => {
+  const [incompleteMeetings, setIncompleteMeetings] = useState<Meeting[]>([]);
 
   useEffect(() => {
     setIncompleteMeetings(
       meetingList
-        .filter((item: MeetingDataType) => {
+        .filter((item: Meeting) => {
           return item.meetingStatus === "MATCHING" || item.meetingStatus === "MATCH_FAILED";
         })
         .sort((a, b) => a.meetingStatus.localeCompare(b.meetingStatus))
