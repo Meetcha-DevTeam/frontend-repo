@@ -1,8 +1,18 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./assets/styles/main.scss";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: "always", // 새로고침 시 무조건 refetch
+      staleTime: 0, // 캐시 즉시 stale
+      retry: 1,
+    },
+  },
+});
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = await import("./mocks/browser");
@@ -13,6 +23,8 @@ if (process.env.NODE_ENV === "development") {
 
 createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider clientId="124678612470-l0adtvcmdc1664nvmsovqoa7qtc0peoh.apps.googleusercontent.com">
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </GoogleOAuthProvider>
 );

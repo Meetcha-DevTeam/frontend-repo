@@ -11,7 +11,7 @@ export const apiCall = async <T>(
   const access_token = sessionStorage.getItem("access-token");
 
   try {
-    const res = await fetch(`${API_BASE}${path}`, {
+    const res = await fetch(`${path}`, {
       method: method,
       headers: {
         "Content-Type": "application/json",
