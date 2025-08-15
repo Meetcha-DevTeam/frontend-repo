@@ -23,7 +23,6 @@ const SchedulePage = () => {
 
   useEffect(() => {
     const force = reloadOnceRef.current;
-    console.log("데이터 페치", fetchStandardDate, force);
     fetchSchedules(fetchStandardDate, force);
     reloadOnceRef.current = false;
   }, [fetchStandardDate]);

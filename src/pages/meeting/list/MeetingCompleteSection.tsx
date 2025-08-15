@@ -1,8 +1,8 @@
+import type { Meeting } from "@/apis/meeting/meetingTypes";
 import styles from "./MeetingCompleteSection.module.scss";
 import MeetingItemCard from "./MeetingItemCard";
-import type { MeetingDataType } from "@/types/meeting-data-type";
 
-const MeetingCompleteSection = ({ meetingList }: { meetingList: MeetingDataType[] }) => {
+const MeetingCompleteSection = ({ meetingList }: { meetingList: Meeting[] }) => {
   const completeDataList = meetingList?.filter((item) => {
     return item.meetingStatus === "DONE";
   });

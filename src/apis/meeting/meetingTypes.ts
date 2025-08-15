@@ -5,7 +5,7 @@ export interface Meeting {
   durationMinutes: number | null;
   deadline: string | null;
   createdAt: string;
-  meetingStatus: "매칭 중" | "진행 중" | "완료" | "매칭 실패"; // ENUM 타입 지정
+  meetingStatus: "MATCHING" | "ONGOING" | "DONE" | "MATCH_FAILED" | "BEFORE";
   confirmedTime: string | null;
 }
 
@@ -13,11 +13,11 @@ export interface MeetingDetail {
   meetingId: string;
   title: string;
   description: string;
-  status: string;
   deadline: string;
   durationMinutes: number;
   participants: Participant[];
-  finalSchedule: FinalSchedule;
+  meetingStatus: "MATCHING" | "ONGOING" | "DONE" | "MATCH_FAILED" | "BEFORE";
+  confirmedTime: string;
 }
 
 export interface Participant {
@@ -26,13 +26,7 @@ export interface Participant {
   profileImageUrl: string;
 }
 
-interface FinalSchedule {
-  type: "success" | "fail";
-  startAt: string;
-  endAt: string;
-}
-
-export interface AlternativeSchedule {
+export interface AlternativeMeeting {
   startTime: string; // "HH:MM"
   endTime: string; // "HH:MM"
   availableNum: number;
@@ -43,5 +37,10 @@ export interface AlternativeSchedule {
 }
 
 export interface AlternativeObj {
-  alternativeTimes: AlternativeSchedule[];
+  alternativeTimes: AlternativeMeeting[];
+}
+
+export interface MeetingCreateResponse {
+  meetingId: string;
+  createdAt: string;
 }

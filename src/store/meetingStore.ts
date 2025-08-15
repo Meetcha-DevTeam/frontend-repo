@@ -1,9 +1,9 @@
-import { fetchMeetingList } from "@/apis/meeting/meetingfetcher";
-import type { MeetingDataType } from "@/types/meeting-data-type";
+import { fetchMeetingList } from "@/apis/meeting/meetingAPI";
+import type { Meeting } from "@/apis/meeting/meetingTypes";
 import { create } from "zustand";
 
 interface MeetingState {
-  meetingList: MeetingDataType[];
+  meetingList: Meeting[];
   fetchMeetings: () => void;
 }
 

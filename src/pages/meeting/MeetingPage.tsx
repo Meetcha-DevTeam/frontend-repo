@@ -10,7 +10,6 @@ const MeetingPage = () => {
 
   useEffect(() => {
     fetchMeetings();
-    console.log("meetings: ", meetings);
   }, []);
 
   return (
