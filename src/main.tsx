@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development") {
 }
 */
 createRoot(document.getElementById("root")!).render(
-  <GoogleOAuthProvider clientId="124678612470-l0adtvcmdc1664nvmsovqoa7qtc0peoh.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID!}>
     <App />
   </GoogleOAuthProvider>
 );
