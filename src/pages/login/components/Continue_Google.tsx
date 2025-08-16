@@ -8,7 +8,7 @@ const Continue_Google = () => {
   const navigate = useNavigate();
 
   // 배포/로컬 모두 자동 대응되는 콜백 URL
-  const redirectUri = `${window.location.origin}/oauth/google/callback`;
+  const redirectUri = `https://meetcha-frontend-deploy.vercel.app/schedule/oauth/google/callback`;
 
   // 1) URL에서 code 추출 (콜백 시에만 존재)
   const params = new URLSearchParams(window.location.search);
@@ -87,4 +87,3 @@ const Continue_Google = () => {
 };
 
 export default Continue_Google;
-
