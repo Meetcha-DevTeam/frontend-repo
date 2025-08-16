@@ -15,8 +15,8 @@ const MeetingDetailPage = () => {
   const [meetingDetail, setMeetingDetail] = useState<MeetingDetail | null>(null);
 
   const onClickShare = async () => {
-    const baseUrl = window.location.origin;
-    const url = `${baseUrl}/meeting/${state}`;
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+    const url = `${API_BASE}/meeting/${state}`;
     const text = meetingDetail ? `[${meetingDetail.title}] 미팅 링크: ${url}` : `미팅 링크: ${url}`;
 
     const ok = await copyToClipboard(text);

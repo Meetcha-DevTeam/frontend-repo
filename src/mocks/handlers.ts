@@ -47,6 +47,7 @@ export const handlers = [
             meetingStatus: "MATCHING",
             deadline: "2024-05-31T13:00:00+09:00",
             durationMinutes: 120,
+            meetingCode: "adf73f37",
             participants: [
               {
                 participantId: "u1a2b3c",
@@ -79,6 +80,7 @@ export const handlers = [
             meetingStatus: "MATCHING",
             deadline: "2025-08-01T13:00:00+09:00",
             durationMinutes: 120,
+            meetingCode: "adf73f37",
             participants: [
               {
                 participantId: "p123abc",
@@ -111,6 +113,7 @@ export const handlers = [
             meetingStatus: "MATCH_FAILED",
             deadline: "2024-06-01T13:00:00+09:00",
             durationMinutes: 90,
+            meetingCode: "adf73f37",
             participants: [],
             finalSchedule: {
               type: "fail",
@@ -132,6 +135,7 @@ export const handlers = [
             meetingStatus: "BEFORE",
             deadline: "2024-06-01T13:00:00+09:00",
             durationMinutes: 90,
+            meetingCode: "adf73f37",
             participants: [
               {
                 participantId: "p789ghi",
