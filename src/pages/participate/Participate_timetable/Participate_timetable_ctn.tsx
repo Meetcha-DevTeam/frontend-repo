@@ -90,7 +90,7 @@ const Participate_timetable_ctn = () => {
     setNickname(e.target.value);
   }; //나중에 backend에 post로 보낼예정..
 
-  console.log(meetingData);
+
   //memoized된 후보 변수들 왜 memoized??===>요것들은 내가 선택한 후보 시간 정보들이다.
   const memoizedCandidateDates = useMemo(() => {
     return meetingData.candidateDates;
