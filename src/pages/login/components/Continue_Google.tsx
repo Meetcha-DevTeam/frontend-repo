@@ -39,7 +39,7 @@ const Continue_Google = () => {
     console.log("API 오류:", error); // ✅ 에러 메시지 확인
     if (response?.success) {
       sessionStorage.setItem("access-token", response.data.accessToken);
-      navigate("/login_complete");
+      navigate("/schedule");
     } else if (response && !response.isSuccess) {
       alert(response.message);
     }
