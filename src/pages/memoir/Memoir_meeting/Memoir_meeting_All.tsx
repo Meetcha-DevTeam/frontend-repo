@@ -85,9 +85,8 @@ const Memoir_meeting_All = () => {
     [memoir]
   );
 
-    console.log(meetingLists);
-  console.log(memoirLists);
-  console.log(meetingSummary);
+ 
+
   if (meetingLoading || memoirLoading||summaryLoading) {
     return (
       <>
