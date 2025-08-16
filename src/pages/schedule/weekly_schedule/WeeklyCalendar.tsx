@@ -7,10 +7,8 @@ import { useState } from "react";
 import ReactDOM from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import ScheduleCreationPage from "../schedule_creation/ScheduleCreationPage";
-import { format } from "date-fns/format";
-import { ko } from "date-fns/locale";
-import type { ScheduleDataType } from "@/types/schedule-data-type";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
+import type { Schedule } from "@/apis/schedule/scheduleTypes";
 
 interface Props {
   week: Date;
@@ -29,7 +27,7 @@ const formats = {
 const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
   const [creationOpen, setCreationOpen] = useState<boolean>(false);
   const [clickedSpan, setClickedSpan] = useState<string>();
-  const [clickedSchedule, setClickedSchedule] = useState<ScheduleDataType>();
+  const [clickedSchedule, setClickedSchedule] = useState<Schedule>();
   const [mode, setMode] = useState<boolean>(true); // 생성모드 or 수정모드
 
   const portal = ReactDOM.createPortal(
@@ -97,14 +95,14 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
           };
         }}
         selectable={true}
-        step={30} // ✅ 각 시간 슬롯 간격 (분 단위)
-        timeslots={2} // ✅ 한 시간당 몇 개의 슬롯
-        longPressThreshold={1000}
+        step={30} // 각 시간 슬롯 간격 (분 단위)
+        timeslots={2} // 한 시간당 몇 개의 슬롯
+        longPressThreshold={750}
         onSelecting={() => !blockInteraction}
         onSelectSlot={(slotInfo) => {
           if (blockInteraction) return;
           setTimeout(() => setCreationOpen(true), 0);
-          console.log("빈 영역 클릭됨:", slotInfo);
+          // console.log("빈 영역 클릭됨:", slotInfo);
           const formattedStart = scheduleStringFormatter(slotInfo.start);
           const formattedEnd = scheduleStringFormatter(slotInfo.end);
 
@@ -114,7 +112,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
           if (blockInteraction) return;
           setMode(false);
           setTimeout(() => setCreationOpen(true), 0);
-          console.log("일정 클릭됨:", event);
+          // console.log("일정 클릭됨:", event);
           setClickedSchedule({
             title: event.title,
             startAt: event.start,
