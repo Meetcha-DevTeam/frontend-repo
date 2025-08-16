@@ -1,26 +1,17 @@
-import type { MeetingDataType } from "@/types/meeting-data-type";
+import { fetchMeetingList } from "@/apis/meeting/meetingAPI";
+import type { Meeting } from "@/apis/meeting/meetingTypes";
 import { create } from "zustand";
 
-export const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const access_token = sessionStorage.getItem("access-token");
-
 interface MeetingState {
-  meetingList: MeetingDataType[];
-  fetchMeetings: (id: number) => void;
+  meetingList: Meeting[];
+  fetchMeetings: () => void;
 }
 
 export const useMeetingStore = create<MeetingState>()((set) => ({
   meetingList: [],
-  fetchMeetings: async (id) => {
-    const res = await fetch(`/meeting-lists`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    const data = await res.json();
-    // console.log(data.data);
-    set({ meetingList: data.data });
+  fetchMeetings: async () => {
+    const data = await fetchMeetingList();
+    console.log(data);
+    set({ meetingList: data });
   },
 }));
