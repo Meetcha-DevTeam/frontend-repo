@@ -36,26 +36,43 @@ const Continue_Google = () => {
   //4. 응답 처리
   useEffect(() => {
     console.log("API 응답:", response);
-    console.log("API 오류:", error); // ✅ 에러 메시지 확인
-    if (response?.success) {
-      sessionStorage.setItem("access-token", response.data.accessToken);
-      navigate("/schedule");
-    } else if (response && !response.isSuccess) {
-      alert(response.message);
+    console.log("API 오류:", error);
+
+    // ✅ 응답 처리 로직 수정
+    if (response) {
+      if (response.isSuccess && response.data?.accessToken) {
+        sessionStorage.setItem("access-token", response.data.accessToken);
+        navigate("/schedule");
+      } else if (response.code !== 200) {
+        console.error("OAuth 실패:", response.message);
+        alert(`로그인 실패: ${response.message}`);
+      }
     }
   }, [response]);
 
   //5. 버튼 클릭 → Google 로그인 페이지로 이동
   const handleGoogleLogin = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectUri = encodeURIComponent("https://meetcha-frontend-deploy.vercel.app/schedule"); // Google 콘솔에 등록한 리디렉션 URI
+    const redirectUri = encodeURIComponent("https://meetcha-frontend-deploy.vercel.app/login");
     const scope = encodeURIComponent("openid email profile");
     const responseType = "code";
     const accessType = "offline";
     const prompt = "consent";
 
+    console.log("Google OAuth 설정:");
+    console.log("Client ID:", clientId);
+    console.log("Redirect URI:", redirectUri);
+
+    // ✅ Client ID 검증 추가
+    if (!clientId) {
+      console.error("VITE_GOOGLE_CLIENT_ID가 설정되지 않았습니다.");
+      alert("Google Client ID가 설정되지 않았습니다.");
+      return;
+    }
+
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&access_type=${accessType}&prompt=${prompt}`;
 
+    console.log("Auth URL:", authUrl);
     window.location.href = authUrl;
   };
 
