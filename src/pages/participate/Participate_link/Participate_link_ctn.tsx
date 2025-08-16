@@ -34,31 +34,10 @@ const Participate_link = () => {
   const handletextchange = (e) => {
     setLinkText(e.target.value);
   };
-  const debugMeetingCode = async (raw: string) => {
-    const codeUpper = raw.trim().toUpperCase();
-    const codeRaw = raw.trim();
 
-    const paths = [
-      `/meeting/code/${encodeURIComponent(codeRaw)}`, // 단수 + 원본
-      `/meeting/code/${encodeURIComponent(codeUpper)}`, // 단수 + 대문자
-      `/meetings/code/${encodeURIComponent(codeRaw)}`, // 복수 + 원본
-      `/meetings/code/${encodeURIComponent(codeUpper)}`, // 복수 + 대문자
-    ];
-
-    for (const p of paths) {
-      for (const auth of [false, true]) {
-        try {
-          const res = await apiCall(p, "GET", undefined, auth);
-          console.log(`[OK] url=${p} withAuth=${auth}`, res);
-        } catch (e) {
-          console.log(`[ERR] url=${p} withAuth=${auth}`, e);
-        }
-      }
-    }
-  };
 
   const requestLinkCheck = async () => {
-    debugMeetingCode;
+  
     const code = linkText.trim(); // 공백 제거
     if (!code) return; // 빈 값 방지
 
@@ -66,17 +45,17 @@ const Participate_link = () => {
       const res = await apiCall(
         `/meeting/code/${encodeURIComponent(code)}`, // ← 복수형 + 슬러그
         "GET",
-        undefined,
+        null,
         true // 인증 필요
         // ← GET이므로 data 인자 넣지 않음!
       );
 
       if (!res) return;
-      
-      if (res.code === 410) {
+
+      if (res.code === 400) {
         navigate("/complete");
       } else if (res.code === 200) {
-        navigate("/timetable", { state: { sendAboutMeeting: res } });
+        navigate("/timetable", { state: { sendAboutMeeting: res.data } });
       } else {
         // 404 등
         navigate("/error");
@@ -86,7 +65,7 @@ const Participate_link = () => {
       navigate("/error");
     }
   };
- 
+
   // 사용: 버튼 클릭 전에 일단 한 번 호출
   // debugMeetingCode(linkText);
 

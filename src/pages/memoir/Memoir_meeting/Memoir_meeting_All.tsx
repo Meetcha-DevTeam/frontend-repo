@@ -28,12 +28,21 @@ const Memoir_meeting_All = () => {
     fire: execMemoirAll,
   } = useAPIs2(`/meeting/reflections`, "GET", undefined, true, false);
 
+  const {
+    response: meetingSummary,
+    loading: summaryLoading,
+    error: summaryError,
+    fire: execSummaryAll,
+  }=useAPIs2(`/reflection/summary`,"GET",undefined,true,false);
+
+
   useEffect(() => {
     if (didInit.current) return;
     didInit.current = true;
     execMeetingAll();
     execMemoirAll();
-  }, [execMeetingAll, execMemoirAll]);
+    execSummaryAll();
+  }, [execMeetingAll, execMemoirAll,execSummaryAll]);
   
   useEffect(() => {
     const s: any = location.state;
@@ -42,12 +51,14 @@ const Memoir_meeting_All = () => {
     didRefetch.current = true;
     execMeetingAll();
     execMemoirAll();
+    execSummaryAll();
     navigate(location.pathname, { replace: true, state: undefined });
   }, [
     location.state,
     location.pathname,
     execMeetingAll,
     execMemoirAll,
+    execSummaryAll,
     navigate,
   ]);
 
@@ -74,7 +85,10 @@ const Memoir_meeting_All = () => {
     [memoir]
   );
 
-  if (meetingLoading || memoirLoading) {
+    console.log(meetingLists);
+  console.log(memoirLists);
+  console.log(meetingSummary);
+  if (meetingLoading || memoirLoading||summaryLoading) {
     return (
       <>
         <p style={{ textAlign: "center", marginTop: "2rem" }}>⌛ 로딩 중…</p>
@@ -83,7 +97,7 @@ const Memoir_meeting_All = () => {
   }
 
   /* ===== 2) 에러 화면 ===== */
-  if (meetingError || memoirError) {
+  if (meetingError || memoirError || summaryError) {
     return (
       <>
         <p style={{ color: "red", textAlign: "center", marginTop: "2rem" }}>
@@ -92,8 +106,7 @@ const Memoir_meeting_All = () => {
       </>
     );
   }
-  console.log(meetingLists);
-  console.log(memoirLists);
+
 
   return (
     <>
@@ -101,6 +114,7 @@ const Memoir_meeting_All = () => {
         /* meetingLists가 배열인지 한 번 더 방어 */
         meetingLists={Array.isArray(meetingLists.data) ? meetingLists.data : []}
         memoirLists={memoirWithTheme}
+        meetingSummary={meetingSummary}
       />
     </>
   );

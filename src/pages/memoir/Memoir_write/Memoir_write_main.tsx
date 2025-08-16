@@ -6,6 +6,7 @@ import "./Memoir_write.scss";
 import { useNavigate } from "react-router-dom";
 const Memoir_write_main = ({
   projectsAll,
+  refetchProjects,
   contribution,
   setContribution,
   role,
@@ -109,6 +110,7 @@ const Memoir_write_main = ({
       </div>
       <Project_container
         projectsAll={projectsAll}
+        refetchProjects={refetchProjects}
         projectId={projectId}
         setProjectId={setProjectId}
         chosenProjectBgColor={chosenProjectBgColor}
