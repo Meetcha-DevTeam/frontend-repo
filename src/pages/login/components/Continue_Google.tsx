@@ -48,11 +48,16 @@ const Continue_Google = () => {
   //5. 버튼 클릭 → Google 로그인 페이지로 이동
   const handleGoogleLogin = () => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const redirectUri = encodeURIComponent("https://meetcha-frontend-deploy.vercel.app/schedule"); // Google 콘솔에 등록한 리디렉션 URI
+    // ✅ 수정: 현재 로그인 페이지로 리디렉션하도록 변경
+    const redirectUri = encodeURIComponent("https://meetcha-frontend-deploy.vercel.app/login"); 
     const scope = encodeURIComponent("openid email profile");
     const responseType = "code";
     const accessType = "offline";
     const prompt = "consent";
+
+    // ✅ 디버깅을 위한 콘솔 로그 추가
+    console.log("Google Client ID:", clientId);
+    console.log("Redirect URI:", redirectUri);
 
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&access_type=${accessType}&prompt=${prompt}`;
 
