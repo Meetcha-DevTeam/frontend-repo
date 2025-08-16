@@ -15,6 +15,7 @@ const Continue_Google = () => {
   const code = params.get("code");
 
   // 2) 수동 실행 훅 (withAuth=false 유지)
+
   const {
     response,
     error,
@@ -27,14 +28,17 @@ const Continue_Google = () => {
     true
   );
 
+
   // 3) StrictMode 대비: 교환 호출은 딱 1번만
   const sentRef = useRef(false);
+
   useEffect(() => {
     if (code && !sentRef.current) {
       sentRef.current = true;
       sendAuthCodeToServer();
     }
   }, [code, sendAuthCodeToServer]);
+
 
   // 4) 응답 처리
   useEffect(() => {
@@ -50,16 +54,20 @@ const Continue_Google = () => {
         console.error("OAuth 실패:", response.message);
         alert(`로그인 실패: ${response.message}`);
       }
+
     }
   }, [error, navigate]);
 
+
   // 5) 버튼 클릭 → Google 로그인 페이지로 이동
+
   const handleGoogleLogin = () => {
     // ✅ 환경변수 다시 사용
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     const redirectUri = encodeURIComponent("https://meetcha-frontend-deploy.vercel.app/schedule");
 
     const scope = encodeURIComponent("openid email profile");
+
     const responseType = "code";
     const accessType = "offline";
     const prompt = "consent";
