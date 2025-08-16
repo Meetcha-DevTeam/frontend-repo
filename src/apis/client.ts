@@ -125,3 +125,5 @@ export const api = {
   delete: <T = any>(u: string, h?: RequestOpts["headers"]) =>
     request<T>(u, { method: "DELETE", headers: h }),
 };
+
+export {request};
