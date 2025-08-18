@@ -6,6 +6,7 @@ export const sendAuthCode = async (authCode: string) => {
   const data = { code: authCode };
   const res: ApiResponse<AuthResponse> = await apiCall("/oauth/google", "POST", data, false);
   sessionStorage.setItem("access-token", res.data.accessToken);
+  sessionStorage.setItem("refresh-token", res.data.refreshToken);
   console.log(res);
   return res;
 };

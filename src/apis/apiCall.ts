@@ -24,6 +24,8 @@ export const apiCall = async <T>(
       console.log(`Api Call Success: ${res.status} ${res.statusText}`);
     } else {
       console.error(`Api Call Failed: ${res.status} ${res.statusText}`);
+      if (res.status === 401) {
+      }
     }
 
     return res.json();
