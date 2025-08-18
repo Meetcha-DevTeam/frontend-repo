@@ -47,7 +47,6 @@ export const createMeeting = async (data) => {
     case 201:
       alert(res.message);
       return res.code;
-
     case 400:
       const details = Object.entries(res.data)
         .map(([_, value]) => `• ${value}`)

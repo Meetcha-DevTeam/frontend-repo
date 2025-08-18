@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./Participate_timetabe.scss";
 import dayjs from "dayjs";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import Top_banner from "../common/Top_banner";
 import Botton_banner_button from "../common/Botton_banner_button";
 import Timetable from "./Timetable";
@@ -18,10 +18,9 @@ const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
+  const [params] = useSearchParams();
+  const meetingId = params.get("meetingId") || "";
 
-  const { sendAboutMeeting } = location.state || {};
-  const meetingId = (sendAboutMeeting as string) || "";
-  console.log(sendAboutMeeting);
 
   const [nickname, setNickname] = useState("");
   const [meetingData, setMeetingData] = useState<any | null>(null);
@@ -101,7 +100,7 @@ const Participate_timetable_ctn = () => {
 
   useEffect(() => {
     getUserMeetingData();
-  }, []);
+  }, [meetingId]);
 
   useEffect(() => {
     if (!meetingData) return;
@@ -122,13 +121,13 @@ const Participate_timetable_ctn = () => {
       alert("참여 가능 시간을 최소 1개 이상 선택해주세요.");
       return;
     }
-
+    console.log(finalPostData);
     try {
       const res = await apiCall(
         `/meetings/id/${meetingId}/join`,
         "POST",
         finalPostData,
-        true // Authorization 포함(프로젝트 util 정책 유지)
+        false // Authorization 포함(프로젝트 util 정책 유지)
       );
 
       if (!res) return;
