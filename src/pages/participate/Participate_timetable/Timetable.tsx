@@ -10,21 +10,29 @@ import type { UISlot } from "@/apis/participate/participateTypes";
 
 dayjs.locale("ko");
 
-interface Props{
+interface BusyInterval {
+  startAt: string;
+  endAt: string;
+}
+
+interface Props {
   candidateDates: string[];
   selectedTimes: UISlot[];
   setSelectedTimes: React.Dispatch<React.SetStateAction<UISlot[]>>;
-  scheduleData: string[];
-};
+  scheduleData: BusyInterval[];
+}
 
-const Timetable = ({ candidateDates,selectedTimes,setSelectedTimes,scheduleData}) => {
+const Timetable = ({
+  candidateDates,
+  selectedTimes,
+  setSelectedTimes,
+  scheduleData,
+}) => {
   const validDates = candidateDates.map((dateStr) => dayjs(dateStr));
-  const rangeStart =
-    validDates[0]?.startOf("day").format("YYYY-MM-DD");
-  const rangeEnd =
-    validDates.at(-1)?.endOf("day").format("YYYY-MM-DD");
+  const rangeStart = validDates[0]?.startOf("day").format("YYYY-MM-DD");
+  const rangeEnd = validDates.at(-1)?.endOf("day").format("YYYY-MM-DD");
   //드래그 선택된 시간들
- 
+
   const handleSelect = (info) => {
     const start = dayjs(info.start).second(0).millisecond(0); //  수정됨: 초, 밀리초 제거
     const end = dayjs(info.end).second(0).millisecond(0);
@@ -35,7 +43,9 @@ const Timetable = ({ candidateDates,selectedTimes,setSelectedTimes,scheduleData}
     };
 
     const isAlreadySelected = selectedTimes.some(
-      (sel) => sel.startISO === newSelection.startISO && sel.endISO === newSelection.endISO
+      (sel) =>
+        sel.startISO === newSelection.startISO &&
+        sel.endISO === newSelection.endISO
     );
 
     if (isAlreadySelected) {
@@ -43,22 +53,33 @@ const Timetable = ({ candidateDates,selectedTimes,setSelectedTimes,scheduleData}
       setSelectedTimes((prev) =>
         prev.filter(
           (sel) =>
-            !(sel.startISO === newSelection.startISO && sel.endISO === newSelection.endISO)
+            !(
+              sel.startISO === newSelection.startISO &&
+              sel.endISO === newSelection.endISO
+            )
         )
       );
     } else {
       // 수정됨: 새로운 시간 선택 → 추가
       setSelectedTimes((prev) => [...prev, newSelection]);
     }
-
-
   };
 
-  const events = selectedTimes.map((time) => ({
+  const busyEvents = (scheduleData ?? []).map((ev) => ({
+    start: dayjs(ev.startAt).toDate(),
+    end: dayjs(ev.endAt).toDate(),
+    display: "background",
+    classNames: ["busy-block"],
+    extendedProps: { isBusy: true },
+  }));
+
+  const selectedEvents = selectedTimes.map((time) => ({
     start: time.startISO,
     end: time.endISO,
     display: "background",
-    backgroundColor: "#FF6200", //  수정됨: 선택 시 배경색
+    backgroundColor: "#FF6200",
+    classNames: ["selected-block"],
+    extendedProps: { isBusy: false },
   }));
   console.log(selectedTimes);
 
@@ -80,9 +101,9 @@ const Timetable = ({ candidateDates,selectedTimes,setSelectedTimes,scheduleData}
       selectable={true} // 수정됨: 드래그 선택 활성화
       selectMirror={false}
       unselectAuto={false}
-      selectOverlap={true}
       select={handleSelect} //  수정됨: 드래그 선택 이벤트 핸들러
-      events={events} //  수정됨: 선택된 시간대 렌더링
+      selectOverlap={(event)=>!event.extendedProps?.isBusy}
+      events={[...busyEvents,...selectedEvents]} //  수정됨: 선택된 시간대 렌더링
       height="auto"
       headerToolbar={false}
       dayHeaderContent={(info) => {
