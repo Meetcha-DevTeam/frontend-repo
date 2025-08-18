@@ -92,7 +92,7 @@ const Participate_timetable_ctn = () => {
       if (resSchedule.code === 400) {
         alert("날짜 형식이 잘못되었거나 범위가 유효하지 않습니다.");
       } else if (resSchedule.code === 401) {
-        alert("로그인이 필요합니다.");
+        alert("로그인이 필요합니다다.");
       } else if (resSchedule.code === 404) {
         alert("사용자를 찾을 수 없습니다.");
       } else if (resSchedule.code == 200) {
