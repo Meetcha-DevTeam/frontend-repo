@@ -48,7 +48,7 @@ const Participate_timetable_ctn = () => {
   const backtoLink = () => {
     navigate("/link");
   };
-  //유저의 미팅정보(candidatedate)를 불러옴
+  //유저의 미팅정보(candidatedate)를 먼저 불러옴
   const getUserMeetingData = async () => {
     if (!sendAboutMeeting) return;
     try {
@@ -170,8 +170,8 @@ const Participate_timetable_ctn = () => {
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
             <div className="meeting_info">
-              <p>{sendAboutMeeting.title}</p>
-              <p>{sendAboutMeeting.description}</p>
+              <p>{meetingData.title}</p>
+              <p>{meetingData.description}</p>
             </div>
           </div>
           <input
