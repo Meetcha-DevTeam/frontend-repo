@@ -42,13 +42,16 @@ export const createMeeting = async (data) => {
     data,
     true
   );
-  const navigate = useNavigate();
 
   switch (res.code) {
     case 201:
       alert(res.message);
+
       navigate("/participate",{state:res.data.meetingId});
       break;
+
+      return res.code;
+
     case 400:
       const details = Object.entries(res.data)
         .map(([_, value]) => `• ${value}`)
