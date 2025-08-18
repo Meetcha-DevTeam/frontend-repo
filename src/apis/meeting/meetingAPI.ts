@@ -47,7 +47,7 @@ export const createMeeting = async (data) => {
   switch (res.code) {
     case 201:
       alert(res.message);
-      navigate("/participate");
+      navigate("/participate",{state:res.data.meetingId});
       break;
     case 400:
       const details = Object.entries(res.data)
