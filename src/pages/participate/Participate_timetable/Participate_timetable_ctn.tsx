@@ -75,13 +75,14 @@ const Participate_timetable_ctn = () => {
   //유저의 일저 데이터를 불러오는 api연동
   const getUserScheduleData = async () => {
     if (!meetingData) return;
-    const candidateDates_length = meetingData.candidiateDates.length;
+
+    const candidateDates = meetingData.candidateDates;
+    const first = candidateDates[0];
+    const last = candidateDates[candidateDates.length - 1];
 
     try {
       const resSchedule = await apiCall(
-        `/user/schedule?from=${meetingData.candidateDates[0]}T00:00:00&to=${
-          meetingData.candidateDates[candidateDates_length - 1]
-        }T23:59:59`,
+        `/user/schedule?from=${first}T00:00:00&to=${last}T23:59:59`,
         "GET",
         null,
         true
@@ -105,8 +106,13 @@ const Participate_timetable_ctn = () => {
 
   useEffect(() => {
     getUserMeetingData();
-    getUserScheduleData();
   }, []);
+
+  useEffect(() => {
+    if (!meetingData) return;
+    //순서를 정한거임.. 미팅데이터를 먼저 불러와야함(candidate때문)
+    getUserScheduleData();
+  }, [meetingData]);
 
   const handleSetNickname = (e) => {
     setNickname(e.target.value);
