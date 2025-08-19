@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styles from "./ScheduleCreationView.module.scss";
+import styles from "./ScheduleCrudView.module.scss";
 import Clock from "@assets/clock.svg?react";
 import Pencil from "@assets/pencil.svg?react";
 import TimePicker from "@/components/TimePicker/TimePicker";
-import ScheduleCreationCard from "./ScheduleCreationCard";
+import ScheduleCreationCard from "./ScheduleCrudCard";
 import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleDurationRow from "./ScheduleDurationRow";
 
@@ -11,20 +11,20 @@ interface Props {
   clickedSpan: string;
   scheduleTitle: string;
   scheduleTime: string;
-  repetition: string;
+  recurrence: string;
   setScheduleTitle: React.Dispatch<React.SetStateAction<string>>;
   setScheduleTime: React.Dispatch<React.SetStateAction<string>>;
-  setRepetition: React.Dispatch<React.SetStateAction<string>>;
+  setRecurrence: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ScheduleCreationView = ({
+const ScheduleCrudView = ({
   clickedSpan,
   scheduleTitle,
   scheduleTime,
-  repetition,
+  recurrence,
   setScheduleTitle,
   setScheduleTime,
-  setRepetition,
+  setRecurrence,
 }: Props) => {
   const cardDataSet = [
     {
@@ -40,29 +40,25 @@ const ScheduleCreationView = ({
       data: scheduleTime,
       dataSetter: setScheduleTime,
     },
-    // {
-    //   id: 1,
-    //   icon: <Pencil />,
-    //   expand: false,
-    //   expandedComponent: null,
-    //   basicComponent: ScheduleRepetitionRow,
-    //   basicProps: {
-    //     data: repetition,
-    //     dataSetter: setRepetition,
-    //   },
-    //   data: repetition,
-    //   dataSetter: setRepetition,
-    // },
+    {
+      id: 1,
+      icon: <Pencil />,
+      expand: false,
+      expandedComponent: null,
+      basicComponent: ScheduleRepetitionRow,
+      basicProps: {
+        data: recurrence,
+        dataSetter: setRecurrence,
+      },
+      data: recurrence,
+      dataSetter: setRecurrence,
+    },
   ];
 
-  useEffect(() => {
-    console.log(scheduleTitle);
-  }, [scheduleTitle]);
-
   return (
-    <div className={styles.scheduleCreationView}>
+    <div className={styles.scheduleCrudView}>
       <input
-        className={styles.scheduleCreationView__inputTag}
+        className={styles.scheduleCrudView__inputTag}
         type="text"
         placeholder="일정 제목"
         value={scheduleTitle}
@@ -70,7 +66,7 @@ const ScheduleCreationView = ({
           setScheduleTitle(e.target.value);
         }}
       />
-      <div className={styles.scheduleCreationView__scheduleOptionContainer}>
+      <div className={styles.scheduleCrudView__scheduleOptionContainer}>
         {cardDataSet.map((item, _) => (
           <ScheduleCreationCard
             key={item.id}
@@ -88,4 +84,4 @@ const ScheduleCreationView = ({
   );
 };
 
-export default ScheduleCreationView;
+export default ScheduleCrudView;

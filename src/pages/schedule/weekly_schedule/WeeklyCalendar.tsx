@@ -3,12 +3,12 @@ import CustomWeekHeader from "./CustomWeekHeader";
 import { CustomEvent } from "./CustomEvent";
 import { Calendar, luxonLocalizer } from "react-big-calendar";
 import { DateTime } from "luxon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import ScheduleCreationPage from "../schedule_creation/ScheduleCreationPage";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
+import ScheduleCrudPage from "../schedule_crud/ScheduleCrudPage";
 
 interface Props {
   week: Date;
@@ -57,11 +57,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
               }
             }}
           >
-            <ScheduleCreationPage
-              clickedSpan={clickedSpan}
-              createMode={mode}
-              data={clickedSchedule}
-            />
+            <ScheduleCrudPage clickedSpan={clickedSpan} createMode={mode} data={clickedSchedule} />
           </motion.div>
         </>
       )}
@@ -112,7 +108,6 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
           if (blockInteraction) return;
           setMode(false);
           setTimeout(() => setCreationOpen(true), 0);
-          // console.log("일정 클릭됨:", event);
           setClickedSchedule({
             title: event.title,
             startAt: event.start,

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
 import type { AlternativeObj, Meeting, MeetingCreateResponse, MeetingDetail } from "./meetingTypes";
@@ -46,8 +45,10 @@ export const createMeeting = async (data) => {
   switch (res.code) {
     case 201:
       alert(res.message);
+
       return res;
     
+
     case 400:
       const details = Object.entries(res.data)
         .map(([_, value]) => `• ${value}`)

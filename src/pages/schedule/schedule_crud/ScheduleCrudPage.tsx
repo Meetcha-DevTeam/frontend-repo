@@ -1,10 +1,10 @@
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
-import styles from "./ScheduleCreationPage.module.scss";
-import ScheduleCreationView from "./ScheduleCreationView";
+import styles from "./ScheduleCrudPage.module.scss";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
+import ScheduleCrudView from "./ScheduleCrudView";
 
 interface Props {
   clickedSpan: string;
@@ -12,11 +12,11 @@ interface Props {
   data?: Schedule;
 }
 
-const ScheduleCreationPage = ({ clickedSpan, createMode, data }: Props) => {
+const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
   const [allDataReserved, setAllDataReserved] = useState<boolean>(false);
   const [scheduleTitle, setScheduleTitle] = useState<string>("");
   const [scheduleTime, setScheduleTime] = useState<string>();
-  const [repetition, setRepetition] = useState<string>();
+  const [recurrence, setRecurrence] = useState<string>("NONE");
 
   useEffect(() => {
     if (!createMode && data) {
@@ -24,50 +24,63 @@ const ScheduleCreationPage = ({ clickedSpan, createMode, data }: Props) => {
       setScheduleTime(
         `${scheduleStringFormatter(data?.startAt)} ${scheduleStringFormatter(data?.endAt)}`
       );
+      setRecurrence(data?.recurrence);
     }
-  }, []);
+  }, [data]);
+
+  const parseScheduleTime = (scheduleTime) => {
+    // 서버 요구 형식에 맞게 데이터 파싱
+    const scheduleArr = scheduleTime.split(" ");
+    const data = {
+      title: scheduleTitle,
+      startAt: `${scheduleArr[0].slice(0, -1)}-${scheduleArr[1].slice(
+        0,
+        -1
+      )}-${scheduleArr[2].slice(0, -4)}T${scheduleArr[4].split(":")[0].padStart(2, "0")}:${
+        scheduleArr[4].split(":")[1]
+      }:00`,
+      endAt: `${scheduleArr[5].slice(0, -1)}-${scheduleArr[6].slice(0, -1)}-${scheduleArr[7].slice(
+        0,
+        -4
+      )}T${scheduleArr[9].split(":")[0].padStart(2, "0")}:${scheduleArr[9].split(":")[1]}:00`,
+      recurrence: recurrence,
+    };
+    return data;
+  };
 
   useEffect(() => {
     if (scheduleTitle && scheduleTime) setAllDataReserved(true);
-  }, [scheduleTitle, scheduleTime, repetition]);
+  }, [scheduleTitle, scheduleTime, recurrence]);
 
   const sendCreationReq = async () => {
     if (!allDataReserved) return;
-    const data = {
-      scheduleTitle: scheduleTitle,
-      scheduleTime: scheduleTime,
-      repetition: repetition,
-    };
-    await createSchedule(data);
+    await createSchedule(parseScheduleTime(scheduleTime));
+    window.location.reload();
   };
 
   const sendEditReq = async () => {
     if (!allDataReserved) return;
-    const data = {
-      scheduleTitle: scheduleTitle,
-      scheduleTime: scheduleTime,
-      repetition: repetition,
-    };
-    await editSchedule(data);
+    await editSchedule({ ...parseScheduleTime(scheduleTime), eventId: data.eventId });
+    window.location.reload();
   };
 
   const sendDelReq = async () => {
-    const scheduleId = "abc"; // 추후 실제 일정 id로 수정요망
-    await deleteSchedule(scheduleId);
+    await deleteSchedule(data.eventId);
+    window.location.reload();
   };
 
   return (
-    <div className={styles.scheduleCreationPage}>
-      <ScheduleCreationView
+    <div className={styles.scheduleCrudPage}>
+      <ScheduleCrudView
         clickedSpan={clickedSpan}
         scheduleTitle={scheduleTitle}
         scheduleTime={scheduleTime}
-        repetition={repetition}
+        recurrence={recurrence}
         setScheduleTitle={setScheduleTitle}
         setScheduleTime={setScheduleTime}
-        setRepetition={setRepetition}
+        setRecurrence={setRecurrence}
       />
-      <div className={styles.scheduleCreationPage__buttonContainer}>
+      <div className={styles.scheduleCrudPage__buttonContainer}>
         {!createMode && (
           <div className={styles.deleteButton} onClick={sendDelReq}>
             삭제하기
@@ -83,4 +96,4 @@ const ScheduleCreationPage = ({ clickedSpan, createMode, data }: Props) => {
   );
 };
 
-export default ScheduleCreationPage;
+export default ScheduleCrudPage;
