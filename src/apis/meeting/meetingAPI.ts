@@ -46,7 +46,7 @@ export const createMeeting = async (data) => {
   switch (res.code) {
     case 201:
       alert(res.message);
-    return res;
+      return res;
     
     case 400:
       const details = Object.entries(res.data)
