@@ -19,12 +19,32 @@ const MeetingCreationPage = () => {
   const [allDataReserved, setAllDataReserved] = useState<boolean>(false);
   const [completeData, setCompleteData] = useState<MeetingSendData>();
   const navigate = useNavigate();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const createMeetingHandler = async () => {
-    const result = await createMeeting(completeData);
+    if (isSubmitting) return;
+    if (!completeData) {
+      alert("필수 입력을 완료해주세요.");
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const result = await createMeeting(completeData);
+      console.log("createMeeting result 👉", result);
+      console.log("result.data 👉", result?.data);
 
-    if (result.code === 201) {
-      navigate(`/timetable?meetingId=${result.data.meetingId}`);
+      const status = result?.code;
+      const id = result?.data?.meetingId;
+
+      if ((status === 201 || status === 200) && id) {
+        navigate(`/timetable?meetingId=${encodeURIComponent(id)}`);
+      } else {
+        alert(result?.message ?? "meetingId를 응답에서 찾지 못했습니다.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("서버 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
