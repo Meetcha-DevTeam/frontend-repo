@@ -21,7 +21,6 @@ const Participate_timetable_ctn = () => {
   const location = useLocation();
   const [params] = useSearchParams();
   const meetingId = params.get("meetingId") || "";
-  const pagenum=params.get("pagenum");
   const [nickname, setNickname] = useState("");
   const [meetingData, setMeetingData] = useState<any | null>(null);
   const [scheduleData, setScheduleData] = useState<any | null>([]);
