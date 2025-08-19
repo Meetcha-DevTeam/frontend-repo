@@ -45,7 +45,7 @@ const App = () => {
           <Route index path="schedule" element={<SchedulePage />} />
           <Route path="meeting" element={<MeetingPage />} />
           <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
-          <Route index path="/mypage" element={<MyPage />}></Route>
+          <Route index path="/mypage" element={<MyPage/>}></Route>
         </Route>
 
         <Route
