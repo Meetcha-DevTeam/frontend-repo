@@ -44,7 +44,7 @@ const Participate_timetable_ctn = () => {
   }, [selectedTimes, nickname]);
 
   const backtoLink = () => {
-    navigate("schedule");
+    navigate("/schedule");
   };
   //유저의 미팅정보(candidatedate)를 먼저 불러옴
   const getUserMeetingData = async () => {
