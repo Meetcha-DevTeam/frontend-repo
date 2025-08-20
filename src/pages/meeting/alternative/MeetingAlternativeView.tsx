@@ -197,7 +197,7 @@ const MeetingAlternativeView = ({ alternativeTimes, meetingId }: Props) => {
                 }
               }
             }}
-            slotMinTime="07:00:00"
+            slotMinTime="00:00:00"
             slotMaxTime="24:00:00"
             height={600}
             slotLabelFormat={{
