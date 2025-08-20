@@ -21,10 +21,11 @@ const Participate_timetable_ctn = () => {
   const location = useLocation();
   const [params] = useSearchParams();
   const meetingId = params.get("meetingId") || "";
+  const pageNum = params.get("pagenum");
   const [nickname, setNickname] = useState("");
   const [meetingData, setMeetingData] = useState<any | null>(null);
   const [scheduleData, setScheduleData] = useState<any | null>([]);
-  const [previousAvailTime,setPreviousAvailTime]=useState<any|null>([]);
+  const [previousAvailTime, setPreviousAvailTime] = useState<any | null>([]);
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
@@ -101,7 +102,12 @@ const Participate_timetable_ctn = () => {
   const getPreviousAvailTime = async () => {
     if (!meetingId) return;
     try {
-      const res = await apiCall(`/meeting/${meetingId}/available-times`, "GET", null, true);
+      const res = await apiCall(
+        `/meeting/${meetingId}/available-times`,
+        "GET",
+        null,
+        true
+      );
 
       if (!res) return;
       if (res.code === 404) {
@@ -119,8 +125,10 @@ const Participate_timetable_ctn = () => {
 
   useEffect(() => {
     getUserMeetingData();
-    getPreviousAvailTime();
-  }, [meetingId]);
+    if (pageNum === "3") {
+      getPreviousAvailTime();
+    }
+  }, [meetingId, pageNum]); // ← pageNum도 의존성에 추가
 
   useEffect(() => {
     if (!meetingData) return;
