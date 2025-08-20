@@ -67,8 +67,9 @@ const MeetingDetailPage = () => {
             )}
           {meetingDetail?.meetingStatus === "MATCHING" &&
             isBefore(meetingDetail?.deadline, Date.now()) && (
+
               <Button
-                label={"대안시간 투표하기 버튼"}
+                label={"대안시간 투표하기"}
                 className={styles.editButton}
                 clickHandler={onClickAlternative}
               />

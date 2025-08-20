@@ -40,6 +40,7 @@ const MyPage = () => {
 
   return (
     <div className="myPage_ctn">
+      <p className="myPage_text">마이 페이지</p>
       <div className="myPage_nickname">
         <div className="img_ctn">
           <img
@@ -57,7 +58,7 @@ const MyPage = () => {
           <p className="nickname">{userData.nickname}</p>
         </div>
       </div>
-      <div className="myPage_information">무엇을 입력할까요?</div>
+      
     </div>
   );
 };
