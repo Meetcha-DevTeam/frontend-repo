@@ -27,6 +27,7 @@ const Timetable = ({
   selectedTimes,
   setSelectedTimes,
   scheduleData,
+  previousAvailTime
 }) => {
   console.log(candidateDates);
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();

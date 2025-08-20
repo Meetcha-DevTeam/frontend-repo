@@ -24,6 +24,7 @@ const Participate_timetable_ctn = () => {
   const [nickname, setNickname] = useState("");
   const [meetingData, setMeetingData] = useState<any | null>(null);
   const [scheduleData, setScheduleData] = useState<any | null>([]);
+  const [previousAvailTime,setPreviousAvailTime]=useState<any|null>([]);
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
@@ -97,8 +98,28 @@ const Participate_timetable_ctn = () => {
     }
   };
 
+  const getPreviousAvailTime = async () => {
+    if (!meetingId) return;
+    try {
+      const res = await apiCall(`/meeting/${meetingId}/available-times`, "GET", null, true);
+
+      if (!res) return;
+      if (res.code === 404) {
+        alert("해당 미팅에 대한 참가 가능 시간을 찾을 수 없습니다.");
+      } else if (res.code === 401) {
+        alert("인증이 필요합니다");
+      } else if (res.code == 200) {
+        console.log(res);
+        setPreviousAvailTime(res.data);
+      }
+    } catch (e) {
+      alert("서버 오류");
+    }
+  };
+
   useEffect(() => {
     getUserMeetingData();
+    getPreviousAvailTime();
   }, [meetingId]);
 
   useEffect(() => {
@@ -214,6 +235,7 @@ const Participate_timetable_ctn = () => {
               candidateDates={meetingData.candidateDates ?? []}
               selectedTimes={selectedTimes}
               setSelectedTimes={setSelectedTimes}
+              previousAvailTime={previousAvailTime}
               scheduleData={scheduleData /* []로 보장됨 */}
             />
           </div>
