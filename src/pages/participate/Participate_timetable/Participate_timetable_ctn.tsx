@@ -155,7 +155,7 @@ const Participate_timetable_ctn = () => {
         alert("미팅 참여 성공!");
         console.log(res);
         // navigate(`/schedule`);
-        navigate("detail", {
+        navigate("/detail", {
           state: {
             meetingId: meetingId,
           },
