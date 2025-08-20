@@ -25,6 +25,7 @@ const MyPage = () => {
     };
     useEffect(() => {
         getUserData();
+        console.log(userData);
       }, []);
   return (
     <div className="myPage_ctn">
