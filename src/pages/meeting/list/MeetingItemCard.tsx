@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import styles from "./MeetingItemCard.module.scss";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,9 +9,10 @@ import type { Meeting } from "@/apis/meeting/meetingTypes";
 
 interface Props {
   data: Meeting;
+  decoComponent?: ReactNode
 }
 
-const MeetingItemCard = ({ data }: Props) => {
+const MeetingItemCard = ({ data, decoComponent }: Props) => {
   const navigate = useNavigate();
   const [meetingDetail, setMeetingDetail] = useState<string>("");
   const [cardStyle, setCardStyle] = useState<string>();
@@ -64,6 +65,7 @@ const MeetingItemCard = ({ data }: Props) => {
           </div>
         </div>
       </div>
+      {decoComponent}
     </div>
   );
 };

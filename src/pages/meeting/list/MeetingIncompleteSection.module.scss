@@ -32,4 +32,14 @@
 
     overflow-y: scroll;
   }
+
+  &__alter_vote_btn {
+    color: var(--main, #FF6200);
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+  }
 }
