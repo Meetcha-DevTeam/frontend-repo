@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getProjectTheme } from "@/utils/theme";
 
 const Memoir_meeting_All = () => {
+  
   const location = useLocation();
   const navigate = useNavigate();
   const didInit = useRef(false);
