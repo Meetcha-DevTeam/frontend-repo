@@ -10,7 +10,6 @@ import { apiCall } from "@/utils/apiCall";
 import type {
   UISlot,
   SubmitAvailabilityBody,
-  ParticipateObject,
 } from "@/apis/participate/participateTypes";
 
 const Participate_timetable_ctn = () => {
@@ -27,9 +26,12 @@ const Participate_timetable_ctn = () => {
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
 
   const finalPostData: SubmitAvailabilityBody = useMemo(() => {
-    const times = selectedTimes.sort(
-      (a, b) => dayjs(a.startAt).valueOf() - dayjs(b.startAt).valueOf()
-    );
+    const times = selectedTimes
+      .map((t) => ({
+        startAt: dayjs(t.startISO).format("YYYY-MM-DDTHH:mm:ss"),
+        endAt: dayjs(t.endISO).format("YYYY-MM-DDTHH:mm:ss"),
+      }))
+      .sort((a, b) => dayjs(a.startAt).valueOf() - dayjs(b.startAt).valueOf());
 
     const nick = nickname.trim();
     return {
@@ -202,7 +204,6 @@ const Participate_timetable_ctn = () => {
     );
   }
 
-
   // meetingData가 확보된 뒤에만 본문 렌더
   return (
     <>
@@ -221,7 +222,12 @@ const Participate_timetable_ctn = () => {
             </div>
           </div>
 
-          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임*" />
+          <input
+            type="text"
+            value={nickname}
+            onChange={handleSetNickname}
+            placeholder="닉네임*"
+          />
         </div>
 
         <div className="timetable">
