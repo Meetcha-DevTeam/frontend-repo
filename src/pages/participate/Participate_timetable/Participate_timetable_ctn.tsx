@@ -7,10 +7,7 @@ import LeftChevron from "@/assets/LeftChevron.svg";
 
 import { apiCall } from "@/utils/apiCall";
 
-import type {
-  UISlot,
-  SubmitAvailabilityBody,
-} from "@/apis/participate/participateTypes";
+import type { UISlot, SubmitAvailabilityBody } from "@/apis/participate/participateTypes";
 
 const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
@@ -43,6 +40,7 @@ const Participate_timetable_ctn = () => {
   const backtoLink = () => {
     navigate("/schedule");
   };
+
   //유저의 미팅정보(candidatedate)를 먼저 불러옴
   const getUserMeetingData = async () => {
     if (!meetingId) return;
@@ -98,12 +96,7 @@ const Participate_timetable_ctn = () => {
   const getPreviousAvailTime = async () => {
     if (!meetingId) return;
     try {
-      const res = await apiCall(
-        `/meeting/${meetingId}/available-times`,
-        "GET",
-        null,
-        true
-      );
+      const res = await apiCall(`/meeting/${meetingId}/available-times`, "GET", null, true);
 
       if (!res) return;
       if (res.code === 404) {
@@ -161,8 +154,8 @@ const Participate_timetable_ctn = () => {
         // 참여 성공 후 이동/알림 처리
         alert("미팅 참여 성공!");
         console.log(res);
-        navigate(`/schedule`);
-        // navigate(`/meeting/${meetingId}`);
+        // navigate(`/schedule`);
+        navigate(`/meeting/${meetingId}`);
       } else if (res.code === 409) {
         alert("이미 이 미팅에 참가했습니다.");
       } else if (res.code === 400) {
@@ -192,12 +185,7 @@ const Participate_timetable_ctn = () => {
                 <p />
               </div>
             </div>
-            <input
-              type="text"
-              value={nickname}
-              onChange={handleSetNickname}
-              placeholder="닉네임"
-            />
+            <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임" />
           </div>
         </div>
       </>
@@ -222,12 +210,7 @@ const Participate_timetable_ctn = () => {
             </div>
           </div>
 
-          <input
-            type="text"
-            value={nickname}
-            onChange={handleSetNickname}
-            placeholder="닉네임*"
-          />
+          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임*" />
         </div>
 
         <div className="timetable">
