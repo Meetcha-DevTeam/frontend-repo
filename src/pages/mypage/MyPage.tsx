@@ -4,7 +4,7 @@ import "./MyPage.scss";
 import { apiCall } from "@/apis/apiCall";
 import { useState } from "react";
 const MyPage = () => {
-  const [userData,setUserData]=useState<any>([]);
+  const [userData,setUserData]=useState<any>();
   const getUserData = async () => {
       
       try {
