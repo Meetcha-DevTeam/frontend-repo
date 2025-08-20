@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
 import type { AlternativeObj, Meeting, MeetingCreateResponse, MeetingDetail } from "./meetingTypes";
@@ -19,8 +20,14 @@ export const fetchMeetingDetail = async (meetingId: string) => {
   return res.data;
 };
 
-export const setAlternativeMeeting = async (meetingId: string, data) => {
+export const voteAlternativeMeeting = async (meetingId: string, data) => {
+  const navigate = useNavigate();
   const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
+  if (!res.success) {
+    alert(res.message);
+  }
+  navigate(`/meeting/${meetingId}`);
+
   return res;
 };
 
