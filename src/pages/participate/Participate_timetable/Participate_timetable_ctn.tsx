@@ -155,7 +155,11 @@ const Participate_timetable_ctn = () => {
         alert("미팅 참여 성공!");
         console.log(res);
         // navigate(`/schedule`);
-        navigate(`/meeting/${meetingId}`);
+        navigate("detail", {
+          state: {
+            meetingId: meetingId,
+          },
+        });
       } else if (res.code === 409) {
         alert("이미 이 미팅에 참가했습니다.");
       } else if (res.code === 400) {
