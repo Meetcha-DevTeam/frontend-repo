@@ -5,7 +5,7 @@ const MyPage = () => {
     <div className="myPage_ctn">
       <div className="myPage_nickname">
         <div className="img_ctn">
-            {/* <img className="myPageImg" src={myPageImg} alt="myPageImg"></img> */}
+            <img className="myPageImg" src={myPageImg} alt="myPageImg"></img>
         </div>
         <div className="nickname_ctn">
             <p className="nickname_text">닉네임</p>
