@@ -29,10 +29,11 @@ const Timetable = ({
   scheduleData,
   previousAvailTime
 }) => {
+  
   console.log(candidateDates);
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();
   console.log(sortedDates);
-
+  console.log(previousAvailTime);
   if (sortedDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
   const validDates: Dayjs[] = sortedDates.map((dateStr) => dayjs(dateStr));
 
