@@ -1,24 +1,20 @@
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "./Participate_timetabe.scss";
 import dayjs from "dayjs";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import Top_banner from "../common/Top_banner";
-import Botton_banner_button from "../common/Botton_banner_button";
 import Timetable from "./Timetable";
 import LeftChevron from "@/assets/LeftChevron.svg";
 
 import { apiCall } from "@/utils/apiCall";
-import { useAPIs2 } from "@/apis/useAPIs2";
 
 import type {
   UISlot,
   SubmitAvailabilityBody,
+  ParticipateObject,
 } from "@/apis/participate/participateTypes";
 
 const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
-
-  const location = useLocation();
   const [params] = useSearchParams();
   const meetingId = params.get("meetingId") || "";
   const pageNum = params.get("pagenum");
@@ -31,12 +27,9 @@ const Participate_timetable_ctn = () => {
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
 
   const finalPostData: SubmitAvailabilityBody = useMemo(() => {
-    const times = selectedTimes
-      .map((t) => ({
-        startAt: dayjs(t.startISO).format("YYYY-MM-DDTHH:mm:ss"),
-        endAt: dayjs(t.endISO).format("YYYY-MM-DDTHH:mm:ss"),
-      }))
-      .sort((a, b) => dayjs(a.startAt).valueOf() - dayjs(b.startAt).valueOf());
+    const times = selectedTimes.sort(
+      (a, b) => dayjs(a.startAt).valueOf() - dayjs(b.startAt).valueOf()
+    );
 
     const nick = nickname.trim();
     return {
@@ -67,7 +60,8 @@ const Participate_timetable_ctn = () => {
       alert("서버 오류");
     }
   };
-  //유저의 일저 데이터를 불러오는 api연동
+
+  //유저의 일정 데이터를 불러오는 api연동
   const getUserScheduleData = async () => {
     if (!meetingData) return;
 
@@ -208,6 +202,7 @@ const Participate_timetable_ctn = () => {
     );
   }
 
+
   // meetingData가 확보된 뒤에만 본문 렌더
   return (
     <>
@@ -221,17 +216,12 @@ const Participate_timetable_ctn = () => {
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
             <div className="meeting_info">
-              <p>{meetingData.title}</p>
-              <p>{meetingData.description}</p>
+              <p>{meetingData?.title}</p>
+              <p>{meetingData?.description}</p>
             </div>
           </div>
 
-          <input
-            type="text"
-            value={nickname}
-            onChange={handleSetNickname}
-            placeholder="닉네임*"
-          />
+          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임*" />
         </div>
 
         <div className="timetable">
@@ -240,7 +230,7 @@ const Participate_timetable_ctn = () => {
           </p>
           <div className="timetable_ctn">
             <Timetable
-              candidateDates={meetingData.candidateDates ?? []}
+              candidateDates={meetingData?.candidateDates ?? []}
               selectedTimes={selectedTimes}
               setSelectedTimes={setSelectedTimes}
               previousAvailTime={previousAvailTime}
