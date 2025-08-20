@@ -231,7 +231,7 @@ const Participate_timetable_ctn = () => {
             type="text"
             value={nickname}
             onChange={handleSetNickname}
-            placeholder="닉네임*"
+            placeholder="닉네임"
           />
         </div>
 
