@@ -7,10 +7,7 @@ import LeftChevron from "@/assets/LeftChevron.svg";
 
 import { apiCall } from "@/utils/apiCall";
 
-import type {
-  UISlot,
-  SubmitAvailabilityBody,
-} from "@/apis/participate/participateTypes";
+import type { UISlot, SubmitAvailabilityBody } from "@/apis/participate/participateTypes";
 
 const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
@@ -26,11 +23,25 @@ const Participate_timetable_ctn = () => {
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
 
   const finalPostData: SubmitAvailabilityBody = useMemo(() => {
+    const snap30 = (d: dayjs.Dayjs) =>
+      d
+        .minute(Math.floor(d.minute() / 30) * 30)
+        .second(0)
+        .millisecond(0);
     const times = selectedTimes
-      .map((t) => ({
-        startAt: dayjs(t.startISO).format("YYYY-MM-DDTHH:mm:ss"),
-        endAt: dayjs(t.endISO).format("YYYY-MM-DDTHH:mm:ss"),
-      }))
+      .map((t: any) => {
+        const sRaw = t.startISO ?? t.startAt; // 문자열 ISO 또는 Date 모두 허용
+        const eRaw = t.endISO ?? t.endAt;
+        let s = snap30(dayjs(sRaw));
+        let e = snap30(dayjs(eRaw));
+        if (!e.isAfter(s)) {
+          e = s.add(30, "minute"); // 0길이/역전 방지
+        }
+        return {
+          startAt: s.format("YYYY-MM-DDTHH:mm:ss"),
+          endAt: e.format("YYYY-MM-DDTHH:mm:ss"),
+        };
+      })
       .sort((a, b) => dayjs(a.startAt).valueOf() - dayjs(b.startAt).valueOf());
 
     const nick = nickname.trim();
@@ -43,6 +54,7 @@ const Participate_timetable_ctn = () => {
   const backtoLink = () => {
     navigate("/schedule");
   };
+
   //유저의 미팅정보(candidatedate)를 먼저 불러옴
   const getUserMeetingData = async () => {
     if (!meetingId) return;
@@ -98,12 +110,7 @@ const Participate_timetable_ctn = () => {
   const getPreviousAvailTime = async () => {
     if (!meetingId) return;
     try {
-      const res = await apiCall(
-        `/meeting/${meetingId}/available-times`,
-        "GET",
-        null,
-        true
-      );
+      const res = await apiCall(`/meeting/${meetingId}/available-times`, "GET", null, true);
 
       if (!res) return;
       if (res.code === 404) {
@@ -145,24 +152,30 @@ const Participate_timetable_ctn = () => {
       alert("참여 가능 시간을 최소 1개 이상 선택해주세요.");
       return;
     }
-    console.log(finalPostData);
+    console.log("fpd:", finalPostData);
+    console.log(meetingId);
+    const isModify = pageNum === "3";
+    const url = isModify ? `/meeting-lists/${meetingId}` : `/meeting/id/${meetingId}/join`;
+    const method = isModify ? "PATCH" : "POST";
+
+    // PATCH 바디는 selectedTimes만, POST는 기존 명세(finalPostData) 유지
+    const body = isModify ? { selectedTimes: finalPostData.selectedTimes } : finalPostData;
+
     try {
-      const res = await apiCall(
-        `/meeting/id/${meetingId}/join`,
-        "POST",
-        finalPostData,
-        true // Authorization 포함(프로젝트 util 정책 유지)
-      );
+      const res = await apiCall(url, method, body, true);
 
       if (!res) return;
 
       // 명세에 맞춘 응답 처리
       if (res.code === 200 && res.success) {
-        // 참여 성공 후 이동/알림 처리
-        alert("미팅 참여 성공!");
+        alert(isModify ? "미팅 참여 정보 수정 성공!" : "미팅 참여 성공!");
         console.log(res);
-        navigate(`/schedule`);
-        // navigate(`/meeting/${meetingId}`);
+        // navigate(`/schedule`);
+        navigate("/meeting/detail", {
+          state: {
+            meetingId: meetingId,
+          },
+        });
       } else if (res.code === 409) {
         alert("이미 이 미팅에 참가했습니다.");
       } else if (res.code === 400) {
@@ -192,12 +205,7 @@ const Participate_timetable_ctn = () => {
                 <p />
               </div>
             </div>
-            <input
-              type="text"
-              value={nickname}
-              onChange={handleSetNickname}
-              placeholder="닉네임"
-            />
+            <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임" />
           </div>
         </div>
       </>
@@ -222,12 +230,7 @@ const Participate_timetable_ctn = () => {
             </div>
           </div>
 
-          <input
-            type="text"
-            value={nickname}
-            onChange={handleSetNickname}
-            placeholder="닉네임*"
-          />
+          <input type="text" value={nickname} onChange={handleSetNickname} placeholder="닉네임" />
         </div>
 
         <div className="timetable">
@@ -236,7 +239,9 @@ const Participate_timetable_ctn = () => {
           </p>
           <div className="timetable_ctn">
             <Timetable
-              candidateDates={Array.isArray(meetingData?.candidateDates) ? meetingData.candidateDates : []}
+              candidateDates={
+                Array.isArray(meetingData?.candidateDates) ? meetingData.candidateDates : []
+              }
               selectedTimes={selectedTimes}
               setSelectedTimes={setSelectedTimes}
               previousAvailTime={Array.isArray(previousAvailTime) ? previousAvailTime : []}
