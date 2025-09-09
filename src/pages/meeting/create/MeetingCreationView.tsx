@@ -3,11 +3,7 @@ import styles from "./MeetingCreationView.module.scss";
 import MeetingOptionCard from "./MeetingOptionCard";
 import type { MeetingSendData } from "./MeetingCreationPage";
 import { cardDataSet } from "./constants/MeetingCreation.constants";
-import {
-  deadlineParse,
-  durationMinutesParse,
-  projectDataParse,
-} from "@/utils/MeetingCreationUtils";
+import { deadlineParse, durationMinutesParse, projectDataParse } from "@/utils/MeetingCreationUtils";
 
 interface Props {
   setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,12 +28,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   };
 
   useEffect(() => {
-    if (
-      meetingTitle &&
-      meetingCandidateDates.length > 0 &&
-      durationMinutes &&
-      deadlineParse(deadline)
-    ) {
+    if (meetingTitle && meetingCandidateDates.length > 0 && durationMinutes && deadlineParse(deadline)) {
       setAllDataReserved(true);
       setCompleteData({
         title: meetingTitle,
@@ -48,14 +39,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
         projectId: projectDataParse(projectData),
       });
     }
-  }, [
-    meetingTitle,
-    meetingDescription,
-    meetingCandidateDates,
-    durationMinutes,
-    deadline,
-    projectData,
-  ]);
+  }, [meetingTitle, meetingDescription, meetingCandidateDates, durationMinutes, deadline, projectData]);
 
   return (
     <div className={styles.meetingCreationView}>
@@ -78,6 +62,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
             type={item.id}
             clickedCardNum={clickedCardNum}
             setCardClickedNum={setClickedCardNum}
+            meetingCandidateDates={meetingCandidateDates}
           />
         ))}
       </div>

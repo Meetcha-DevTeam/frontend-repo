@@ -14,11 +14,21 @@ interface Props {
   data: string | string[];
   type: number;
   clickedCardNum: number;
+  meetingCandidateDates?: string[];
   setCardClickedNum: React.Dispatch<React.SetStateAction<number>>;
   dataSetter: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const MeetingOptionCard = ({ title, icon, data, type, clickedCardNum, setCardClickedNum, dataSetter }: Props) => {
+const MeetingOptionCard = ({
+  title,
+  icon,
+  data,
+  type,
+  clickedCardNum,
+  meetingCandidateDates,
+  setCardClickedNum,
+  dataSetter,
+}: Props) => {
   const [expanded, setExpanded] = useState<boolean>(false); // 카드가 펼쳐졌는지 여부
   const contentRef = useRef<HTMLDivElement>(null); // 사용자 입력 컴포넌트 크기 영역 참조 변수
   let inputComponent = null; // 사용자 입력 방식에 따른 컴포넌트(input태그, 달력, ...)
@@ -47,7 +57,10 @@ const MeetingOptionCard = ({ title, icon, data, type, clickedCardNum, setCardCli
     case 3:
       inputComponent = (
         <>
-          <CalendarInputComponent dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>} />
+          <CalendarInputComponent
+            dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+            meetingCandidateDates={meetingCandidateDates}
+          />
           <TimePicker
             onChange={(item) => {
               (dataSetter as React.Dispatch<React.SetStateAction<string>>)((prev) => {
