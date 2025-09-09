@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./MeetingCreationView.module.scss";
 import MeetingOptionCard from "./MeetingOptionCard";
 import type { MeetingSendData } from "./MeetingCreationPage";
-import { parse } from "date-fns/parse";
 import { cardDataSet } from "./constants/MeetingCreation.constants";
+import {
+  deadlineParse,
+  durationMinutesParse,
+  projectDataParse,
+} from "@/utils/MeetingCreationUtils";
 
 interface Props {
   setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +21,7 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   const [durationMinutes, setDurationMinutes] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
   const [projectData, setProjectData] = useState<string>(null);
+  const [clickedCardNum, setClickedCardNum] = useState<number>(null); // 미팅 카드 중 유저가 클릭한 카드의 번호
 
   const stateMapping = {
     description: { data: meetingDescription, dataSetter: setMeetingDescription },
@@ -26,26 +31,6 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
     project: { data: projectData, dataSetter: setProjectData },
   };
 
-  const projectDataParse = (project: string) => {
-    if (!project) return null;
-    const index = project.indexOf(" ");
-    return project.slice(0, index);
-  };
-
-  const durationMinutesParse = (durationMinutes: string) => {
-    const parsedDate = parse(durationMinutes, "HH:mm", new Date()); // duration은 숫자로 파싱하면서 총 "분"으로 변환
-    return parsedDate.getHours() * 60 + parsedDate.getMinutes();
-  };
-
-  const deadlineParse = (deadline: string) => {
-    if (!deadline) return null;
-    if (!deadline.includes("T")) return null;
-    const [date, time] = deadline?.split("T");
-    const [hour, minute] = time?.split(":");
-    const paddedTime = hour?.padStart(2, "0") + ":" + minute;
-    return date + "T" + paddedTime;
-  };
-  //
   useEffect(() => {
     if (
       meetingTitle &&
@@ -91,6 +76,8 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
             data={stateMapping[item.stateKey as keyof typeof stateMapping].data}
             dataSetter={stateMapping[item.stateKey as keyof typeof stateMapping].dataSetter}
             type={item.id}
+            clickedCardNum={clickedCardNum}
+            setCardClickedNum={setClickedCardNum}
           />
         ))}
       </div>
