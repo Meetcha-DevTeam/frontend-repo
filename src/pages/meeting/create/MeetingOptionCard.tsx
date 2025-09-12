@@ -22,18 +22,29 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null); // 사용자 입력 컴포넌트 크기 영역 참조 변수
   let inputComponent = null; // 사용자 입력 방식에 따른 컴포넌트(input태그, 달력, ...)
 
+  const isPreviousDate = (date: Date) => {
+    return date.getTime() < new Date().getTime() && date.getDate() < new Date().getDate();
+  };
+
   switch (type) {
     case 0:
       inputComponent = (
         <TextInputComponent
-          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+          dataSetter={
+            dataSetter as React.Dispatch<React.SetStateAction<string>>
+          }
         />
       );
       break;
     case 1:
       inputComponent = (
         <CalendarMultipleInputComponent
-          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string[]>>}
+          dataSetter={
+            dataSetter as React.Dispatch<React.SetStateAction<string[]>>
+          }
+          tileDisabled={({ date }) => {
+            return isPreviousDate(date);
+          }}
         />
       );
       break;
@@ -52,25 +63,32 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
       inputComponent = (
         <>
           <CalendarInputComponent
-            dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+            dataSetter={
+              dataSetter as React.Dispatch<React.SetStateAction<string>>
+            }
+            tileDisabled={({ date }) => {
+              return isPreviousDate(date);
+            }}
           />
           <TimePicker
             onChange={(item) => {
-              (dataSetter as React.Dispatch<React.SetStateAction<string>>)((prev) => {
-                if (!prev) {
-                  // 초기의 빈 문자열인 경우
-                  return item;
-                } else if (prev.includes("T")) {
-                  // 날짜+시간이 이미 입력된 경우
-                  return `${prev?.split("T")[0]}T${item}`;
-                } else if (prev.includes(":")) {
-                  // 시간만 입력된 경우
-                  return item;
-                } else {
-                  // 날짜만 입력된 경우
-                  return `${prev}T${item}`;
+              (dataSetter as React.Dispatch<React.SetStateAction<string>>)(
+                (prev) => {
+                  if (!prev) {
+                    // 초기의 빈 문자열인 경우
+                    return item;
+                  } else if (prev.includes("T")) {
+                    // 날짜+시간이 이미 입력된 경우
+                    return `${prev?.split("T")[0]}T${item}`;
+                  } else if (prev.includes(":")) {
+                    // 시간만 입력된 경우
+                    return item;
+                  } else {
+                    // 날짜만 입력된 경우
+                    return `${prev}T${item}`;
+                  }
                 }
-              });
+              );
             }}
             ampm={false}
             minRange={1}
@@ -81,7 +99,9 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
     case 4:
       inputComponent = (
         <ProjectInputComponent
-          dataSetter={dataSetter as React.Dispatch<React.SetStateAction<string>>}
+          dataSetter={
+            dataSetter as React.Dispatch<React.SetStateAction<string>>
+          }
         />
       );
   }
@@ -120,14 +140,23 @@ const MeetingOptionCard = ({ title, icon, data, type, dataSetter }: Props) => {
   return (
     <div
       className={
-        expanded ? `${styles.expanded} ${styles.meetingOptionCard}` : styles.meetingOptionCard
+        expanded
+          ? `${styles.expanded} ${styles.meetingOptionCard}`
+          : styles.meetingOptionCard
       }
     >
-      <div className={styles.meetingOptionCard__top} onClick={() => setExpanded((prev) => !prev)}>
+      <div
+        className={styles.meetingOptionCard__top}
+        onClick={() => setExpanded((prev) => !prev)}
+      >
         <div className={styles.meetingOptionCard__top__icon}>{icon}</div>
         <div className={styles.meetingOptionCard__top__data}>
-          <div className={styles.meetingOptionCard__top__data__label}>{title}</div>
-          <div className={styles.meetingOptionCard__top__data__value}>{formatData(data)}</div>
+          <div className={styles.meetingOptionCard__top__data__label}>
+            {title}
+          </div>
+          <div className={styles.meetingOptionCard__top__data__value}>
+            {formatData(data)}
+          </div>
         </div>
         <div className={styles.meetingOptionCard__top__downArrow}>
           <DownArrow />

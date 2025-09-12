@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import Calendar from "react-calendar";
 import "./CalendarInputComponent.scss";
 import { dateFormatter } from "@/utils/dateFormatter";
 
-interface Props {
+interface Props extends Omit<ComponentProps<typeof Calendar>, "onClickDay" | "tileClassName" | "formatDay" > {
   dataSetter:
     | React.Dispatch<React.SetStateAction<string>>
     | React.Dispatch<React.SetStateAction<string[]>>;
 }
-const CalendarInputComponent = ({ dataSetter }: Props) => {
+const CalendarInputComponent = ({ dataSetter,...restProps }: Props) => {
   const [clickedDay, setClickedDay] = useState<string>();
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const CalendarInputComponent = ({ dataSetter }: Props) => {
             return "custom-active";
           }
         }}
+        {...restProps}
       />
     </div>
   );
