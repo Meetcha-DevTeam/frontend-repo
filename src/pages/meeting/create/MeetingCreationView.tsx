@@ -21,6 +21,8 @@ const MeetingCreationView = ({ setAllDataReserved, setCompleteData }: Props) => 
   const [deadline, setDeadline] = useState<string>("");
   const [projectData, setProjectData] = useState<string>(null);
 
+  console.log({meetingCandidateDates,durationMinutes,deadline})
+
   const cardDataSet = [
     {
       id: 0,
