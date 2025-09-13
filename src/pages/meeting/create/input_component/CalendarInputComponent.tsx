@@ -37,7 +37,7 @@ const CalendarInputComponent = ({ meetingCandidateDates, dataSetter }: Props) =>
   return (
     <div className="calendarInputComponent">
       <Calendar
-        formatDay={(locale, date) => date.toLocaleString("en", { day: "numeric" })}
+        formatDay={(_, date) => date.toLocaleString("en", { day: "numeric" })}
         onClickDay={(value) => {
           setClickedDay(dateFormatter(value));
         }}
