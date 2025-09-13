@@ -13,7 +13,7 @@ const Continue_Google = () => {
     const prompt = "consent";
 
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&access_type=${accessType}&include_granted_scopes=true&prompt=${prompt}`;
-    window.location.href = "/schedule";
+    window.location.href = authUrl;
   };
 
   return (
