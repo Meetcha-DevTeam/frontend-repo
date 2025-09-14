@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAPIs2 } from "@/apis/useAPIs2";
+import { apiCall } from "@/apis/apiCall";
 import "./Memoir_meeting.scss";
-
+import { useAPIs2 } from "@/apis/useAPIs2";
 interface Props {
   meetingLists: any[];
 }
@@ -14,7 +14,7 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
     null
   );
 
-  // 1. 훅은 최상단에서 선언
+
   const {
     response: chosenMemoir,
     loading,
@@ -27,6 +27,8 @@ const Meeting_list_content = ({ meetingLists }: Props) => {
     true,
     false
   );
+
+
 
   // 2. 클릭 시 선택된 미팅 ID 저장 + fire 실행
   const handleClick = (meeting: any) => {
