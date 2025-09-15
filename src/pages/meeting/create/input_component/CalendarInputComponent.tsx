@@ -2,6 +2,7 @@ import { useEffect, useState, type ComponentProps } from "react";
 import Calendar from "react-calendar";
 import "./CalendarInputComponent.scss";
 import { dateFormatter } from "@/utils/dateFormatter";
+import { min, startOfDay } from "date-fns";
 
 interface Props extends Omit<ComponentProps<typeof Calendar>, "onClickDay" | "tileClassName" | "formatDay" > {
   dataSetter:
@@ -10,6 +11,11 @@ interface Props extends Omit<ComponentProps<typeof Calendar>, "onClickDay" | "ti
 }
 const CalendarInputComponent = ({ dataSetter,...restProps }: Props) => {
   const [clickedDay, setClickedDay] = useState<string>();
+  const limitDay = useMemo(() => {
+    if (!meetingCandidateDates?.length) return undefined;
+    const dates = meetingCandidateDates.map((v) => startOfDay(new Date(v)));
+    return min(dates); // Date 객체 반환
+  }, [meetingCandidateDates]);
 
   useEffect(() => {
     (dataSetter as React.Dispatch<React.SetStateAction<string>>)((prev) => {
@@ -32,7 +38,7 @@ const CalendarInputComponent = ({ dataSetter,...restProps }: Props) => {
   return (
     <div className="calendarInputComponent">
       <Calendar
-        formatDay={(locale, date) => date.toLocaleString("en", { day: "numeric" })}
+        formatDay={(_, date) => date.toLocaleString("en", { day: "numeric" })}
         onClickDay={(value) => {
           setClickedDay(dateFormatter(value));
         }}
@@ -42,6 +48,7 @@ const CalendarInputComponent = ({ dataSetter,...restProps }: Props) => {
           }
         }}
         {...restProps}
+        tileDisabled={({ date, view }) => view === "month" && startOfDay(date) >= limitDay}
       />
     </div>
   );
