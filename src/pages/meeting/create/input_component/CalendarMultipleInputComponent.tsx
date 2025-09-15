@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import Calendar from "react-calendar";
 import "./CalendarMultipleInputComponent.scss";
 import { dateFormatter } from "@/utils/dateFormatter";
+import { isPreviousDate } from "@/utils/MeetingOptionCardUtils";
 
-interface Props {
-  dataSetter:
-    | React.Dispatch<React.SetStateAction<string>>
-    | React.Dispatch<React.SetStateAction<string[]>>;
+interface Props extends Omit<ComponentProps<typeof Calendar>, "onClickDay" | "tileClassName" | "formatDay"> {
+  dataSetter: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<string[]>>;
 }
-const CalendarMultipleInputComponent = ({ dataSetter }: Props) => {
+const CalendarMultipleInputComponent = ({ dataSetter, ...restProps }: Props) => {
   const [clickedDays, setClickedDays] = useState<string[]>([]);
 
   const clickDaySaver = (value: Date) => {
@@ -34,6 +33,8 @@ const CalendarMultipleInputComponent = ({ dataSetter }: Props) => {
             return "custom-active";
           }
         }}
+        // {...restProps}
+        tileDisabled={({ date }) => isPreviousDate(date)}
       />
     </div>
   );
