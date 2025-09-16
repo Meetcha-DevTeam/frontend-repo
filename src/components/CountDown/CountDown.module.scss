@@ -15,7 +15,7 @@
   border-radius: 8px;
 
   &__label {
-    font-size: 14px;
+    @extend %body3;
   }
 
   &__time {

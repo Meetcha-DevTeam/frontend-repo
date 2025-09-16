@@ -217,7 +217,7 @@ const Participate_timetable_ctn = () => {
       </div>
 
       <div className="participate_ctn">
-        <CountDown label={"참여 마감 시간"} finishTime={new Date("2025-09-19T12:00:00")} />
+        <CountDown label={"참가 마감 시간"} finishTime={new Date("2025-09-19T12:00:00")} />
         <div className="text_container1">
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
