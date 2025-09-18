@@ -1,4 +1,5 @@
 import React from "react";
+import {motion} from "framer-motion";
 import "./CommonContent.scss";
 
 import meetingPage from "@assets/meetingCreate.svg";
@@ -6,10 +7,20 @@ import participatePage from "@assets/participate.svg";
 import meetingListPage from "@assets/meetingLists.svg";
 import memoirPage from "@assets/memoir.svg";
 
+const container ={hidden:{},show:{transition:{staggerChildren:0.15}}};
+const item={hidden:{opacity:0,y:32},show:{opacity:1,y:0,transition:{duration:0.6}}};
+const lineV={hidden:{opacity:0,scaleY:0},show:{opacity:1,scaleY:1,transition:{duration:0.5}}};
+const dotV={hidden:{opacity:0,scale:0.7,y:8},show:{opacity:1,scale:1,y:0,transition:{duration:0.45}}};
+
 const CommonContent = () => {
   return (
-    <div className="content_ctn">
-      <div className="content-">
+    <motion.div className="content_ctn"
+    variants={container}
+    initial="hidden"
+    whileInView="show"
+    viewport={{once:true,amount:0.2}}
+    >
+      <motion.div className="content-" variants={item}>
         <div className="content_text">
           <p>미팅 생성과 공유</p>
           <div className="content_desc">
@@ -18,13 +29,13 @@ const CommonContent = () => {
           </div>
         </div>
         <div className="img_ctn">
-          <img src={meetingPage} alt="meetingPage"></img>
-          <span className="line"></span>
-          <span className="circle"></span>
-          <img src={participatePage} alt="participatePage"></img>
+          <motion.img src={meetingPage} alt="meetingPage"/>
+          <motion.span className="line"/>
+          <motion.span className="circle"/>
+          <motion.img src={participatePage} alt="participatePage"/>
         </div>
-      </div>
-      <div className="content">
+      </motion.div>
+      <motion.div className="content" variants={item}>
         <div className="content_text">
           <p>미팅 관리</p>
           <div className="content_desc">
@@ -33,8 +44,8 @@ const CommonContent = () => {
           </div>
         </div>
         <img src={meetingListPage} alt="meetingListPage"></img>
-      </div>
-      <div className="content">
+      </motion.div>
+      <motion.div className="content" variants={item}>
         <div className="content_text">
           <p>미팅 회고</p>
           <div className="content_desc">
@@ -43,8 +54,8 @@ const CommonContent = () => {
           </div>
         </div>
         <img src={memoirPage} alt="memoirPage"></img>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
