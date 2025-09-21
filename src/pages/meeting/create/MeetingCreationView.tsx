@@ -1,28 +1,21 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "./MeetingCreationView.module.scss";
-import MeetingOptionCard from "./MeetingOptionCard";
-import type { MeetingSendData } from "./MeetingCreationPage";
-import { cardDataSet } from "./constants/MeetingCreation.constants";
-import {
-  useMeetingCreateFormContext,
-} from "./hooks/useMeetingCreateForm";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionItem,
-  AccordionTrigger,
-} from "@radix-ui/react-accordion";
+import { durationOptions } from "./constants/MeetingCreation.constants";
+import { useMeetingCreateFormContext } from "./hooks/useMeetingCreateForm";
+import { Accordion } from "@radix-ui/react-accordion";
 import Pencil from "@assets/pencil.svg?react";
-import DownArrow from "@assets/downArrow.svg?react";
 import Calendar from "@assets/calendar.svg?react";
-import TextInputComponent from "./input_component/TextInputComponent";
+import Clock from "@assets/clock.svg?react";
+import Watch from "@assets/watch.svg?react";
+// 아이콘 이름이 아이콘? 일단 피그마엔 그렇게 적힘
+import Icon from "@assets/icon.svg?react";
 import type { MeetingCreationSchema } from "./schemas/meetingCreationSchema";
-
-interface Props {
-  setAllDataReserved: React.Dispatch<React.SetStateAction<boolean>>;
-  setCompleteData: React.Dispatch<React.SetStateAction<MeetingSendData>>;
-}
+import { MeetingAccordionItem } from "./MeetingAccordionItem";
+import { MultiSelectCalendar } from "./input_component/MultiSelectCalendar";
+import { DurationSelect } from "./input_component/DurationSelect";
+import { DateTimePicker } from "./input_component/DateTimePicker";
+import dayjs from "dayjs";
+import { ProjectSetter } from "./input_component/ProjectSetter";
 
 const fieldNames: Record<
   keyof MeetingCreationSchema,
@@ -34,35 +27,9 @@ const fieldNames: Record<
   durationMinutes: "durationMinutes",
   deadline: "deadline",
   projectId: "projectId",
-};
+} as const;
 
-const TriggerContent = ({
-  icon,
-  title,
-  value,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  value: string | string[];
-}) => {
-  return (
-    <>
-      {icon}
-      <div className={styles.accordion__trigger__content}>
-        <p className={styles.accordion__trigger__content__title}>{title}</p>
-        <p className={styles.accordion__trigger__content__value}>
-          {typeof value === "string" ? value : value.join(", ")}
-        </p>
-      </div>
-      <DownArrow className={styles.accordion__trigger__chevron} />
-    </>
-  );
-};
-
-const MeetingCreationView = ({
-  setAllDataReserved,
-  setCompleteData,
-}: Props) => {
+const MeetingCreationView = () => {
   const form = useMeetingCreateFormContext();
 
   return (
@@ -74,26 +41,20 @@ const MeetingCreationView = ({
         onChange={(e) => {
           form.setFormValue("title", e.target.value);
         }}
+        autoFocus
       />
       <Accordion
         type="single"
         collapsible
-        className={styles.accordion}
+        className={styles.accordionContainer}
       >
-        <AccordionItem
-          value={fieldNames.description}
-          className={styles.accordion__item}
-        >
-          <AccordionHeader>
-            <AccordionTrigger className={styles.accordion__trigger}>
-              <TriggerContent
-                icon={<Pencil className={styles.accordion__trigger__icon} />}
-                title="미팅 설명"
-                value={form.getFormValue("description") || "-"}
-              />
-            </AccordionTrigger>
-          </AccordionHeader>
-          <AccordionContent className={styles.accordion__content}>
+        <MeetingAccordionItem
+          triggerContent={{
+            Icon: Pencil,
+            title: "미팅 설명",
+            value: form.getFormValue("description") || "-",
+          }}
+          formInputComponent={
             <textarea
               style={{
                 width: "100%",
@@ -109,21 +70,63 @@ const MeetingCreationView = ({
                 form.setFormValue("description", e.target.value);
               }}
             />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem
-          value={fieldNames.candidateDates}
-          className={styles.accordion__item}
-        >
-          <AccordionHeader>
-            <AccordionTrigger className={styles.accordion__trigger}>
-              <TriggerContent icon={<Calendar className={styles.accordion__trigger__icon} />} title="미팅 후보 날짜" value={form.getFormValue("candidateDates")} />
-            </AccordionTrigger>
-          </AccordionHeader>
-          <AccordionContent className={styles.accordion__content}>
-            미구현
-          </AccordionContent>
-        </AccordionItem>
+          }
+          fieldName={fieldNames.description}
+        />
+        <MeetingAccordionItem
+          triggerContent={{
+            Icon: Calendar,
+            title: "미팅 후보 날짜",
+            value:
+              form.getFormValue("candidateDates").length > 0
+                ? form
+                    .getFormValue("candidateDates")
+                    .map((date) => dayjs(date).format("YYYY년 MM월 DD일"))
+                : "선택해주세요",
+          }}
+          formInputComponent={<MultiSelectCalendar />}
+          fieldName={fieldNames.candidateDates}
+          required
+        />
+        <MeetingAccordionItem
+          triggerContent={{
+            Icon: Clock,
+            title: "미팅 진행 시간",
+            value:
+              durationOptions.find(
+                (option) =>
+                  option.value === form.getFormValue("durationMinutes")
+              )?.label || "선택해주세요",
+          }}
+          formInputComponent={<DurationSelect />}
+          fieldName={fieldNames.durationMinutes}
+          required
+        />
+        <MeetingAccordionItem
+          triggerContent={{
+            Icon: Watch,
+            title: "투표 마감 시간",
+            value: form.getFormValue("deadline")
+              ? dayjs(form.getFormValue("deadline")).format(
+                  "YYYY년 MM월 DD일 HH시 mm분"
+                )
+              : "선택해주세요",
+          }}
+          formInputComponent={<DateTimePicker />}
+          fieldName={fieldNames.deadline}
+          required
+        />
+        <MeetingAccordionItem
+          triggerContent={{
+            Icon: Icon,
+            title: "프로젝트",
+            value: form.getFormValue("projectId")
+              ? "선택 완료"
+              : "선택해주세요",
+          }}
+          formInputComponent={<ProjectSetter />}
+          fieldName={fieldNames.projectId}
+        />
       </Accordion>
     </div>
   );

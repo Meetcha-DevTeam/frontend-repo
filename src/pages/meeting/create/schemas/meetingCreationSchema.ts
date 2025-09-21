@@ -53,25 +53,12 @@ const meetingCreationSchema = z
         { message: "올바르지 않은 형식입니다." }
       ),
     /**
-     * H(H):MM
+     * H(H):MM -> number
      */
     durationMinutes: z
-      .string()
+      .number()
       .min(1, { message: "진행 시간을 선택해주세요" })
-      .refine(
-        (value) => {
-          const [hour, minute] = value.split(":");
-          return (
-            hour &&
-            minute &&
-            parseInt(hour) >= 0 &&
-            parseInt(hour) <= 23 &&
-            parseInt(minute) >= 0 &&
-            parseInt(minute) <= 59
-          );
-        },
-        { message: "올바르지 않은 형식입니다." }
-      ),
+      .max(1440, { message: "올바르지 않은 형식입니다." }),
     /**
      * YYYY-MM-DDTH(H):MM <- TODO: H하나면 native Date객체 기준 Invalid Date임
      */
@@ -90,12 +77,12 @@ const meetingCreationSchema = z
     // 후보날짜와 데드라인 관계 검증
     if (
       value.candidateDates.some((date) =>
-        dayjs(date).isAfter(dayjs(value.deadline))
+        dayjs(date).isBefore(dayjs(value.deadline))
       )
     ) {
       context.addIssue({
         code: "custom",
-        message: "후보날짜는 데드라인 이후여야 합니다.",
+        message: "후보날짜는 참여 마감 시간 이후여야 합니다.",
         path: ["candidateDates", "deadline"],
       });
     }
@@ -115,11 +102,11 @@ export type MeetingCreationSchema = z.infer<typeof meetingCreationSchema>;
  */
 export interface MeetingSendData {
   title: string;
-  description: string;
+  description?: string;
   durationMinutes: number;
   candidateDates: string[];
   deadline: string;
-  projectId: string;
+  projectId?: string;
 }
 
 export { meetingCreationSchema };

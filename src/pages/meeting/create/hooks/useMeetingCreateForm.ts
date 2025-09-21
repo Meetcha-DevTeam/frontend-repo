@@ -61,7 +61,7 @@ export const useMeetingCreateForm = (
     setter?.defaultValue ?? {
       title: "",
       candidateDates: [],
-      durationMinutes: "",
+      durationMinutes: 0,
       deadline: "",
     }
   );
