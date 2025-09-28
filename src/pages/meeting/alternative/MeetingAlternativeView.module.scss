@@ -48,8 +48,8 @@
 
   border: none;
 
-  background-color: $color-orange-30000 !important;
-  color: $color-orange-3000;
+  background-color: $color-orange-2 !important;
+  color: $color-orange-10;
 }
 
 .selectedEvent {
@@ -58,7 +58,7 @@
 }
 
 .checkButton {
-  color: $color-orange-30000;
+  color: $color-orange-2;
 }
 
 .dashedLine {
@@ -81,7 +81,7 @@
 
   font-family: Pretendard;
 
-  color: $color-orange-3000;
+  color: $color-orange-10;
 
   &__title {
     font-size: 14px;
@@ -97,11 +97,11 @@
 }
 
 .active {
-  background-color: $color-orange-3000;
+  background-color: $color-orange-10;
   color: white;
 }
 
 .inactive {
-  background-color: $color-orange-200;
+  background-color: $color-orange-6;
   color: white;
 }
