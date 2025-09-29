@@ -2,16 +2,31 @@ import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; //  수정됨: 드래그/선택을 위해 추가
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
 import "./Participate_timetabe.scss";
-import type { Dayjs } from "dayjs";
-import type {
+
+import {
+  parseISO,
+  startOfDay,
+  endOfDay,
+  addDays,
+  differenceInCalendarDays,
+  getDay,
+  getHours,
+  format as formatDate,
+  setMinutes,
+  setSeconds,
+  setMilliseconds,
+  addMinutes,
+  isAfter,
+  getTime,
+  getMinutes,
+} from "date-fns";
+import { ko } from "date-fns/locale";
+
+import type{
   ParticipateObject,
   UISlot,
-} from "@/apis/participate/participateTypes";
-
-dayjs.locale("ko");
+}from "@apis/participate/participateTypes";
 
 interface BusyInterval {
   startAt: string;
@@ -33,11 +48,15 @@ const Timetable = ({
   scheduleData,
   previousAvailTime,
 }) => {
-  const keyOf = (sISO: string, eISO: string) =>
-    `${dayjs(sISO).second(0).millisecond(0).valueOf()}|${dayjs(eISO)
-      .second(0)
-      .millisecond(0)
-      .valueOf()}`;
+const snap30 = (d: Date) => {
+    const m = Math.floor(getMinutes(d) / 30) * 30;
+    return setMilliseconds(setSeconds(setMinutes(d, m), 0), 0);
+  };
+  const keyOf = (sISO: string, eISO: string) => {
+    const s = getTime(setMilliseconds(setSeconds(parseISO(sISO), 0), 0));
+    const e = getTime(setMilliseconds(setSeconds(parseISO(eISO), 0), 0));
+    return `${s}|${e}`;
+  };
 
   useEffect(() => {
     if (!Array.isArray(previousAvailTime) || previousAvailTime.length === 0)
@@ -49,21 +68,18 @@ const Timetable = ({
       let changed = false;
 
       for (const slot of previousAvailTime) {
-        const snap30 = (d: dayjs.Dayjs) =>
-          d
-            .minute(Math.floor(d.minute() / 30) * 30)
-            .second(0)
-            .millisecond(0);
-        const start = snap30(dayjs(slot.startAt)).toISOString();
-        const end = snap30(dayjs(slot.endAt)).toISOString();
-        const key = keyOf(start, end);
-
+        const s = snap30(parseISO(slot.startAt));
+        const e = snap30(parseISO(slot.endAt));
+        const sISO = s.toISOString();
+        const eISO = e.toISOString();
+        const key = keyOf(sISO, eISO);
         if (!exists.has(key)) {
-          merged.push({ startAt: start, endAt: end });
+          merged.push({ startAt: sISO, endAt: eISO });
           exists.add(key);
           changed = true;
         }
       }
+
       return changed ? merged : prev;
     });
   }, [previousAvailTime, setSelectedTimes]);
@@ -73,31 +89,26 @@ const Timetable = ({
   console.log(previousAvailTime);
 
   if (sortedDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
-  const validDates: Dayjs[] = sortedDates.map((dateStr) => dayjs(dateStr));
+  
+  const validDates: Date[] = sortedDates.map((dateStr) => parseISO(dateStr));
 
-  const start = validDates[0];
-  const end = validDates.at(-1);
-  const daysSpan = end!.diff(start!, "day") + 1; // 표시할 연속 일수
+   const start = validDates[0];
+  const end = validDates[validDates.length - 1];
+  const daysSpan = differenceInCalendarDays(end, start) + 1;
 
-  const allowedDows: Set<number> = new Set(validDates.map((d) => d.day())); // 0=일 ... 6=토
+  const allowedDows: Set<number> = new Set(validDates.map((d) => getDay(d))); // 0=일 ... 6=토
   const hiddenDays = [0, 1, 2, 3, 4, 5, 6].filter(
     (dow: number) => !allowedDows.has(dow)
   );
 
-  const rangeStart = validDates[0]?.startOf("day").format("YYYY-MM-DD");
-  const rangeEnd = validDates.at(-1)?.endOf("day").format("YYYY-MM-DD");
-  //드래그 선택된 시간들
+  const rangeStart = formatDate(startOfDay(validDates[0]), "yyyy-MM-dd");
+  const rangeEndExclusive = formatDate(addDays(endOfDay(validDates.at(-1)!), 1), "yyyy-MM-dd");
 
   const handleSelect = (info: any) => {
-    const snap30 = (d: dayjs.Dayjs) =>
-      d
-        .minute(Math.floor(d.minute() / 30) * 30)
-        .second(0)
-        .millisecond(0);
-    let s = snap30(dayjs(info.start));
-    let e = snap30(dayjs(info.end));
-    if (!e.isAfter(s)) {
-      e = s.add(30, "minute");
+    let s = snap30(info.start as Date);
+    let e = snap30(info.end as Date);
+    if (!isAfter(e, s)) {
+      e = addMinutes(s, 30);
     }
     const sISO = s.toISOString();
     const eISO = e.toISOString();
@@ -113,9 +124,9 @@ const Timetable = ({
     }
   };
 
-  const busyEvents = (scheduleData ?? []).map((ev) => ({
-    start: dayjs(ev.startAt).toDate(),
-    end: dayjs(ev.endAt).toDate(),
+   const busyEvents = (scheduleData ?? []).map((ev) => ({
+    start: parseISO(ev.startAt), // 'YYYY-MM-DDTHH:mm:ss' → 로컬 Date로 해석
+    end: parseISO(ev.endAt),
     display: "background",
     classNames: ["busy-block"],
     extendedProps: { isBusy: true },
@@ -138,11 +149,8 @@ const Timetable = ({
       views={{
         timeGridSpan: { type: "timeGrid", duration: { days: daysSpan } },
       }}
-      initialDate={validDates[0]?.format("YYYY-MM-DD")}
-      visibleRange={{
-        start: rangeStart,
-        end: dayjs(rangeEnd).add(1, "day").format("YYYY-MM-DD"),
-      }}
+      initialDate={formatDate(validDates[0], "yyyy-MM-dd")}
+      visibleRange={{ start: rangeStart, end: rangeEndExclusive }}
       hiddenDays={hiddenDays}
       locale="ko"
       slotMinTime="00:00:00"
@@ -159,12 +167,11 @@ const Timetable = ({
       height="auto"
       headerToolbar={false}
       dayHeaderContent={(info) => {
-        const date = dayjs(info.date);
-        return `${date.format("M.D")}(${date.format("dd")})`;
+        const label = formatDate(info.date, "M.d(EEE)", { locale: ko }); // 예: 7.22(화)
+        return label;
       }}
       slotLabelContent={(arg) => {
-        const hour = dayjs(arg.date).hour();
-        return `${hour}`;
+        return String(getHours(arg.date)); // 0~23
       }}
     />
   );
