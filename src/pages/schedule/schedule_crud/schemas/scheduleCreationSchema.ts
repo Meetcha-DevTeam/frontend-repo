@@ -46,7 +46,7 @@ export type ScheduleCreationSchema = z.infer<typeof scheduleCreationSchema>;
  * recurrence 필드의 타입
  */
 const RECURRENCE = ["NONE", "DAILY", "WEEKLY", "BIWEEKLY", "MONTHLY"] as const;
-type Recurrence = (typeof RECURRENCE)[number];
+export type Recurrence = (typeof RECURRENCE)[number];
 
 /**
  * 서버로 보낼 데이터 형식
