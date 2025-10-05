@@ -10,7 +10,7 @@
     font-size: 11px;
     font-style: normal;
     font-weight: 600;
-    color: $color-gray-2;
+    color: $color-gray-300;
   }
   &__day {
     display: flex;
@@ -26,5 +26,5 @@
 }
 
 .sunday {
-  color: $color-orange-5 !important;
+  color: $color-orange-10 !important;
 }

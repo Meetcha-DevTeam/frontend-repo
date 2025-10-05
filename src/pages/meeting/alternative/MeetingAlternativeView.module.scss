@@ -16,7 +16,7 @@
   overflow-x: scroll;
 
   &__header {
-    color: $color-gray-6;
+    color: $color-gray-400;
     font-size: 21px;
     font-style: normal;
     font-weight: 700;
@@ -48,8 +48,8 @@
 
   border: none;
 
-  background-color: $color-orange-2 !important;
-  color: $color-orange-5;
+  background-color: $color-orange-100 !important;
+  color: $color-orange-10;
 }
 
 .selectedEvent {
@@ -58,7 +58,7 @@
 }
 
 .checkButton {
-  color: $color-orange-2;
+  color: $color-orange-100;
 }
 
 .dashedLine {
@@ -81,7 +81,7 @@
 
   font-family: Pretendard;
 
-  color: $color-orange-5;
+  color: $color-orange-10;
 
   &__title {
     font-size: 14px;
@@ -97,11 +97,11 @@
 }
 
 .active {
-  background-color: $color-orange-5;
+  background-color: $color-orange-10;
   color: white;
 }
 
 .inactive {
-  background-color: $color-orange-6;
+  background-color: $color-orange-200;
   color: white;
 }

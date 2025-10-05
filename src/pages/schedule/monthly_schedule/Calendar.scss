@@ -11,7 +11,7 @@
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  background: $color-cream-dark;
+  background: $color-cream-100;
   border: none !important;
   // border: 1px solid #a0a096;
   font-family: "Arial", "Helvetica", sans-serif;
@@ -93,11 +93,11 @@
 }
 
 .monthlyScheduleView .react-calendar__month-view__weekdays__weekday--weekend {
-  color: $color-orange-5;
+  color: $color-orange-10;
 }
 
 .monthlyScheduleView .react-calendar__month-view__days__day--weekend {
-  color: $color-orange-5;
+  color: $color-orange-10;
 }
 
 .monthlyScheduleView .react-calendar__month-view__days__day {
@@ -161,7 +161,7 @@
 
 .monthlyScheduleView .react-calendar__tile--active {
   // background: #006edc;
-  background: $color-gray-6 !important;
+  background: $color-gray-400 !important;
   color: white;
 }
 
@@ -192,7 +192,7 @@
 
   border-radius: 15px;
 
-  background-color: $color-orange-5;
+  background-color: $color-orange-10;
   color: white;
   font-size: x-small;
 
