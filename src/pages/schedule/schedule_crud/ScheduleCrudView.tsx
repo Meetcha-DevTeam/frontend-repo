@@ -31,7 +31,7 @@ const ScheduleCrudView = ({
       id: 0,
       icon: <Clock />,
       expand: true,
-      expandComponent: TimePicker,
+      expandedComponent: TimePicker,
       basicComponent: ScheduleDurationRow,
       basicProps: {
         clickedSpan,
@@ -76,7 +76,7 @@ const ScheduleCrudView = ({
             dataSetter={item.dataSetter}
             BasicComponent={item.basicComponent}
             basicProps={item.basicProps}
-            ExpandedComponent={item.expandComponent}
+            ExpandedComponent={item.expandedComponent}
           />
         ))}
       </div>
