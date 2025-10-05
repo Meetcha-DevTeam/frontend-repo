@@ -25,6 +25,7 @@ const scheduleCreationSchema = z
         },
         { message: "올바르지 않은 형식입니다." }
       ),
+    recurrence: z.string().min(1, { message: "반복 주기를 선택해주세요." }),
   })
   .superRefine((value, context) => {
     if (dayjs(value.startAt).isAfter(dayjs(value.endAt))) {
@@ -56,3 +57,5 @@ export interface ScheduleCreationData {
   endAt: string;
   recurrence: Recurrence;
 }
+
+export { scheduleCreationSchema };
