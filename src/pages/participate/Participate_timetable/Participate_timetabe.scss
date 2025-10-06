@@ -11,10 +11,10 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    height: 18%;
+    height: 8rem;
     .meeting_info_ctn {
       width: 100%;
-      height: 40%;
+      height: 3.5rem;
       display: flex;
       flex-direction: row;
       background-color: #fff9f1;
@@ -53,11 +53,15 @@
       }
     }
     input {
+      box-sizing: border-box;
       width: 100%;
-      height: 40%;
+      height: 3.5rem;
+
       border: 1px solid #e8e8e8;
       padding: 1rem;
       border-radius: 8px;
+      text-align: left;
+      direction: 1tr;
     }
   }
 
@@ -142,7 +146,7 @@
 .fc .busy-block {
   background-image: repeating-linear-gradient(
     135deg,
-    rgba(160, 160, 160, 0.35) 0 8px,
-    rgba(160, 160, 160, 0.15) 8px 16px
+    #c6c6c6 0 8px,
+    #a19a9a 8px 16px
   );
 }

@@ -109,6 +109,7 @@ const Timetable = ({
     const k = keyOf(sISO, eISO);
 
     const exists = selectedTimes.some((t) => keyOf(t.startAt, t.endAt) === k);
+    
     if (exists) {
       setSelectedTimes((prev) => prev.filter((t) => keyOf(t.startAt, t.endAt) !== k));
     } else {
