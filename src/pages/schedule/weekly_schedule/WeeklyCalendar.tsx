@@ -5,7 +5,7 @@ import { Calendar, luxonLocalizer } from "react-big-calendar";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudPage from "../schedule_crud/ScheduleCrudPage";
@@ -29,6 +29,19 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
   const [clickedSpan, setClickedSpan] = useState<string>();
   const [clickedSchedule, setClickedSchedule] = useState<Schedule>();
   const [mode, setMode] = useState<boolean>(true); // 생성모드 or 수정모드
+  const dragControls = useDragControls();
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    // 이벤트가 발생한 가장 안쪽 요소를 가져옵니다.
+    const target = e.target as HTMLElement;
+
+    // target의 상위 요소 중 '.time-picker-no-drag' 클래스를 가진 요소가 있는지 확인합니다.
+    // 만약 있다면, TimePicker 내부에서 이벤트가 시작된 것입니다.
+    if (target.closest(".time-picker-no-drag")) {
+      // 이벤트 전파를 막아서 framer-motion의 drag 핸들러가 실행되지 않도록 합니다.
+      e.stopPropagation();
+    }
+  };
 
   const portal = ReactDOM.createPortal(
     <AnimatePresence>
@@ -52,8 +65,9 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            onClick={(e) => e.stopPropagation()}
+            onPointerDown={handlePointerDown}
             drag="y"
+            dragControls={dragControls}
             dragDirectionLock={true}
             dragConstraints={{ top: 0, bottom: 1000 }}
             dragElastic={0}
@@ -65,6 +79,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
               }
             }}
           >
+            {/* <ScheduleCrudPage clickedSpan={clickedSpan} createMode={mode} data={clickedSchedule} /> */}
             <ScheduleCrudPage clickedSpan={clickedSpan} createMode={mode} data={clickedSchedule} />
           </motion.div>
         </>
@@ -123,9 +138,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             recurrence: event.recur,
             eventId: event.id,
           });
-          setClickedSpan(
-            `${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`
-          );
+          setClickedSpan(`${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`);
         }}
       />
       {portal}

@@ -9,7 +9,7 @@ import ScheduleCrudView from "./ScheduleCrudView";
 interface Props {
   clickedSpan: string;
   createMode: boolean; // true -> create mode, false -> edit mode
-  data?: Schedule;
+  data?: Schedule; // 기존 일정 클릭시 얻을수있는 기존 일정 관련 데이터
 }
 
 const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
@@ -21,9 +21,7 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
   useEffect(() => {
     if (!createMode && data) {
       setScheduleTitle(data?.title);
-      setScheduleTime(
-        `${scheduleStringFormatter(data?.startAt)} ${scheduleStringFormatter(data?.endAt)}`
-      );
+      setScheduleTime(`${scheduleStringFormatter(data?.startAt)} ${scheduleStringFormatter(data?.endAt)}`);
       setRecurrence(data?.recurrence);
     }
   }, [data]);
@@ -40,12 +38,10 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
     const scheduleArr = scheduleTime.split(" ");
     const data = {
       title: scheduleTitle,
-      startAt: `${scheduleArr[0].slice(0, -1)}-${scheduleArr[1].slice(
+      startAt: `${scheduleArr[0].slice(0, -1)}-${scheduleArr[1].slice(0, -1)}-${scheduleArr[2].slice(
         0,
-        -1
-      )}-${scheduleArr[2].slice(0, -4)}T${scheduleArr[4].split(":")[0].padStart(2, "0")}:${
-        scheduleArr[4].split(":")[1]
-      }:00`,
+        -4
+      )}T${scheduleArr[4].split(":")[0].padStart(2, "0")}:${scheduleArr[4].split(":")[1]}:00`,
       endAt: `${scheduleArr[5].slice(0, -1)}-${scheduleArr[6].slice(0, -1)}-${scheduleArr[7].slice(
         0,
         -4

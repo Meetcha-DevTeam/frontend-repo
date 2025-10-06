@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./ScheduleCrudView.module.scss";
 import Clock from "@assets/clock.svg?react";
 import Pencil from "@assets/pencil.svg?react";
-import TimePicker from "@/components/TimePicker/TimePicker";
+import { TimePicker } from "@/pages/schedule/schedule_crud/components/TimePicker";
 import ScheduleCreationCard from "./ScheduleCrudCard";
 import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleDurationRow from "./ScheduleDurationRow";
