@@ -10,16 +10,22 @@ interface Props {
 
 const ScheduleDurationRow = ({ clickedSpan, sharingData, dataSetter }: Props) => {
   // ex) clickedSpan : 07월 31일(목) 오전 02:00 07월 31일(목) 오전 05:30
-  const parts = clickedSpan.split(" ");
+  const [
+    initStartYear,
+    initStartMonth,
+    initStartDate,
+    initStartMeridiem,
+    initStartTime,
+    initEndYear,
+    initEndMonth,
+    initEndDate,
+    initEndMeridiem,
+    initEndTime,
+  ] = clickedSpan.split(" ");
 
-  const [startOrEnd, setStartOrEnd] = useState<number>(0);
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
-
-  useEffect(() => {
-    setStartTime(`${parts[3]} ${parts[4]}`);
-    setEndTime(`${parts[8]} ${parts[9]}`);
-  }, [clickedSpan]);
+  const [startOrEnd, setStartOrEnd] = useState<number>(1);
+  const [startTime, setStartTime] = useState<string>(`${initStartMeridiem} ${initStartTime}`);
+  const [endTime, setEndTime] = useState<string>(`${initEndMeridiem} ${initEndTime}`);
 
   useEffect(() => {
     if (sharingData == null || sharingData === "") return;
@@ -32,7 +38,7 @@ const ScheduleDurationRow = ({ clickedSpan, sharingData, dataSetter }: Props) =>
 
   useEffect(() => {
     dataSetter(
-      `${parts[0]} ${parts[1]} ${parts[2]} ${startTime} ${parts[5]} ${parts[6]} ${parts[7]} ${endTime}`
+      `${initStartYear} ${initStartMonth} ${initStartDate} ${startTime} ${initEndYear} ${initEndMonth} ${initEndDate} ${endTime}`
     );
   }, [startTime, endTime]);
 
@@ -46,7 +52,7 @@ const ScheduleDurationRow = ({ clickedSpan, sharingData, dataSetter }: Props) =>
         }}
       >
         <div className={styles.scheduleDurationRow__box__date}>
-          {parts[1]} {parts[2]}
+          {initStartMonth} {initStartDate}
         </div>
         <div
           className={
@@ -67,7 +73,7 @@ const ScheduleDurationRow = ({ clickedSpan, sharingData, dataSetter }: Props) =>
         }}
       >
         <div className={styles.scheduleDurationRow__box__date}>
-          {parts[6]} {parts[7]}
+          {initEndMonth} {initEndDate}
         </div>
         <div
           className={

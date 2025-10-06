@@ -19,8 +19,9 @@ const formatDate = (date: Date) => {
 };
 
 const formatTime = (time: TimeOption) => {
-  const hour = Number(time.hour) + (time.meridiem === "오후" ? 12 : 0);
-  return `${hour}:${time.minute}`;
+  // const hour = Number(time.hour) + (time.meridiem === "오후" ? 12 : 0);
+  // return `${hour}:${time.minute}`;
+  return `${time.meridiem} ${time.hour}:${time.minute}`;
 };
 
 const createArray = (length: number, add = 0): WheelPickerOption[] =>
