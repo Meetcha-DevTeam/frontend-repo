@@ -22,12 +22,6 @@ export interface MeetingData {
   isClosed: boolean; // false
 }
 
-// export interface CandidateMeetingData {
-//   meetingId: UUID; // "028fe9e7-3207-4654-8417-bd60b64e6de7"
-//   title: string; // "티켓팅"
-//   description: string;
-// }
-
 export interface ParticipateResponse {
   selectedTimes: ParticipateObject[];
 }
@@ -36,3 +30,5 @@ export interface ParticipateObject {
   startAt: string;
   endAt: string;
 }
+
+
