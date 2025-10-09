@@ -6,6 +6,8 @@ import { TimePicker } from "@/pages/schedule/schedule_crud/components/TimePicker
 import ScheduleCreationCard from "./ScheduleCrudCard";
 import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleDurationRow from "./ScheduleDurationRow";
+import ScheduleCrudCardExpandable from "./ScheduleCrudCardExpandable";
+import ScheduleCrudCard from "./ScheduleCrudCard";
 
 interface Props {
   clickedSpan: string;
@@ -26,34 +28,34 @@ const ScheduleCrudView = ({
   setScheduleTime,
   setRecurrence,
 }: Props) => {
-  const cardDataSet = [
-    {
-      id: 0,
-      icon: <Clock />,
-      expand: true,
-      expandedComponent: TimePicker,
-      basicComponent: ScheduleDurationRow,
-      basicProps: {
-        clickedSpan,
-        dataSetter: setScheduleTime,
-      },
-      data: scheduleTime,
-      dataSetter: setScheduleTime,
-    },
-    {
-      id: 1,
-      icon: <Pencil />,
-      expand: false,
-      expandedComponent: null,
-      basicComponent: ScheduleRepetitionRow,
-      basicProps: {
-        data: recurrence,
-        dataSetter: setRecurrence,
-      },
-      data: recurrence,
-      dataSetter: setRecurrence,
-    },
-  ];
+  // const cardDataSet = [
+  //   {
+  //     id: 0,
+  //     icon: <Clock />,
+  //     expand: true,
+  //     expandedComponent: TimePicker,
+  //     basicComponent: ScheduleDurationRow,
+  //     basicProps: {
+  //       clickedSpan,
+  //       dataSetter: setScheduleTime,
+  //     },
+  //     data: scheduleTime,
+  //     dataSetter: setScheduleTime,
+  //   },
+  //   {
+  //     id: 1,
+  //     icon: <Pencil />,
+  //     expand: false,
+  //     expandedComponent: null,
+  //     basicComponent: ScheduleRepetitionRow,
+  //     basicProps: {
+  //       data: recurrence,
+  //       dataSetter: setRecurrence,
+  //     },
+  //     data: recurrence,
+  //     dataSetter: setRecurrence,
+  //   },
+  // ];
 
   return (
     <div className={styles.scheduleCrudView}>
@@ -67,7 +69,7 @@ const ScheduleCrudView = ({
         }}
       />
       <div className={styles.scheduleCrudView__scheduleOptionContainer}>
-        {cardDataSet.map((item, _) => (
+        {/* {cardDataSet.map((item, _) => (
           <ScheduleCreationCard
             key={item.id}
             icon={item.icon}
@@ -78,7 +80,9 @@ const ScheduleCrudView = ({
             basicProps={item.basicProps}
             ExpandedComponent={item.expandedComponent}
           />
-        ))}
+        ))} */}
+        <ScheduleCrudCardExpandable clickedSpan={clickedSpan} dataSetter={setScheduleTime} />
+        <ScheduleCrudCard icon={<Pencil />} data={recurrence} dataSetter={setRecurrence} />
       </div>
     </div>
   );

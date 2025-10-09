@@ -5,7 +5,7 @@ import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudView from "./ScheduleCrudView";
-import { useMeetingCreateForm } from "@/pages/meeting/create/hooks/useMeetingCreateForm";
+import { useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
 
 interface Props {
   clickedSpan: string;
@@ -19,7 +19,9 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
   const [scheduleTime, setScheduleTime] = useState<string>();
   const [recurrence, setRecurrence] = useState<string>("NONE");
 
-  const form = useMeetingCreateForm();
+  const form = useScheduleCreateForm();
+
+  console.log("form:", form);
 
   useEffect(() => {
     if (!createMode && data) {

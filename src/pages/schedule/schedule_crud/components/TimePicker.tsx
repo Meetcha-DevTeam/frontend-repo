@@ -8,7 +8,7 @@ import type { Dispatch, SetStateAction } from "react";
 import styles from "./TimePicker.module.scss";
 
 dayjs.extend(min);
-interface TimeOption {
+export interface TimeOption {
   meridiem: string;
   hour: string;
   minute: string;
@@ -44,14 +44,17 @@ const meridiemOptions: WheelPickerOption[] = [
 
 interface TimePickerProps {
   setStringTime: Dispatch<SetStateAction<string>>;
+  stringTime: string;
 }
 
-export const TimePicker = ({ setStringTime }: TimePickerProps) => {
+export const TimePicker = ({ setStringTime, stringTime }: TimePickerProps) => {
   // const form = useScheduleCreateFormContext();
+  const [strMeridiem, strTime] = stringTime.split(" ");
+  const [strHour, strMinute] = strTime.split(":");
   const [time, setTime] = useState<TimeOption>({
-    meridiem: "오전",
-    hour: "12",
-    minute: "00",
+    meridiem: strMeridiem,
+    hour: strHour,
+    minute: strMinute,
   });
 
   // const timeSetter = (time: TimeOption) => {
