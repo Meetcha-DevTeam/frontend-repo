@@ -5,7 +5,7 @@ import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudView from "./ScheduleCrudView";
-import { useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
+import { ScheduleCreateFormContext, useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
 
 interface Props {
   clickedSpan: string;
@@ -60,9 +60,18 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
     if (scheduleTitle && scheduleTime) setAllDataReserved(true);
   }, [scheduleTitle, scheduleTime, recurrence]);
 
-  const sendCreationReq = async () => {
-    if (!allDataReserved) return;
-    await createSchedule(parseScheduleTime(scheduleTime));
+  const sendCreationReq = () => {
+    // if (!allDataReserved) return;
+    // await createSchedule(parseScheduleTime(scheduleTime));
+    if (form.errors) {
+      for (const [key, value] of Object.entries(form.errors)) {
+        alert(`${key} ${value}`);
+      }
+    }
+
+    form.onSubmit(async () => {
+      await createSchedule(form.values);
+    });
   };
 
   const sendEditReq = async () => {
@@ -76,15 +85,18 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
 
   return (
     <div className={styles.scheduleCrudPage}>
-      <ScheduleCrudView
-        clickedSpan={clickedSpan}
-        scheduleTitle={scheduleTitle}
-        scheduleTime={scheduleTime}
-        recurrence={recurrence}
-        setScheduleTitle={setScheduleTitle}
-        setScheduleTime={setScheduleTime}
-        setRecurrence={setRecurrence}
-      />
+      <ScheduleCreateFormContext.Provider value={form}>
+        <ScheduleCrudView
+          clickedSpan={clickedSpan}
+          scheduleTitle={scheduleTitle}
+          scheduleTime={scheduleTime}
+          recurrence={recurrence}
+          setScheduleTitle={setScheduleTitle}
+          setScheduleTime={setScheduleTime}
+          setRecurrence={setRecurrence}
+        />
+      </ScheduleCreateFormContext.Provider>
+
       <div className={styles.scheduleCrudPage__buttonContainer}>
         {!createMode && (
           <div className={styles.deleteButton} onClick={sendDelReq}>
@@ -92,7 +104,8 @@ const ScheduleCrudPage = ({ clickedSpan, createMode, data }: Props) => {
           </div>
         )}
         <Button
-          className={allDataReserved ? styles.active : styles.inactive}
+          // className={allDataReserved ? styles.active : styles.inactive}
+          className={styles.active}
           label={createMode ? "일정 생성하기" : "완료"}
           clickHandler={createMode ? sendCreationReq : sendEditReq}
         />

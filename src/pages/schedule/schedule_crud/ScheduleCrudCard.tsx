@@ -40,30 +40,29 @@
 // };
 
 // export default ScheduleCrudCard;
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ScheduleCrudCard.module.scss";
-import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
+import type { ScheduleCreationSchema } from "./schemas/scheduleCreationSchema";
+import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
 
 interface Props {
   icon: React.ReactNode;
-  data: string;
-  dataSetter: React.Dispatch<React.SetStateAction<string>>;
+  content: React.ReactNode;
+  type: keyof ScheduleCreationSchema;
 }
 
-const ScheduleCrudCard = ({ icon, data, dataSetter }: Props) => {
-  const [expandCard, setExpandCard] = useState<boolean>(false);
+const ScheduleCrudCard = ({ icon, content, type }: Props) => {
+  const form = useScheduleCreateFormContext();
+
   return (
     <div
-      className={expandCard ? `${styles.active} ${styles.scheduleCrudCard}` : styles.scheduleCrudCard}
-      onClick={(e) => {
-        setExpandCard((prev) => !prev);
-      }}
+      className={
+        form.getFormValue(type) !== "NONE" ? `${styles.active} ${styles.scheduleCrudCard}` : styles.scheduleCrudCard
+      }
     >
       <div className={styles.scheduleCrudCard__basic}>
         <div className={styles.scheduleCrudCard__basic__icon}>{icon}</div>
-        <div className={styles.scheduleCrudCard__basic__data}>
-          <ScheduleRepetitionRow data={data} dataSetter={dataSetter} />
-        </div>
+        <div className={styles.scheduleCrudCard__basic__data}>{content}</div>
       </div>
     </div>
   );

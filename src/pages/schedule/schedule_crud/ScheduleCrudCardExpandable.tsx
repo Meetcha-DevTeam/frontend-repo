@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ScheduleDurationRow from "./ScheduleDurationRow";
-import { useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
+import { useScheduleCreateForm, useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
 import { TimePicker } from "./components/TimePicker";
 import Clock from "@assets/clock.svg?react";
 import styles from "./ScheduleCrudCard.module.scss";
 
 interface Props {
   clickedSpan: string; // 주간캘린더에서 선택한 일정 범위
-  dataSetter: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const Picker = {
@@ -17,7 +16,8 @@ export const Picker = {
 
 export type PickerType = (typeof Picker)[keyof typeof Picker];
 
-const ScheduleCrudCardExpandable = ({ clickedSpan, dataSetter }: Props) => {
+const ScheduleCrudCardExpandable = ({ clickedSpan }: Props) => {
+  // clickedSpan : YYYY년 MM월 DD일(D) HH시 MM분
   const [
     initStartYear,
     initStartMonth,
@@ -30,20 +30,32 @@ const ScheduleCrudCardExpandable = ({ clickedSpan, dataSetter }: Props) => {
     initEndMeridiem,
     initEndTime,
   ] = clickedSpan.split(" ");
+  const startYear = initStartYear.substring(0, 4); // YYYY
+  const startMonth = initStartMonth.substring(0, 2); // MM
+  const startDate = initStartDate.substring(0, 2); // DD
+  const endYear = initEndYear.substring(0, 4);
+  const endMonth = initEndMonth.substring(0, 2);
+  const endDate = initEndDate.substring(0, 2);
+
   const [isCardOpen, setIsCardOpen] = useState<boolean>(false);
   const [pickerType, setPickerType] = useState<PickerType>(Picker.Start);
   const [startTime, setStartTime] = useState<string>(`${initStartMeridiem} ${initStartTime}`);
   const [endTime, setEndTime] = useState<string>(`${initEndMeridiem} ${initEndTime}`);
-  const form = useScheduleCreateForm();
-
-  const [initStartHour, initStartMinute] = initStartTime.split(":");
-  const [initEndHour, initEndMinute] = initEndTime.split(":");
+  const form = useScheduleCreateFormContext();
 
   useEffect(() => {
-    dataSetter(
-      `${initStartYear} ${initStartMonth} ${initStartDate} ${startTime} ${initEndYear} ${initEndMonth} ${initEndDate} ${endTime}`
-    );
+    form.setFormValue("startAt", startYear + "-" + startMonth + "-" + startDate + "T" + formatTime(startTime));
+    form.setFormValue("endAt", endYear + "-" + endMonth + "-" + endDate + "T" + formatTime(endTime));
   }, [startTime, endTime]);
+
+  const formatTime = (time: string) => {
+    console.log(time);
+    const [meridiem, timeAndMinute] = time.split(" ");
+    const [hour, minute] = timeAndMinute.split(":");
+    const base24Hour = Number(hour) + (meridiem === "오후" ? 12 : 0);
+    const formattedHour = String(base24Hour).padStart(2, "0");
+    return `${formattedHour}:${minute}`;
+  };
 
   return (
     <div

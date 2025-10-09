@@ -8,6 +8,7 @@ import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleDurationRow from "./ScheduleDurationRow";
 import ScheduleCrudCardExpandable from "./ScheduleCrudCardExpandable";
 import ScheduleCrudCard from "./ScheduleCrudCard";
+import { useScheduleCreateForm, useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
 
 interface Props {
   clickedSpan: string;
@@ -28,6 +29,7 @@ const ScheduleCrudView = ({
   setScheduleTime,
   setRecurrence,
 }: Props) => {
+  const form = useScheduleCreateFormContext();
   // const cardDataSet = [
   //   {
   //     id: 0,
@@ -63,9 +65,10 @@ const ScheduleCrudView = ({
         className={styles.scheduleCrudView__inputTag}
         type="text"
         placeholder="일정 제목"
-        value={scheduleTitle}
+        value={form.getFormValue("title")}
         onChange={(e) => {
-          setScheduleTitle(e.target.value);
+          // setScheduleTitle(e.target.value);
+          form.setFormValue("title", e.target.value);
         }}
       />
       <div className={styles.scheduleCrudView__scheduleOptionContainer}>
@@ -81,8 +84,8 @@ const ScheduleCrudView = ({
             ExpandedComponent={item.expandedComponent}
           />
         ))} */}
-        <ScheduleCrudCardExpandable clickedSpan={clickedSpan} dataSetter={setScheduleTime} />
-        <ScheduleCrudCard icon={<Pencil />} data={recurrence} dataSetter={setRecurrence} />
+        <ScheduleCrudCardExpandable clickedSpan={clickedSpan} />
+        <ScheduleCrudCard icon={<Pencil />} content={<ScheduleRepetitionRow />} type={"recurrence"} />
       </div>
     </div>
   );
