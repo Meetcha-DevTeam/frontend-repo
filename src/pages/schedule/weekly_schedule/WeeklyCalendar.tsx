@@ -10,6 +10,16 @@ import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudPage from "../schedule_crud/ScheduleCrudPage";
 
+/**
+ * 슬라이드가 생성모드로 열렸는지, 수정모드로 열렸는지를 구분
+ */
+export const Slide = {
+  Create: "create",
+  Edit: "edit",
+} as const;
+
+export type SlideType = (typeof Slide)[keyof typeof Slide];
+
 interface Props {
   week: Date;
   events: any[];
@@ -28,7 +38,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
   const [crudOpen, setCrudOpen] = useState<boolean>(false);
   const [clickedSpan, setClickedSpan] = useState<string>();
   const [clickedSchedule, setClickedSchedule] = useState<Schedule>();
-  const [mode, setMode] = useState<boolean>(true); // 생성모드 or 수정모드
+  const [slideType, setSlideType] = useState<SlideType>(Slide.Create);
   const dragControls = useDragControls();
 
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -80,7 +90,12 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             }}
           >
             {/* <ScheduleCrudPage clickedSpan={clickedSpan} createMode={mode} data={clickedSchedule} /> */}
-            <ScheduleCrudPage clickedSpan={clickedSpan} createMode={mode} data={clickedSchedule} />
+            <ScheduleCrudPage
+              clickedSpan={clickedSpan}
+              slideType={slideType}
+              data={clickedSchedule}
+              setCrudOpen={setCrudOpen}
+            />
           </motion.div>
         </>
       )}
@@ -129,7 +144,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
         }}
         onSelectEvent={(event) => {
           if (blockInteraction) return;
-          setMode(false);
+          setSlideType(Slide.Edit);
           setTimeout(() => setCrudOpen(true), 0);
           setClickedSchedule({
             title: event.title,

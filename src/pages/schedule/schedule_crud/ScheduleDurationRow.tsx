@@ -38,21 +38,6 @@ const ScheduleDurationRow = ({
     initEndTime,
   ] = clickedSpan.split(" ");
 
-  // const [startOrEnd, setStartOrEnd] = useState<number>(1);
-  // const [startTime, setStartTime] = useState<string>(`${initStartMeridiem} ${initStartTime}`);
-  // const [endTime, setEndTime] = useState<string>(`${initEndMeridiem} ${initEndTime}`);
-
-  // useEffect(() => {
-  //   if (sharingData == null || sharingData === "") return;
-  //   if (pickerType === Picker.Start) {
-  //     setStartTime(sharingData);
-  //     return;
-  //   }
-  //   if (pickerType === Picker.End) {
-  //     setEndTime(sharingData);
-  //   }
-  // }, [sharingData]);
-
   return (
     <div className={styles.scheduleDurationRow}>
       <div
