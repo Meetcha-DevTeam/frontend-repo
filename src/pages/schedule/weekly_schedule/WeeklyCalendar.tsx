@@ -9,6 +9,7 @@ import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudPage from "../schedule_crud/ScheduleCrudPage";
+import type { ParsedSchedule } from "./WeeklyScheduleView";
 
 /**
  * 슬라이드가 생성모드로 열렸는지, 수정모드로 열렸는지를 구분
@@ -22,7 +23,7 @@ export type SlideType = (typeof Slide)[keyof typeof Slide];
 
 interface Props {
   week: Date;
-  events: any[];
+  events: ParsedSchedule[];
   blockInteraction: boolean;
 }
 
