@@ -6,7 +6,7 @@ const scheduleCreationSchema = z
     title: z
       .string()
       .min(1, { message: "제목을 입력해주세요." })
-      .max(100, { message: "제목은 100자 이하로 입력해주세요." }),
+      .max(40, { message: "제목은 40자 이하로 입력해주세요." }),
     startAt: z
       .string()
       .min(1, { message: "일정 시작일을 선택해주세요." })
