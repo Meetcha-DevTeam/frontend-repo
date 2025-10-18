@@ -33,7 +33,7 @@ const Participate_timetable_ctn = () => {
       .map((t: any) => {
         const sRaw = t.startISO ?? t.startAt; // 문자열 ISO 또는 Date 모두 허용
         const eRaw = t.endISO ?? t.endAt;
-        let s = snap30(dayjs(sRaw));
+        const s = snap30(dayjs(sRaw));
         let e = snap30(dayjs(eRaw));
         if (!e.isAfter(s)) {
           e = s.add(30, "minute"); // 0길이/역전 방지
@@ -85,7 +85,12 @@ const Participate_timetable_ctn = () => {
     const last = sortedDates[sortedDates.length - 1];
 
     try {
-      const resSchedule = await apiCall(`/user/schedule?from=${first}T00:00:00&to=${last}T23:59:59`, "GET", null, true);
+      const resSchedule = await apiCall(
+        `/user/schedule?from=${first}T00:00:00&to=${last}T23:59:59`,
+        "GET",
+        null,
+        true
+      );
 
       if (!resSchedule) return;
       if (resSchedule.code === 400) {
@@ -236,7 +241,9 @@ const Participate_timetable_ctn = () => {
           </p>
           <div className="timetable_ctn">
             <Timetable
-              candidateDates={Array.isArray(meetingData?.candidateDates) ? meetingData.candidateDates : []}
+              candidateDates={
+                Array.isArray(meetingData?.candidateDates) ? meetingData.candidateDates : []
+              }
               selectedTimes={selectedTimes}
               setSelectedTimes={setSelectedTimes}
               previousAvailTime={Array.isArray(previousAvailTime) ? previousAvailTime : []}
