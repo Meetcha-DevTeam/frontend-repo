@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import { isAfter, isValid, parseISO } from "date-fns";
 import { z } from "zod";
 
 const scheduleCreationSchema = z
@@ -12,7 +12,8 @@ const scheduleCreationSchema = z
       .min(1, { message: "일정 시작일을 선택해주세요." })
       .refine(
         (value) => {
-          return dayjs(value).isValid();
+          const parsedDate = parseISO(value);
+          return isValid(parsedDate);
         },
         { message: "올바르지 않은 형식입니다." }
       ),
@@ -21,14 +22,17 @@ const scheduleCreationSchema = z
       .min(1, { message: "일정 마감일을 선택해주세요." })
       .refine(
         (value) => {
-          return dayjs(value).isValid();
+          const parsedDate = parseISO(value);
+          return isValid(parsedDate);
         },
         { message: "올바르지 않은 형식입니다." }
       ),
     recurrence: z.string().min(1, { message: "반복 주기를 선택해주세요." }),
   })
   .superRefine((value, context) => {
-    if (dayjs(value.startAt).isAfter(dayjs(value.endAt))) {
+    const start = parseISO(value.startAt);
+    const end = parseISO(value.endAt);
+    if (isAfter(start, end)) {
       context.addIssue({
         code: "custom",
         message: "일정 시작일은 일정 마감일 이전이어야 합니다.",
