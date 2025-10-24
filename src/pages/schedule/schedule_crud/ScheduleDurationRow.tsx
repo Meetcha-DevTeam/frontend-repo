@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./ScheduleDurationRow.module.scss";
 import RightChevron from "@assets/rightChevron.svg?react";
 import { Picker, type PickerType } from "./ScheduleCrudCardExpandable";
 
 interface Props {
   clickedSpan: string;
-  // sharingData: string;
-  // dataSetter: React.Dispatch<React.SetStateAction<string>>;
   startTime: string;
   endTime: string;
-  setStartTime: React.Dispatch<React.SetStateAction<string>>;
-  setEndTime: React.Dispatch<React.SetStateAction<string>>;
   pickerType: PickerType;
   setPickerType: React.Dispatch<React.SetStateAction<PickerType>>;
 }
@@ -19,24 +15,12 @@ const ScheduleDurationRow = ({
   clickedSpan,
   startTime,
   endTime,
-  setStartTime,
-  setEndTime,
   pickerType,
   setPickerType,
 }: Props) => {
-  // ex) clickedSpan : 07월 31일(목) 오전 02:00 07월 31일(목) 오전 05:30
-  const [
-    initStartYear,
-    initStartMonth,
-    initStartDate,
-    initStartMeridiem,
-    initStartTime,
-    initEndYear,
-    initEndMonth,
-    initEndDate,
-    initEndMeridiem,
-    initEndTime,
-  ] = clickedSpan.split(" ");
+  // ex) clickedSpan : YYYY년 MM월 DD일(D) HH시 MM분 YYYY년 MM월 DD일(D) HH시 MM분
+  const [, initStartMonth, initStartDate, , , , initEndMonth, initEndDate, ,] =
+    clickedSpan.split(" ");
 
   return (
     <div className={styles.scheduleDurationRow}>

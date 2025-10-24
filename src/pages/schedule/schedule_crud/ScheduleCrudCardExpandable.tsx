@@ -81,8 +81,6 @@ const ScheduleCrudCardExpandable = ({ clickedSpan }: Props) => {
             setPickerType={setPickerType}
             startTime={startTime}
             endTime={endTime}
-            setStartTime={setStartTime}
-            setEndTime={setEndTime}
             clickedSpan={clickedSpan}
           />
         </div>
