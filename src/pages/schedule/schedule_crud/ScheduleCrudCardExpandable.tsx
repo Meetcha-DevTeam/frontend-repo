@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ScheduleDurationRow from "./ScheduleDurationRow";
-import { useScheduleCreateForm, useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
+import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
 import { TimePicker } from "./components/TimePicker";
 import Clock from "@assets/clock.svg?react";
 import styles from "./ScheduleCrudCard.module.scss";
@@ -44,12 +44,17 @@ const ScheduleCrudCardExpandable = ({ clickedSpan }: Props) => {
   const form = useScheduleCreateFormContext();
 
   useEffect(() => {
-    form.setFormValue("startAt", startYear + "-" + startMonth + "-" + startDate + "T" + formatTime(startTime));
-    form.setFormValue("endAt", endYear + "-" + endMonth + "-" + endDate + "T" + formatTime(endTime));
-  }, [startTime, endTime]);
+    form.setFormValue(
+      "startAt",
+      startYear + "-" + startMonth + "-" + startDate + "T" + formatTime(startTime)
+    );
+    form.setFormValue(
+      "endAt",
+      endYear + "-" + endMonth + "-" + endDate + "T" + formatTime(endTime)
+    );
+  }, [startTime, endTime, startYear, startMonth, startDate, endYear, endMonth, endDate, form]);
 
   const formatTime = (time: string) => {
-    console.log(time);
     const [meridiem, timeAndMinute] = time.split(" ");
     const [hour, minute] = timeAndMinute.split(":");
     const base24Hour = Number(hour) + (meridiem === "오후" ? 12 : 0);
@@ -59,10 +64,12 @@ const ScheduleCrudCardExpandable = ({ clickedSpan }: Props) => {
 
   return (
     <div
-      onClick={(e) => {
+      onClick={() => {
         setIsCardOpen((prev) => !prev);
       }}
-      className={isCardOpen ? `${styles.active} ${styles.scheduleCrudCard}` : styles.scheduleCrudCard}
+      className={
+        isCardOpen ? `${styles.active} ${styles.scheduleCrudCard}` : styles.scheduleCrudCard
+      }
     >
       <div className={styles.scheduleCrudCard__basic}>
         <div className={styles.scheduleCrudCard__basic__icon}>

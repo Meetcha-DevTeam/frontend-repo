@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { createContext, useContext, useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./ScheduleCrudPage.module.scss";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
@@ -7,6 +7,7 @@ import ScheduleCrudView from "./ScheduleCrudView";
 import { ScheduleCreateFormContext, useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
 import { Slide, type SlideType } from "../weekly_schedule/WeeklyCalendar";
 import type { Dispatch, SetStateAction } from "react";
+import { ScheduleCrudContext } from "./hooks/useScheduleCrudContext";
 
 interface Props {
   clickedSpan: string;
@@ -15,25 +16,13 @@ interface Props {
   data?: Schedule; // 기존 일정 클릭시 얻을수있는 기존 일정 관련 데이터
 }
 
-type UiState = Props;
-
-export const UiContext = createContext<UiState | null>(null);
-
-export const useUiContext = () => {
-  const ctx = useContext(UiContext);
-  if (!ctx) throw new Error("UiContext not found");
-  return ctx;
-};
-
 const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) => {
   const form = useScheduleCreateForm();
-  // console.log("form:", form);
-  // console.log("data:", data);
   useEffect(() => {
     if (slideType === Slide.Create) return;
     form.setFormValue("title", data?.title);
     form.setFormValue("recurrence", data?.recurrence);
-  }, []);
+  }, [slideType, data, form]);
 
   const sendCreationReq = () => {
     if (form.errors) {
@@ -71,9 +60,9 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
   return (
     <div className={styles.scheduleCrudPage}>
       <ScheduleCreateFormContext.Provider value={form}>
-        <UiContext.Provider value={{ clickedSpan, slideType, data, setCrudOpen }}>
+        <ScheduleCrudContext.Provider value={{ clickedSpan, slideType, data, setCrudOpen }}>
           <ScheduleCrudView />
-        </UiContext.Provider>
+        </ScheduleCrudContext.Provider>
       </ScheduleCreateFormContext.Provider>
 
       <div className={styles.scheduleCrudPage__buttonContainer}>

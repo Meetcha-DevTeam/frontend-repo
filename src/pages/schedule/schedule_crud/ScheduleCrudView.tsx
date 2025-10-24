@@ -5,27 +5,33 @@ import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleCrudCardExpandable from "./ScheduleCrudCardExpandable";
 import ScheduleCrudCard from "./ScheduleCrudCard";
 import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
-import { useUiContext } from "./ScheduleCrudPage";
 import { Slide } from "../weekly_schedule/WeeklyCalendar";
+import { useScheduleCrudContext } from "./hooks/useScheduleCrudContext";
 
 const ScheduleCrudView = () => {
   const form = useScheduleCreateFormContext();
-  const uiContext = useUiContext();
+  const scheduleCrudContext = useScheduleCrudContext();
 
   return (
     <div className={styles.scheduleCrudView}>
       <input
         className={styles.scheduleCrudView__inputTag}
         type="text"
-        placeholder={uiContext.slideType === Slide.Create ? "일정 제목" : form.getFormValue("title")}
+        placeholder={
+          scheduleCrudContext.slideType === Slide.Create ? "일정 제목" : form.getFormValue("title")
+        }
         value={form.getFormValue("title")}
         onChange={(e) => {
           form.setFormValue("title", e.target.value);
         }}
       />
       <div className={styles.scheduleCrudView__scheduleOptionContainer}>
-        <ScheduleCrudCardExpandable clickedSpan={uiContext.clickedSpan} />
-        <ScheduleCrudCard icon={<Pencil />} content={<ScheduleRepetitionRow />} type={"recurrence"} />
+        <ScheduleCrudCardExpandable clickedSpan={scheduleCrudContext.clickedSpan} />
+        <ScheduleCrudCard
+          icon={<Pencil />}
+          content={<ScheduleRepetitionRow />}
+          type={"recurrence"}
+        />
       </div>
     </div>
   );
