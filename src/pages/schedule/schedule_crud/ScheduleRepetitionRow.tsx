@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styles from "./ScheduleRepetitionRow.module.scss";
 import { options } from "./constants/ScheduleRepetitionRow.constants";
 import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
@@ -8,7 +7,7 @@ const ScheduleRepetitionRow = () => {
 
   return (
     <div className={styles.scheduleRepetitionRow}>
-      {options.map((item, _) => (
+      {options.map((item) => (
         <div
           key={item.id}
           onClick={() => form.setFormValue("recurrence", item.value)}
