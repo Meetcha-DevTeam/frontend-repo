@@ -1,26 +1,15 @@
-import dayjs from "dayjs";
-import min from "dayjs/plugin/minMax";
 import { useEffect, useState } from "react";
 import { WheelPicker, WheelPickerWrapper, type WheelPickerOption } from "@ncdai/react-wheel-picker";
-import { useScheduleCreateFormContext } from "@/pages/schedule/schedule_crud/hooks/useScheduleCreateForm";
-import type { ScheduleCreationData } from "@/pages/schedule/schedule_crud/schemas/scheduleCreationSchema";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./TimePicker.module.scss";
 
-dayjs.extend(min);
 export interface TimeOption {
   meridiem: string;
   hour: string;
   minute: string;
 }
 
-const formatDate = (date: Date) => {
-  return dayjs(date).format("YYYY-MM-DD");
-};
-
 const formatTime = (time: TimeOption) => {
-  // const hour = Number(time.hour) + (time.meridiem === "오후" ? 12 : 0);
-  // return `${hour}:${time.minute}`;
   return `${time.meridiem} ${time.hour}:${time.minute}`;
 };
 
@@ -40,15 +29,12 @@ const meridiemOptions: WheelPickerOption[] = [
   { label: "오후", value: "오후" },
 ];
 
-// type ScheduleCreationKeys = keyof ScheduleCreationData;
-
 interface TimePickerProps {
   setStringTime: Dispatch<SetStateAction<string>>;
   stringTime: string;
 }
 
 export const TimePicker = ({ setStringTime, stringTime }: TimePickerProps) => {
-  // const form = useScheduleCreateFormContext();
   const [strMeridiem, strTime] = stringTime.split(" ");
   const [strHour, strMinute] = strTime.split(":");
   const [time, setTime] = useState<TimeOption>({
@@ -56,11 +42,6 @@ export const TimePicker = ({ setStringTime, stringTime }: TimePickerProps) => {
     hour: strHour,
     minute: strMinute,
   });
-
-  // const timeSetter = (time: TimeOption) => {
-  //   setTime(time);
-  //   form.setFormValue(`${startOrEnd}`, `${formatDate(day)}T${formatTime(time)}`);
-  // };
 
   useEffect(() => {
     setStringTime(`${formatTime(time)}`);
