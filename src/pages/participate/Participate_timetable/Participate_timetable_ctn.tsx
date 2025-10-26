@@ -1,17 +1,20 @@
 import { useEffect, useState, useMemo } from "react";
-import "./Participate_timetabe.scss";
-
 import { useNavigate, useSearchParams } from "react-router-dom";
+
 import Timetable from "./Timetable";
+import CountDown from "@/components/CountDown/CountDown";
+
 import LeftChevron from "@/assets/LeftChevron.svg";
 
 import { apiCall } from "@/utils/apiCall";
+
+import "./Participate_timetabe.scss";
 
 import type {
   UISlot,
   SubmitAvailabilityBody,
 } from "@/apis/participate/participateTypes";
-import CountDown from "@/components/CountDown/CountDown";
+
 import {
   parseISO,
   isAfter,
@@ -38,6 +41,10 @@ const Participate_timetable_ctn = () => {
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
+
+  const backtoLink = () => {
+    navigate("/schedule");
+  };
 
   const snap30 = (d: Date) => {
     const m = Math.floor(getMinutes(d) / 30) * 30;
@@ -74,10 +81,6 @@ const Participate_timetable_ctn = () => {
       selectedTimes: times,
     };
   }, [selectedTimes, nickname]);
-
-  const backtoLink = () => {
-    navigate("/schedule");
-  };
 
   //유저의 미팅정보(candidatedate)를 먼저 불러옴 후보날짜를 띄우기 우함
   const getUserMeetingData = async () => {
@@ -228,7 +231,7 @@ const Participate_timetable_ctn = () => {
       <>
         <div className="top_ctn">
           <img src={LeftChevron} alt="LeftChevron" onClick={backtoLink} />
-          <p>미팅 참가</p>
+          <p>미팅 참여</p>
         </div>
         <div className="participate_ctn">
           <div className="text_container1">
@@ -282,7 +285,12 @@ const Participate_timetable_ctn = () => {
           <p>
             참여 가능 시간<span>*</span>
           </p>
-          <div className="timetable_ctn">
+          <div className="timetable_ctn"
+          tabIndex={-1}
+          onPointerDownCapture={()=>{
+            const a = document.activeElement as HTMLElement|null;
+            if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable))a.blur();
+          }}>
             <Timetable
               candidateDates={
                 Array.isArray(meetingData?.candidateDates)

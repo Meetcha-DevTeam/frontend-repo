@@ -31,4 +31,24 @@ export interface ParticipateObject {
   endAt: string;
 }
 
+export interface MeetingInfoData{
+  meetingId:UUID;
+  title:string;
+  description:string;
+  durationMinutes: number;
+  candidateDates:string[];
+  deadline:ISODateTimeString;
+  createdAt:ISODateTimeString;
+}
+
+export interface UserScheduleData{
+  eventId:string;
+  title:string;
+  startAt:ISODateTimeString;
+  endAt:ISODateTimeString;
+  recurrence:string;
+}
+
+export type PreviousAvailTime=ParticipateResponse;
+
 
