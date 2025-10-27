@@ -28,16 +28,13 @@ import type {
   SubmitAvailabilityBody,
 } from "@/apis/participate/participateTypes";
 
+import { snap30,toDate } from "@/utils/dateUtil";
 import {
   parseISO,
   isAfter,
   addMinutes,
-  setMinutes,
-  setSeconds,
-  setMilliseconds,
   format,
   getTime,
-  getMinutes,
 } from "date-fns";
 
 const Participate_timetable_ctn = () => {
@@ -59,12 +56,6 @@ const Participate_timetable_ctn = () => {
   const backtoLink = () => {
     navigate("/schedule");
   };
-
-  const snap30 = (d: Date) => {
-    const m = Math.floor(getMinutes(d) / 30) * 30;
-    return setMilliseconds(setSeconds(setMinutes(d, m), 0), 0);
-  };
-  const toDate = (x: any) => (x instanceof Date ? x : parseISO(String(x)));
 
   const finalPostData: SubmitAvailabilityBody = useMemo(() => {
     const times = selectedTimes
