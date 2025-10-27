@@ -13,17 +13,18 @@ import {
   getDay,
   getHours,
   format as formatDate,
-  setMinutes,
-  setSeconds,
-  setMilliseconds,
   addMinutes,
   isAfter,
-  getTime,
-  getMinutes,
 } from "date-fns";
+import { snap30, keyOf } from "@/utils/dateUtil";
+import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime";
+
 import { ko } from "date-fns/locale";
 
-import type { ParticipateObject, UISlot } from "@apis/participate/participateTypes";
+import type {
+  ParticipateObject,
+  UISlot,
+} from "@apis/participate/participateTypes";
 
 interface BusyInterval {
   startAt: string;
@@ -45,40 +46,7 @@ const Timetable = ({
   scheduleData,
   previousAvailTime,
 }) => {
-  const snap30 = (d: Date) => {
-    const m = Math.floor(getMinutes(d) / 30) * 30;
-    return setMilliseconds(setSeconds(setMinutes(d, m), 0), 0);
-  };
-  const keyOf = (sISO: string, eISO: string) => {
-    const s = getTime(setMilliseconds(setSeconds(parseISO(sISO), 0), 0));
-    const e = getTime(setMilliseconds(setSeconds(parseISO(eISO), 0), 0));
-    return `${s}|${e}`;
-  };
-
-  useEffect(() => {
-    if (!Array.isArray(previousAvailTime) || previousAvailTime.length === 0) return;
-
-    setSelectedTimes((prev) => {
-      const exists = new Set(prev.map((s) => keyOf(s.startAt, s.endAt)));
-      const merged = [...prev];
-      let changed = false;
-
-      for (const slot of previousAvailTime) {
-        const s = snap30(parseISO(slot.startAt));
-        const e = snap30(parseISO(slot.endAt));
-        const sISO = s.toISOString();
-        const eISO = e.toISOString();
-        const key = keyOf(sISO, eISO);
-        if (!exists.has(key)) {
-          merged.push({ startAt: sISO, endAt: eISO });
-          exists.add(key);
-          changed = true;
-        }
-      }
-
-      return changed ? merged : prev;
-    });
-  }, [previousAvailTime, setSelectedTimes]);
+  useMergePreviousTimes(previousAvailTime, setSelectedTimes);
   console.log(candidateDates);
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();
   console.log(sortedDates);
@@ -96,7 +64,10 @@ const Timetable = ({
   const hiddenDays = [0, 1, 2, 3, 4, 5, 6].filter((dow: number) => !allowedDows.has(dow));
 
   const rangeStart = formatDate(startOfDay(validDates[0]), "yyyy-MM-dd");
-  const rangeEndExclusive = formatDate(addDays(endOfDay(validDates.at(-1)!), 1), "yyyy-MM-dd");
+  const rangeEndExclusive = formatDate(
+    addDays(endOfDay(validDates.at(-1)!), 1),
+    "yyyy-MM-dd"
+  );
 
   const handleSelect = (info: any) => {
     let s = snap30(info.start as Date);
@@ -109,7 +80,7 @@ const Timetable = ({
     const k = keyOf(sISO, eISO);
 
     const exists = selectedTimes.some((t) => keyOf(t.startAt, t.endAt) === k);
-    
+
     if (exists) {
       setSelectedTimes((prev) => prev.filter((t) => keyOf(t.startAt, t.endAt) !== k));
     } else {
