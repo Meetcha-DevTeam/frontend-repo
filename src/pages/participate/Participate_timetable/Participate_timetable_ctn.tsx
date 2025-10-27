@@ -12,6 +12,8 @@ import {
   getUserMeetingData,
   getPreviousAvailTime,
   getUserScheduleData,
+  submitAvailability,
+  updateAvailability,
 } from "@/apis/participate/participateAPI";
 import type {
   ParticipateResponse,
@@ -118,7 +120,7 @@ const Participate_timetable_ctn = () => {
   useEffect(() => {
     if (!meetingData) return;
     //순서를 정한거임.. 미팅데이터를 먼저 불러와야함(candidate때문)
-    
+
     const getSchedule = async () => {
       try {
         const sortedDates = [...meetingData.candidateDates].sort(); //해당 구간 사이의 데이터만 불러오기위함
@@ -138,6 +140,7 @@ const Participate_timetable_ctn = () => {
   }; //나중에 backend에 post로 보낼예정..
 
   const handleSubmit = async () => {
+    //오류처리
     if (!meetingId) {
       alert("유효하지 않은 미팅입니다.");
       return;
@@ -146,45 +149,25 @@ const Participate_timetable_ctn = () => {
       alert("참여 가능 시간을 최소 1개 이상 선택해주세요.");
       return;
     }
-    console.log("fpd:", finalPostData);
-    console.log(meetingId);
-    const isModify = pageNum === "3"; //미팅 참여페이지 수정ver
-    const url = isModify
-      ? `/meeting-lists/${meetingId}`
-      : `/meeting/id/${meetingId}/join`;
-    const method = isModify ? "PATCH" : "POST";
 
-    // PATCH 바디는 selectedTimes만, POST는 기존 명세(finalPostData) 유지
-    const body = isModify
-      ? { selectedTimes: finalPostData.selectedTimes }
-      : finalPostData;
+    const isModify = pageNum === "3"; //미팅 참여페이지 수정ver
 
     try {
-      const res = await apiCall(url, method, body, true);
-
-      if (!res) return;
-
-      // 명세에 맞춘 응답 처리
-      if (res.code === 200 && res.success) {
-        alert(isModify ? "미팅 참여 정보 수정 성공!" : "미팅 참여 성공!");
-        console.log(res);
-        // navigate(`/schedule`);
-        navigate("/meeting/detail", {
-          state: {
-            meetingId: meetingId,
-          },
-        });
-      } else if (res.code === 409) {
-        alert("이미 이 미팅에 참가했습니다.");
-      } else if (res.code === 400) {
-        alert("미팅 참여마감시간이 지났습니다.");
-      } else if (res.code === 401) {
-        alert("로그인이 필요합니다.");
-      } else {
-        alert(res.message ?? "참여에 실패했습니다.");
-      }
+      const result = isModify
+        ? await updateAvailability(meetingId, {
+            selectedTimes: finalPostData.selectedTimes,
+          })
+        : await submitAvailability(meetingId, finalPostData); // SubmitAvailabilityBody
+      console.log(result);
+      isModify
+        ? navigate("/meeting/detail", {
+            state: {
+              meetingId: meetingId,
+            },
+          })
+        : navigate("/schedule");
     } catch (e) {
-      alert("서버 오류가 발생했습니다.");
+      console.error(e);
     }
   };
 
@@ -225,7 +208,10 @@ const Participate_timetable_ctn = () => {
       </div>
 
       <div className="participate_ctn">
-        <CountDown label={"참가 마감 시간"} finishTime={parseISO(meetingData.deadline)} />
+        <CountDown
+          label={"참가 마감 시간"}
+          finishTime={parseISO(meetingData.deadline)}
+        />
         <div className="text_container1">
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
