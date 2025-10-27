@@ -18,6 +18,7 @@ import {
 } from "date-fns";
 import { snap30, keyOf } from "@/utils/dateUtil";
 import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime";
+import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection";
 
 import { ko } from "date-fns/locale";
 
@@ -69,24 +70,7 @@ const Timetable = ({
     "yyyy-MM-dd"
   );
 
-  const handleSelect = (info: any) => {
-    let s = snap30(info.start as Date);
-    let e = snap30(info.end as Date);
-    if (!isAfter(e, s)) {
-      e = addMinutes(s, 30);
-    }
-    const sISO = s.toISOString();
-    const eISO = e.toISOString();
-    const k = keyOf(sISO, eISO);
-
-    const exists = selectedTimes.some((t) => keyOf(t.startAt, t.endAt) === k);
-
-    if (exists) {
-      setSelectedTimes((prev) => prev.filter((t) => keyOf(t.startAt, t.endAt) !== k));
-    } else {
-      setSelectedTimes((prev) => [...prev, { startAt: sISO, endAt: eISO }]);
-    }
-  };
+  const {handleSelect}=useTimetableSelection(selectedTimes,setSelectedTimes);
 
   const busyEvents = (scheduleData ?? []).map((ev) => ({
     start: parseISO(ev.startAt), // 'YYYY-MM-DDTHH:mm:ss' → 로컬 Date로 해석
