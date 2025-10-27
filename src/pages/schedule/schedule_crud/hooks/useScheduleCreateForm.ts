@@ -3,7 +3,7 @@ import {
   scheduleCreationSchema,
   type ScheduleCreationSchema,
 } from "../schemas/scheduleCreationSchema";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 export const useScheduleCreateForm = (
   setter?: FormSetter<ScheduleCreationSchema>
@@ -21,15 +21,18 @@ export const useScheduleCreateForm = (
     Record<keyof ScheduleCreationSchema, string>
   > | null>(null);
 
-  const formDataSetter = (
-    key: keyof ScheduleCreationSchema,
-    value: ScheduleCreationSchema[keyof ScheduleCreationSchema]
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const formDataSetter = useCallback(
+    (
+      key: keyof ScheduleCreationSchema,
+      value: ScheduleCreationSchema[keyof ScheduleCreationSchema]
+    ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    },
+    []
+  );
 
   const getFormValue = <K extends keyof ScheduleCreationSchema>(key: K) => {
     return formData[key];
