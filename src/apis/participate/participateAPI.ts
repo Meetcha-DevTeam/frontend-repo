@@ -4,6 +4,10 @@ import type {
   ParticipateResponse,
   MeetingInfoData,
   UserScheduleData,
+  SubmitAvailabilityBody,
+  UpdateAvailabilityBody,
+  SubmitAvailabilityRes,
+  UpdateAvailabilityRes,
 } from "./participateTypes";
 
 export const getUserMeetingData = async (meetingId: string) => {
@@ -26,7 +30,7 @@ export const getUserScheduleData = async (first: string, last: string) => {
     null,
     true
   );
-  console.log("UserScheduleData:",res);
+  console.log("UserScheduleData:", res);
   return res.data;
 };
 
@@ -39,6 +43,36 @@ export const getPreviousAvailTime = async (meetingId: string) => {
   );
 
   console.log("cur part: ", res);
+
+  return res.data;
+};
+
+export const submitAvailability = async (
+  meetingId: string,
+  body: SubmitAvailabilityBody
+) => {
+  const res: ApiResponse<SubmitAvailabilityRes> = await apiCall(
+    `/meeting/id/${meetingId}/join`,
+    "POST",
+    body,
+    true
+  );
+  console.log("submitResponse:", res);
+
+  return res.data;
+};
+
+export const updateAvailability = async (
+  meetingId: string,
+  body: UpdateAvailabilityBody
+) => {
+  const res: ApiResponse<UpdateAvailabilityRes> = await apiCall(
+    `/meeting-lists/${meetingId}`,
+    "PATCH",
+    body,
+    true
+  );
+  console.log("updateResponse:",res);
 
   return res.data;
 };

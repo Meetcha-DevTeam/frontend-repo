@@ -3,14 +3,6 @@ export interface UISlot {
   endISO: string;
 }
 
-export interface SubmitAvailabilityBody {
-  nickname?: string;
-  selectedTimes: {
-    startAt: string;
-    endAt: string;
-  }[];
-}
-
 export type ISODateTimeString = string; // e.g. "2025-08-19T18:00:00"
 export type UUID = string;
 
@@ -51,4 +43,21 @@ export interface UserScheduleData{
 
 export type PreviousAvailTime=ParticipateResponse;
 
+export interface SubmitAvailabilityBody {
+  nickname?: string;
+  selectedTimes: {
+    startAt: string;
+    endAt: string;
+  }[];
+}
 
+export interface SubmitAvailabilityRes{
+  meetingId: UUID;
+  participantId:UUID;
+}
+
+export interface UpdateAvailabilityBody{
+  selectedTimes:ParticipateObject[];
+}
+
+export type UpdateAvailabilityRes=SubmitAvailabilityRes;
