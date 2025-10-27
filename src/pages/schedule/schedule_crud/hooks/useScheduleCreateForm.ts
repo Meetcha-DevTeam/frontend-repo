@@ -1,4 +1,4 @@
-import type { FormSetter, FormBase } from "@/pages/meeting/create/hooks/useMeetingCreateForm";
+import type { FormBase, FormSetter } from "@/types/FormValidationBaseTypes";
 import {
   scheduleCreationSchema,
   type ScheduleCreationSchema,
