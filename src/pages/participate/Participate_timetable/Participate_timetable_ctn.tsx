@@ -8,6 +8,17 @@ import LeftChevron from "@/assets/LeftChevron.svg";
 
 import { apiCall } from "@/utils/apiCall";
 
+import {
+  getUserMeetingData,
+  getPreviousAvailTime,
+  getUserScheduleData,
+} from "@/apis/participate/participateAPI";
+import type {
+  ParticipateResponse,
+  UserScheduleData,
+  MeetingInfoData,
+} from "@/apis/participate/participateTypes";
+
 import "./Participate_timetabe.scss";
 
 import type {
@@ -35,9 +46,10 @@ const Participate_timetable_ctn = () => {
 
   const [nickname, setNickname] = useState("");
 
-  const [meetingData, setMeetingData] = useState<any | null>(null); //참가페이지에 해당하는 미팅 데이터
-  const [scheduleData, setScheduleData] = useState<any | null>([]); //사용자의 캘린더 데이터
-  const [previousAvailTime, setPreviousAvailTime] = useState<any | null>([]); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
+  const [meetingData, setMeetingData] = useState<MeetingInfoData>(null); //참가페이지에 해당하는 미팅 데이터
+  const [scheduleData, setScheduleData] = useState<UserScheduleData>(null); //사용자의 캘린더 데이터
+  const [previousAvailTime, setPreviousAvailTime] =
+    useState<ParticipateResponse>(null); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
   const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
@@ -84,94 +96,41 @@ const Participate_timetable_ctn = () => {
     };
   }, [selectedTimes, nickname]);
 
-  //유저의 미팅정보(candidatedate)를 먼저 불러옴 후보날짜를 띄우기 우함
-  const getUserMeetingData = async () => {
-    if (!meetingId) return;
-    try {
-      const res = await apiCall(`/meeting/id/${meetingId}`, "GET", null, true);
-
-      if (!res) return;
-      if (res.code === 404) {
-        alert("존재하지 않는 미팅입니다");
-      } else if (res.code === 401) {
-        alert("인증이 필요합니다");
-      } else if (res.code == 200) {
-        console.log(res);
-        setMeetingData(res.data);
-      }
-    } catch (e) {
-      alert("서버 오류");
-    }
-  };
-
-  //유저의 일정 데이터를 불러오는 api연동
-  const getUserScheduleData = async () => {
-    if (!meetingData) return;
-
-    const sortedDates = [...meetingData.candidateDates].sort(); //해당 구간 사이의 데이터만 불러오기위함
-    const first = sortedDates[0];
-    const last = sortedDates[sortedDates.length - 1];
-
-    try {
-      const resSchedule = await apiCall(
-        `/user/schedule?from=${first}T00:00:00&to=${last}T23:59:59`,
-        "GET",
-        null,
-        true
-      );
-
-      if (!resSchedule) return;
-      if (resSchedule.code === 400) {
-        alert("날짜 형식이 잘못되었거나 범위가 유효하지 않습니다.");
-      } else if (resSchedule.code === 401) {
-        alert("로그인이 필요합니다다.");
-      } else if (resSchedule.code === 404) {
-        alert("사용자를 찾을 수 없습니다.");
-      } else if (resSchedule.code == 200) {
-        console.log(resSchedule);
-        setScheduleData(resSchedule.data);
-      }
-    } catch (e) {
-      alert("서버 오류");
-    }
-  };
-
-  const getPreviousAvailTime = async () => {
-    if (!meetingId) return;
-    try {
-
-      const res = await apiCall(
-        `/meeting/${meetingId}/available-times`,
-        "GET",
-        null,
-        true
-      );
-
-      if (!res) return;
-      if (res.code === 404) {
-        alert("해당 미팅에 대한 참가 가능 시간을 찾을 수 없습니다.");
-      } else if (res.code === 401) {
-        alert("인증이 필요합니다");
-      } else if (res.code == 200) {
-        console.log(res);
-        setPreviousAvailTime(Array.isArray(res.data) ? res.data : []);
-      }
-    } catch (e) {
-      alert("서버 오류");
-    }
-  };
-
   useEffect(() => {
-    getUserMeetingData();
-    if (pageNum === "3") {
-      getPreviousAvailTime();
-    }
+    if (!meetingId) return;
+
+    const fetchfunc = async () => {
+      try {
+        const userMeetingData = await getUserMeetingData(meetingId);
+        setMeetingData(userMeetingData);
+
+        if (pageNum === "3") {
+          const previousTime = await getPreviousAvailTime(meetingId);
+          setPreviousAvailTime(previousTime);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchfunc();
   }, [meetingId, pageNum]); // ← pageNum도 의존성에 추가
 
   useEffect(() => {
     if (!meetingData) return;
     //순서를 정한거임.. 미팅데이터를 먼저 불러와야함(candidate때문)
-    getUserScheduleData();
+    
+    const getSchedule = async () => {
+      try {
+        const sortedDates = [...meetingData.candidateDates].sort(); //해당 구간 사이의 데이터만 불러오기위함
+        const first = sortedDates[0];
+        const last = sortedDates[sortedDates.length - 1];
+        const scheduleData = await getUserScheduleData(first, last);
+        setScheduleData(scheduleData);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getSchedule();
   }, [meetingData]);
 
   const handleSetNickname = (e) => {
@@ -189,7 +148,7 @@ const Participate_timetable_ctn = () => {
     }
     console.log("fpd:", finalPostData);
     console.log(meetingId);
-    const isModify = pageNum === "3";
+    const isModify = pageNum === "3"; //미팅 참여페이지 수정ver
     const url = isModify
       ? `/meeting-lists/${meetingId}`
       : `/meeting/id/${meetingId}/join`;
@@ -266,7 +225,7 @@ const Participate_timetable_ctn = () => {
       </div>
 
       <div className="participate_ctn">
-        <CountDown label={"참가 마감 시간"} finishTime={meetingData.deadline} />
+        <CountDown label={"참가 마감 시간"} finishTime={parseISO(meetingData.deadline)} />
         <div className="text_container1">
           <div className="meeting_info_ctn">
             <div className="dividend"></div>
@@ -288,12 +247,20 @@ const Participate_timetable_ctn = () => {
           <p>
             참여 가능 시간<span>*</span>
           </p>
-          <div className="timetable_ctn"
-          tabIndex={-1}
-          onPointerDownCapture={()=>{
-            const a = document.activeElement as HTMLElement|null;
-            if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.isContentEditable))a.blur();
-          }}>
+          <div
+            className="timetable_ctn"
+            tabIndex={-1}
+            onPointerDownCapture={() => {
+              const a = document.activeElement as HTMLElement | null;
+              if (
+                a &&
+                (a.tagName === "INPUT" ||
+                  a.tagName === "TEXTAREA" ||
+                  a.isContentEditable)
+              )
+                a.blur();
+            }}
+          >
             <Timetable
               candidateDates={
 
