@@ -26,10 +26,10 @@ export const useScheduleCreateForm = (
       key: keyof ScheduleCreationSchema,
       value: ScheduleCreationSchema[keyof ScheduleCreationSchema]
     ) => {
-      setFormData((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
+      setFormData((prev) => {
+        if (Object.is(prev[key], value)) return prev;
+        return { ...prev, [key]: value };
+      });
     },
     []
   );
