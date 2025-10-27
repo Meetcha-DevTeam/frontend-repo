@@ -44,6 +44,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
 
   const handlePointerDown = (e: React.PointerEvent) => {
     // 이벤트가 발생한 가장 안쪽 요소를 가져옵니다.
+    console.log("타입:", typeof e.target);
     const target = e.target as HTMLElement;
 
     // target의 상위 요소 중 '.time-picker-no-drag' 클래스를 가진 요소가 있는지 확인합니다.
@@ -137,7 +138,6 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
         onSelectSlot={(slotInfo) => {
           if (blockInteraction) return;
           setTimeout(() => setCrudOpen(true), 0);
-          // console.log("빈 영역 클릭됨:", slotInfo);
           const formattedStart = scheduleStringFormatter(slotInfo.start);
           const formattedEnd = scheduleStringFormatter(slotInfo.end);
 
@@ -154,7 +154,9 @@ const WeeklyCalendar = ({ week, events, blockInteraction }: Props) => {
             recurrence: event.recur,
             eventId: event.id,
           });
-          setClickedSpan(`${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`);
+          setClickedSpan(
+            `${scheduleStringFormatter(event.start)} ${scheduleStringFormatter(event.end)}`
+          );
         }}
       />
       {portal}
