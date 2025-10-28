@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
+
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction"; //  수정됨: 드래그/선택을 위해 추가
+
+import { toBusyEvents, toSelectedEvents } from "@/utils/eventTransform";
+import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime";
+import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection";
+
 import "./Participate_timetabe.scss";
 
 import {
@@ -13,32 +19,9 @@ import {
   getDay,
   getHours,
   format as formatDate,
-  addMinutes,
-  isAfter,
 } from "date-fns";
-import { snap30, keyOf } from "@/utils/dateUtil";
-import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime";
-import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection";
 
 import { ko } from "date-fns/locale";
-
-import type {
-  ParticipateObject,
-  UISlot,
-} from "@apis/participate/participateTypes";
-
-interface BusyInterval {
-  startAt: string;
-  endAt: string;
-}
-
-interface Props {
-  candidateDates: string[];
-  selectedTimes: ParticipateObject[];
-  setSelectedTimes: React.Dispatch<React.SetStateAction<ParticipateObject[]>>;
-  scheduleData: BusyInterval[];
-  previousAvailTime?: { startAt: string; endAt: string }[];
-}
 
 const Timetable = ({
   candidateDates,
@@ -48,10 +31,8 @@ const Timetable = ({
   previousAvailTime,
 }) => {
   useMergePreviousTimes(previousAvailTime, setSelectedTimes);
-  console.log(candidateDates);
+
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();
-  console.log(sortedDates);
-  console.log(previousAvailTime);
 
   if (sortedDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
 
@@ -70,25 +51,15 @@ const Timetable = ({
     "yyyy-MM-dd"
   );
 
-  const {handleSelect}=useTimetableSelection(selectedTimes,setSelectedTimes);
+  const { handleSelect } = useTimetableSelection(
+    selectedTimes,
+    setSelectedTimes
+  );
 
-  const busyEvents = (scheduleData ?? []).map((ev) => ({
-    start: parseISO(ev.startAt), // 'YYYY-MM-DDTHH:mm:ss' → 로컬 Date로 해석
-    end: parseISO(ev.endAt),
-    display: "background",
-    classNames: ["busy-block"],
-    extendedProps: { isBusy: true },
-  }));
-
-  const selectedEvents = selectedTimes.map((time) => ({
-    start: time.startAt,
-    end: time.endAt,
-    display: "background",
-    backgroundColor: "#FF6200",
-    classNames: ["selected-block"],
-    extendedProps: { isBusy: false },
-  }));
-  console.log(selectedTimes);
+  console.log(candidateDates);
+  console.log(sortedDates);
+  console.log(previousAvailTime);
+  console.log(scheduleData);
 
   return (
     <FullCalendar
@@ -111,7 +82,10 @@ const Timetable = ({
       unselectAuto={false}
       select={handleSelect} //  수정됨: 드래그 선택 이벤트 핸들러
       selectOverlap={(event) => !event.extendedProps?.isBusy}
-      events={[...busyEvents, ...selectedEvents]} //  수정됨: 선택된 시간대 렌더링
+      events={[
+        ...toBusyEvents(scheduleData),
+        ...toSelectedEvents(selectedTimes),
+      ]} //  수정됨: 선택된 시간대 렌더링
       height="auto"
       headerToolbar={false}
       dayHeaderContent={(info) => {
