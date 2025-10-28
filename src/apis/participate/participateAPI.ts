@@ -24,7 +24,7 @@ export const getUserMeetingData = async (meetingId: string) => {
 };
 
 export const getUserScheduleData = async (first: string, last: string) => {
-  const res: ApiResponse<UserScheduleData> = await apiCall(
+  const res: ApiResponse<UserScheduleData[]> = await apiCall(
     `/user/schedule?from=${first}T00:00:00&to=${last}T23:59:59`,
     "GET",
     null,

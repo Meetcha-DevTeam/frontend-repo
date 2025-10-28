@@ -6,8 +6,6 @@ import CountDown from "@/components/CountDown/CountDown";
 
 import LeftChevron from "@/assets/LeftChevron.svg";
 
-import { apiCall } from "@/utils/apiCall";
-
 import {
   getUserMeetingData,
   getPreviousAvailTime,
@@ -46,7 +44,7 @@ const Participate_timetable_ctn = () => {
   const [nickname, setNickname] = useState("");
 
   const [meetingData, setMeetingData] = useState<MeetingInfoData>(null); //참가페이지에 해당하는 미팅 데이터
-  const [scheduleData, setScheduleData] = useState<UserScheduleData>(null); //사용자의 캘린더 데이터
+  const [scheduleData, setScheduleData] = useState<UserScheduleData[]>([]); //사용자의 캘린더 데이터
   const [previousAvailTime, setPreviousAvailTime] =
     useState<ParticipateResponse>(null); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
 
