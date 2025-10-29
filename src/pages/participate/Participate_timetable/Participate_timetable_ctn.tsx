@@ -22,8 +22,8 @@ import type {
 import "./Participate_timetabe.scss";
 
 import type {
-  UISlot,
   SubmitAvailabilityBody,
+  ParticipateObject
 } from "@/apis/participate/participateTypes";
 
 import { snap30,toDate } from "@/utils/dateUtil";
@@ -49,7 +49,7 @@ const Participate_timetable_ctn = () => {
     useState<ParticipateResponse>(null); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
-  const [selectedTimes, setSelectedTimes] = useState<UISlot[]>([]); //  수정됨: 선택된 시간 저장용 state
+  const [selectedTimes, setSelectedTimes] = useState<ParticipateObject[]>([]); //  수정됨: 선택된 시간 저장용 state
 
   const backtoLink = () => {
     navigate("/schedule");
@@ -57,9 +57,9 @@ const Participate_timetable_ctn = () => {
 
   const finalPostData: SubmitAvailabilityBody = useMemo(() => {
     const times = selectedTimes
-      .map((t: any) => {
-        const sRaw = t.startISO ?? t.startAt;
-        const eRaw = t.endISO ?? t.endAt;
+      .map((t: ParticipateObject) => {
+        const sRaw = t.startAt;
+        const eRaw = t.endAt;
 
         let s = snap30(toDate(sRaw));
         let e = snap30(toDate(eRaw));
