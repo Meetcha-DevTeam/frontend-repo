@@ -155,6 +155,13 @@
     #a19a9a 8px 16px
   );
 }
+
+.fc .selected-block{
+  background-image: #FF6200;
+  opacity: 1;
+}
+
+
 .button_ctn {
   position: sticky;
   left: 0; right: 0; bottom: 0;
