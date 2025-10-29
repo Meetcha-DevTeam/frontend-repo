@@ -1,7 +1,3 @@
-export interface UISlot {
-  startISO: string;
-  endISO: string;
-}
 
 export type ISODateTimeString = string; // e.g. "2025-08-19T18:00:00"
 export type UUID = string;

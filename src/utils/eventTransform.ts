@@ -2,7 +2,7 @@
 import { parseISO } from "date-fns";
 import type {
   UserScheduleData,
-  UISlot,
+  ParticipateObject,
 } from "@/apis/participate/participateTypes";
 
 interface BusyEvent {
@@ -32,10 +32,10 @@ export const toBusyEvents = (
     extendedProps: { isBusy: true },
   }));//결과는 toBusyEvents는 이러한 데이터 형식가진 배열
 //내가 select한 일정들에 대해서 데이터 재설정
-export const toSelectedEvents = (selectedTimes: UISlot[]): SelectedEvent[] =>
+export const toSelectedEvents = (selectedTimes: ParticipateObject[]): SelectedEvent[] =>
   selectedTimes.map((time) => ({
-    start: time.startISO,
-    end: time.endISO,
+    start: time.startAt,
+    end: time.endAt,
     backgroundColor: "#FF6200",
     classNames: ["selected-block"],
     extendedProps: { isBusy: false },
