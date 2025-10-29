@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import FullCalendar from "@fullcalendar/react";//기본코어->렌더링 담당
-import timeGridPlugin from "@fullcalendar/timegrid";//시간 단위로 일정이 보이는 형태(주간/일간 뷰)
+import FullCalendar from "@fullcalendar/react"; //기본코어->렌더링 담당
+import timeGridPlugin from "@fullcalendar/timegrid"; //시간 단위로 일정이 보이는 형태(주간/일간 뷰)
 import interactionPlugin from "@fullcalendar/interaction"; //드래그,선택,클릭 같은 사용자 상호작용
 
-import { toBusyEvents, toSelectedEvents } from "@/utils/eventTransform";//데이터 transform util함수 호출
-import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime";//
-import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection";//
+import { toBusyEvents, toSelectedEvents } from "@/utils/eventTransform"; //데이터 transform util함수 호출
+import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime"; //
+import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection"; //
 
 import "./Participate_timetabe.scss";
 
@@ -30,13 +30,14 @@ const Timetable = ({
   scheduleData,
   previousAvailTime,
 }) => {
+  const [clickNum, setClickNum] = useState<number>(0);
   useMergePreviousTimes(previousAvailTime, setSelectedTimes);
   //previousAvailTime(이전에 지정했던 시간=>대안시간 투표 전에 지정한 시간)이 존재하지 않으면 시행x
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();
 
   if (sortedDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
 
-  const validDates: Date[] = sortedDates.map((dateStr) => parseISO(dateStr));//date객체 변환
+  const validDates: Date[] = sortedDates.map((dateStr) => parseISO(dateStr)); //date객체 변환
 
   const start = validDates[0];
   const end = validDates[validDates.length - 1];
@@ -66,7 +67,7 @@ const Timetable = ({
 
   return (
     <FullCalendar
-      key={selectedTimes.map((t)=>t.startAt).join(",")}
+      key={selectedTimes.map((t) => t.startAt).join(",")}
       plugins={[timeGridPlugin, interactionPlugin]} //  수정됨: 드래그/선택 위해 interactionPlugin 추가
       initialView="timeGridSpan"
       views={{
@@ -88,7 +89,7 @@ const Timetable = ({
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       events={[
         ...toBusyEvents(scheduleData),
-        ...toSelectedEvents(selectedTimes),
+        ...toSelectedEvents(clickNum, selectedTimes),
       ]} //  수정됨: 선택된 시간대 렌더링
       height="auto"
       headerToolbar={false}

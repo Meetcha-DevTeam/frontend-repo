@@ -31,12 +31,16 @@ export const toBusyEvents = (
     classNames: ["busy-block"],
     extendedProps: { isBusy: true },
   }));//결과는 toBusyEvents는 이러한 데이터 형식가진 배열
-//내가 select한 일정들에 대해서 데이터 재설정
-export const toSelectedEvents = (selectedTimes: ParticipateObject[]): SelectedEvent[] =>
-  selectedTimes.map((time) => ({
+
+//색 6개 중에 번갈아 가면서 설정
+const CalendarColor=["#FF7842","#FF934F","#FFA770","#FFC8A1","#EEA679","#B58160","#875A3E"];
+
+//내가 select한 일정들에 대해서 데이터 재설정->fullcalendar 렌더링을 위함
+export const toSelectedEvents = (clicknum:number,selectedTimes: ParticipateObject[]): SelectedEvent[] =>
+  selectedTimes.map((time,index) => ({
     start: time.startAt,
     end: time.endAt,
-    backgroundColor: "#FF6200",
+    backgroundColor:CalendarColor[(clicknum+index)%CalendarColor.length],
     classNames: ["selected-block"],
     extendedProps: { isBusy: false },
   }));
