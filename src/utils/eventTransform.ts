@@ -4,6 +4,7 @@ import type {
   UserScheduleData,
   UISlot,
 } from "@/apis/participate/participateTypes";
+
 interface BusyEvent {
   start: Date;
   end: Date;
@@ -11,15 +12,15 @@ interface BusyEvent {
   classNames: string[];
   extendedProps: Record<string, any>;
 }
+
 interface SelectedEvent {
   start: string;
   end: string;
-  display: string;
   backgroundColor: string;
   classNames: string[];
   extendedProps: Record<string, any>;
 }
-
+//사용자의 구글캘린더 일정 정보 불러와 데이터 재설정
 export const toBusyEvents = (
   scheduleData: UserScheduleData[] | null
 ): BusyEvent[] =>
@@ -29,13 +30,12 @@ export const toBusyEvents = (
     display: "background",
     classNames: ["busy-block"],
     extendedProps: { isBusy: true },
-  }));
-
+  }));//결과는 toBusyEvents는 이러한 데이터 형식가진 배열
+//내가 select한 일정들에 대해서 데이터 재설정
 export const toSelectedEvents = (selectedTimes: UISlot[]): SelectedEvent[] =>
   selectedTimes.map((time) => ({
     start: time.startISO,
     end: time.endISO,
-    display: "background",
     backgroundColor: "#FF6200",
     classNames: ["selected-block"],
     extendedProps: { isBusy: false },
