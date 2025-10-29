@@ -64,10 +64,10 @@ const Timetable = ({
   console.log(previousAvailTime);
   console.log(selectedTimes);
   console.log(scheduleData);
-
+ 
   return (
     <FullCalendar
-      key={selectedTimes.map((t) => t.startAt).join(",")}
+     
       plugins={[timeGridPlugin, interactionPlugin]} //  수정됨: 드래그/선택 위해 interactionPlugin 추가
       initialView="timeGridSpan"
       views={{
