@@ -3,8 +3,8 @@ import { parseISO } from "date-fns";
 import type {
   UserScheduleData,
   ParticipateObject,
+  EventWithColor
 } from "@/apis/participate/participateTypes";
-
 interface BusyEvent {
   start: Date;
   end: Date;
@@ -16,6 +16,7 @@ interface BusyEvent {
 interface SelectedEvent {
   start: string;
   end: string;
+  display:string;
   backgroundColor: string;
   classNames: string[];
   extendedProps: Record<string, any>;
@@ -33,14 +34,14 @@ export const toBusyEvents = (
   }));//결과는 toBusyEvents는 이러한 데이터 형식가진 배열
 
 //색 6개 중에 번갈아 가면서 설정
-const CalendarColor=["#FF7842","#FF934F","#FFA770","#FFC8A1","#EEA679","#B58160","#875A3E"];
 
 //내가 select한 일정들에 대해서 데이터 재설정->fullcalendar 렌더링을 위함
-export const toSelectedEvents = (clicknum:number,selectedTimes: ParticipateObject[]): SelectedEvent[] =>
-  selectedTimes.map((time,index) => ({
-    start: time.startAt,
-    end: time.endAt,
-    backgroundColor:CalendarColor[(clicknum+index)%CalendarColor.length],
+export const toSelectedEvents = (selectedEventsWithColor:EventWithColor[]): SelectedEvent[] =>
+  selectedEventsWithColor.map((time) => ({
+    start: time.start,
+    end: time.end,
+    display: 'auto',
+    backgroundColor:time.color,
     classNames: ["selected-block"],
     extendedProps: { isBusy: false },
   }));

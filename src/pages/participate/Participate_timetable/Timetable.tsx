@@ -7,7 +7,7 @@ import interactionPlugin from "@fullcalendar/interaction"; //드래그,선택,�
 import { toBusyEvents, toSelectedEvents } from "@/utils/eventTransform"; //데이터 transform util함수 호출
 import { useMergePreviousTimes } from "./TimetableHooks/useMergePreviousTime"; //
 import { useTimetableSelection } from "./TimetableHooks/useTimetableSelection"; //
-
+import type { EventWithColor } from "@/apis/participate/participateTypes";
 import "./Participate_timetabe.scss";
 
 import {
@@ -22,6 +22,7 @@ import {
 } from "date-fns";
 
 import { ko } from "date-fns/locale";
+import type { ParticipateObject } from "@/apis/participate/participateTypes";
 
 const Timetable = ({
   candidateDates,
@@ -58,16 +59,34 @@ const Timetable = ({
     selectedTimes,
     setSelectedTimes
   );
+  const CalendarColor = [
+    "#FF7842",
+    "#FF934F",
+    "#FFA770",
+    "#FFC8A1",
+    "#EEA679",
+    "#B58160",
+    "#875A3E",
+  ];
+  //selectedTimes마다 색상을 지정해줌!
+  const selectedEventsWithColor = (
+    arr: ParticipateObject[]
+  ): EventWithColor[] =>
+    arr.map((t) => {
+      const s = new Date(t.startAt).getTime();
+      const e = new Date(t.endAt).getTime();
+      const idx = Math.abs(s ^ e) % CalendarColor.length; // ← 한 줄로 고정 인덱스
+      return { start: t.startAt, end: t.endAt, color: CalendarColor[idx] };
+    });
 
   console.log(candidateDates);
   console.log(sortedDates);
   console.log(previousAvailTime);
   console.log(selectedTimes);
   console.log(scheduleData);
- 
+
   return (
     <FullCalendar
-     
       plugins={[timeGridPlugin, interactionPlugin]} //  수정됨: 드래그/선택 위해 interactionPlugin 추가
       initialView="timeGridSpan"
       views={{
@@ -89,7 +108,7 @@ const Timetable = ({
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       events={[
         ...toBusyEvents(scheduleData),
-        ...toSelectedEvents(clickNum, selectedTimes),
+        ...toSelectedEvents(selectedEventsWithColor(selectedTimes)),
       ]} //  수정됨: 선택된 시간대 렌더링
       height="auto"
       headerToolbar={false}

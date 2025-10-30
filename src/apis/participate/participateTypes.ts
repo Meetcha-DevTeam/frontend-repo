@@ -1,4 +1,3 @@
-
 export type ISODateTimeString = string; // e.g. "2025-08-19T18:00:00"
 export type UUID = string;
 
@@ -19,25 +18,25 @@ export interface ParticipateObject {
   endAt: string;
 }
 
-export interface MeetingInfoData{
-  meetingId:UUID;
-  title:string;
-  description:string;
+export interface MeetingInfoData {
+  meetingId: UUID;
+  title: string;
+  description: string;
   durationMinutes: number;
-  candidateDates:string[];
-  deadline:ISODateTimeString;
-  createdAt:ISODateTimeString;
+  candidateDates: string[];
+  deadline: ISODateTimeString;
+  createdAt: ISODateTimeString;
 }
 
-export interface UserScheduleData{
-  eventId:string;
-  title:string;
-  startAt:ISODateTimeString;
-  endAt:ISODateTimeString;
-  recurrence:string;
+export interface UserScheduleData {
+  eventId: string;
+  title: string;
+  startAt: ISODateTimeString;
+  endAt: ISODateTimeString;
+  recurrence: string;
 }
 
-export type PreviousAvailTime=ParticipateResponse;
+export type PreviousAvailTime = ParticipateResponse;
 
 export interface SubmitAvailabilityBody {
   nickname?: string;
@@ -47,13 +46,19 @@ export interface SubmitAvailabilityBody {
   }[];
 }
 
-export interface SubmitAvailabilityRes{
+export interface SubmitAvailabilityRes {
   meetingId: UUID;
-  participantId:UUID;
+  participantId: UUID;
 }
 
-export interface UpdateAvailabilityBody{
-  selectedTimes:ParticipateObject[];
+export interface UpdateAvailabilityBody {
+  selectedTimes: ParticipateObject[];
 }
 
-export type UpdateAvailabilityRes=SubmitAvailabilityRes;
+export type UpdateAvailabilityRes = SubmitAvailabilityRes;
+
+export interface EventWithColor {
+  start: string;
+  end: string;
+  color: string;
+}
