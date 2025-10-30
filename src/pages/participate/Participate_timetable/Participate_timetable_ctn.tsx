@@ -23,17 +23,11 @@ import "./Participate_timetabe.scss";
 
 import type {
   SubmitAvailabilityBody,
-  ParticipateObject
+  ParticipateObject,
 } from "@/apis/participate/participateTypes";
 
-import { snap30,toDate } from "@/utils/dateUtil";
-import {
-  parseISO,
-  isAfter,
-  addMinutes,
-  format,
-  getTime,
-} from "date-fns";
+import { snap30, toDate } from "@/utils/dateUtil";
+import { parseISO, isAfter, addMinutes, format, getTime } from "date-fns";
 
 const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
