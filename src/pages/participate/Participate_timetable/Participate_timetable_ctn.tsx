@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Timetable from "./Timetable";
@@ -6,13 +6,6 @@ import CountDown from "@/components/CountDown/CountDown";
 
 import LeftChevron from "@/assets/LeftChevron.svg";
 
-import {
-  getUserMeetingData,
-  getPreviousAvailTime,
-  getUserScheduleData,
-  submitAvailability,
-  updateAvailability,
-} from "@/apis/participate/participateAPI";
 import type {
   ParticipateResponse,
   UserScheduleData,
@@ -26,9 +19,11 @@ import type {
   ParticipateObject,
 } from "@/apis/participate/participateTypes";
 
-import { snap30, toDate } from "@/utils/dateUtil";
-import { parseISO, isAfter, addMinutes, format, getTime } from "date-fns";
-
+import { parseISO } from "date-fns";
+import { useGetSettingData } from "./TimetableHooks/ParticipateCtn/useGetSetting";
+import { useGetScheduleData } from "./TimetableHooks/ParticipateCtn/useGetSchedule";
+import { useHandleSubmitData } from "./TimetableHooks/ParticipateCtn/useHandleSubmit";
+import { useGetFinalData } from "./TimetableHooks/ParticipateCtn/useGetFinalData";
 const Participate_timetable_ctn = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -49,110 +44,20 @@ const Participate_timetable_ctn = () => {
     navigate("/schedule");
   };
 
-  const finalPostData: SubmitAvailabilityBody = useMemo(() => {
-    const times = selectedTimes
-      .map((t: ParticipateObject) => {
-        const sRaw = t.startAt;
-        const eRaw = t.endAt;
+  const finalPostData: SubmitAvailabilityBody = useGetFinalData(
+    selectedTimes,
+    nickname
+  );
 
+  useGetSettingData(meetingId, pageNum, setMeetingData, setPreviousAvailTime);
 
-        let s = snap30(toDate(sRaw));
-        let e = snap30(toDate(eRaw));
-
-        if (!isAfter(e, s)) {
-          e = addMinutes(s, 30); // 0길이/역전 방지
-
-        }
-
-        // 서버 스펙: 'YYYY-MM-DDTHH:mm:ss' (로컬 기준)
-        return {
-          startAt: format(s, "yyyy-MM-dd'T'HH:mm:ss"),
-          endAt: format(e, "yyyy-MM-dd'T'HH:mm:ss"),
-        };
-      })
-      .sort(
-        (a, b) => getTime(parseISO(a.startAt)) - getTime(parseISO(b.startAt))
-      );
-
-    const nick = nickname.trim();
-    return {
-      nickname: nick.length > 0 ? nick : undefined,
-      selectedTimes: times,
-    };
-  }, [selectedTimes, nickname]);
-
-  useEffect(() => {
-    if (!meetingId) return;
-
-    const fetchfunc = async () => {
-      try {
-        const userMeetingData = await getUserMeetingData(meetingId);
-        setMeetingData(userMeetingData);
-
-        if (pageNum === "3") {
-          const previousTime = await getPreviousAvailTime(meetingId);
-          setPreviousAvailTime(previousTime);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchfunc();
-  }, [meetingId, pageNum]); // ← pageNum도 의존성에 추가
-
-  useEffect(() => {
-    if (!meetingData) return;
-    //순서를 정한거임.. 미팅데이터를 먼저 불러와야함(candidate때문)
-
-    const getSchedule = async () => {
-      try {
-        const sortedDates = [...meetingData.candidateDates].sort(); //해당 구간 사이의 데이터만 불러오기위함
-        const first = sortedDates[0];
-        const last = sortedDates[sortedDates.length - 1];
-        const scheduleData = await getUserScheduleData(first, last);
-        setScheduleData(scheduleData);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getSchedule();
-  }, [meetingData]);
+  useGetScheduleData(meetingData, setScheduleData);
 
   const handleSetNickname = (e) => {
     setNickname(e.target.value);
   }; //나중에 backend에 post로 보낼예정..
 
-  const handleSubmit = async () => {
-    //오류처리
-    if (!meetingId) {
-      alert("유효하지 않은 미팅입니다.");
-      return;
-    }
-    if (finalPostData.selectedTimes.length === 0) {
-      alert("참여 가능 시간을 최소 1개 이상 선택해주세요.");
-      return;
-    }
-
-    const isModify = pageNum === "3"; //미팅 참여페이지 수정ver
-
-    try {
-      const result = isModify
-        ? await updateAvailability(meetingId, {
-            selectedTimes: finalPostData.selectedTimes,
-          })
-        : await submitAvailability(meetingId, finalPostData); // SubmitAvailabilityBody
-      console.log(result);
-      isModify
-        ? navigate("/meeting/detail", {
-            state: {
-              meetingId: meetingId,
-            },
-          })
-        : navigate("/schedule");
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const handleSubmit = useHandleSubmitData(meetingId, pageNum, finalPostData);
 
   if (!meetingData) {
     return (
