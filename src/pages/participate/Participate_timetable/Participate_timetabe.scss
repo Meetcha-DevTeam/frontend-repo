@@ -168,15 +168,14 @@
 }
 
 .fc-direction-ltr, .fc-timegrid-col-events{
-  margin: 0 auto;
-  
+  width: 100%;
 }
 .fc-timegrid-event-harness,
 .fc-timegrid-event-harness-inset {
   opacity: 0.75;
   pointer-events: none;
   z-index: 1;
-
+  
 }
 .fc .selected-block,
 .fc .selected-block * {
