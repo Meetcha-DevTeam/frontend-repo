@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import FullCalendar from "@fullcalendar/react"; //기본코어->렌더링 담당
 import timeGridPlugin from "@fullcalendar/timegrid"; //시간 단위로 일정이 보이는 형태(주간/일간 뷰)
