@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 import "normalize.css";
 import "@ncdai/react-wheel-picker/style.css";
+import { BrowserLimiter } from "./components/BrowserLimiter.tsx";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV === "development") {
 createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider clientId="214919872484-j05rks059n5hbtm083spk9s5dvg6m9cu.apps.googleusercontent.com">
     <QueryClientProvider client={queryClient}>
+      <BrowserLimiter />
       <App />
       <ToastContainer
         containerId="timerClose"
