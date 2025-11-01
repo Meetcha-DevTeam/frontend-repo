@@ -14,6 +14,7 @@ import type {
 
 import "./Participate_timetabe.scss";
 
+
 import type {
   SubmitAvailabilityBody,
   ParticipateObject,
@@ -89,7 +90,7 @@ const Participate_timetable_ctn = () => {
 
   // meetingData가 확보된 뒤에만 본문 렌더
   return (
-    <>
+    <div className="ctn">
       <div className="top_ctn">
         <img src={LeftChevron} alt="LeftChevron" onClick={backtoLink} />
         <p>미팅 참가</p>
@@ -160,7 +161,7 @@ const Participate_timetable_ctn = () => {
           </div>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 export default Participate_timetable_ctn;
