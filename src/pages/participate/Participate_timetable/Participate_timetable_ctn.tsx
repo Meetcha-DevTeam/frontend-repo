@@ -111,7 +111,7 @@ const Participate_timetable_ctn = () => {
   const getPreviousAvailTime = async () => {
     if (!meetingId) return;
     try {
-      const res = await apiCall(`/meeting/${meetingId}/available-times`, "GET", null, true);
+      const res = await apiCall(`/meeting-lists/${meetingId}`, "GET", null, true);
 
       if (!res) return;
       if (res.code === 404) {
