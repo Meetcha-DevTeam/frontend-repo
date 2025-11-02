@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
 import "./MyPage.scss";
-import { fetchProfileData } from "@/apis/mypage/mypageAPI";
 import MoonLoader from "react-spinners/MoonLoader";
+import { useEffect, useState } from "react";
+import { fetchProfileData } from "@/apis/mypage/mypageAPI";
+import { logout } from "@/apis/auth/authAPI";
+import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const [userData, setUserData] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const load = async () => {
@@ -14,7 +17,9 @@ const MyPage = () => {
     load();
   }, []);
 
-  const logout = () => {};
+  const logoutHandler = () => {
+    if (logout()) navigate("/landingPage");
+  };
 
   return (
     <main className="myPage">
@@ -29,7 +34,7 @@ const MyPage = () => {
         )}
       </section>
       <section className="featureContainer">
-        <div className="featureItem" onClick={() => logout()}>
+        <div className="featureItem" onClick={() => logoutHandler()}>
           로그아웃
         </div>
       </section>
