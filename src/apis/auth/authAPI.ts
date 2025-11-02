@@ -1,6 +1,6 @@
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
-import type { AuthResponse } from "./authTypes";
+import type { AuthResponse, logoutResponse } from "./authTypes";
 
 export const sendAuthCode = async (authCode: string, addr: string) => {
   const data = { code: authCode, redirectUri: addr };
@@ -21,5 +21,12 @@ export const renewAccessToken = async (refToken: string) => {
   } else {
     console.error(res.message);
     return false;
+  }
+};
+
+export const logout = async () => {
+  const res: ApiResponse<logoutResponse> = await apiCall("/oauth/logout", "POST", null, true);
+  switch (res.code) {
+    case 200:
   }
 };

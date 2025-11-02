@@ -14,6 +14,8 @@ const MyPage = () => {
     load();
   }, []);
 
+  const logout = () => {};
+
   return (
     <main className="myPage">
       <section className="profileContainer">
@@ -27,7 +29,9 @@ const MyPage = () => {
         )}
       </section>
       <section className="featureContainer">
-        <div className="featureItem">로그아웃</div>
+        <div className="featureItem" onClick={() => logout()}>
+          로그아웃
+        </div>
       </section>
     </main>
   );
