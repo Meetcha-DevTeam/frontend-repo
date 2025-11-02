@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "vercel-build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings -1",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
