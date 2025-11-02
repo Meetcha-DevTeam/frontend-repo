@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import "./Participate_timetabe.scss";
 import dayjs from "dayjs";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Timetable from "./Timetable";
 import LeftChevron from "@/assets/LeftChevron.svg";
 
@@ -168,10 +168,7 @@ const Participate_timetable_ctn = () => {
       if (!res) return;
 
       // 명세에 맞춘 응답 처리
-      if (res.code === 200 && res.success) {
-        alert(isModify ? "미팅 참여 정보 수정 성공!" : "미팅 참여 성공!");
-        console.log(res);
-        // navigate(`/schedule`);
+      if (res.code === 200) {
         navigate("/meeting/detail", {
           state: {
             meetingId: meetingId,
