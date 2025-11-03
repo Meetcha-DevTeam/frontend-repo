@@ -27,12 +27,12 @@ export const renewAccessToken = async (refToken: string) => {
 export const logout = async () => {
   const res: ApiResponse<logoutResponse> = await apiCall("/oauth/logout", "POST", null, true);
   const type = getResponseType(res.code);
-  switch (type) {
-    case "success":
-      sessionStorage.removeItem("access-token");
-      sessionStorage.removeItem("refresh-token");
-      return true;
-    default:
-      alert(res.message);
+
+  if (type === "success") {
+    sessionStorage.removeItem("access-token");
+    sessionStorage.removeItem("refresh-token");
+    return res;
+  } else {
+    throw Promise.reject(new Error(res.message));
   }
 };
