@@ -31,7 +31,12 @@ const Timetable = ({
   scheduleData,
   previousAvailTime,
 }) => {
-  const [clickNum, setClickNum] = useState<number>(0);
+
+  const { handleSelect } = useTimetableSelection(
+    selectedTimes,
+    setSelectedTimes
+  );
+  
   useMergePreviousTimes(previousAvailTime, setSelectedTimes);
   //previousAvailTime(이전에 지정했던 시간=>대안시간 투표 전에 지정한 시간)이 존재하지 않으면 시행x
   const sortedDates: string[] = [...(candidateDates ?? [])].sort();
@@ -53,10 +58,6 @@ const Timetable = ({
     "yyyy-MM-dd"
   );
 
-  const { handleSelect } = useTimetableSelection(
-    selectedTimes,
-    setSelectedTimes
-  );
   const CalendarColor = [
     "#FF7842",
     "#FF934F",
@@ -76,12 +77,6 @@ const Timetable = ({
       const idx = Math.abs(s ^ e) % CalendarColor.length; // ← 한 줄로 고정 인덱스
       return { start: t.startAt, end: t.endAt, color: CalendarColor[idx] };
     });
-
-  console.log(candidateDates);
-  console.log(sortedDates);
-  console.log(previousAvailTime);
-  console.log(selectedTimes);
-  console.log(scheduleData);
 
   return (
     <FullCalendar

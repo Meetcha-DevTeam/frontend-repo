@@ -14,7 +14,7 @@ export const useGetFinalData = (
         const sRaw = t.startAt;
         const eRaw = t.endAt;
 
-        let s = snap30(toDate(sRaw));
+        const s = snap30(toDate(sRaw));
         let e = snap30(toDate(eRaw));
 
         if (!isAfter(e, s)) {

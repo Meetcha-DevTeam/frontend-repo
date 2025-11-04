@@ -14,7 +14,7 @@ export const useTimetableSelection = (
 
 ) => {
   const handleSelect = (info: date) => {
-    let s = snap30(info.start as Date);
+    const s = snap30(info.start as Date);
     let e = snap30(info.end as Date);
 
     if (!isAfter(e, s)) e = addMinutes(s, 30);

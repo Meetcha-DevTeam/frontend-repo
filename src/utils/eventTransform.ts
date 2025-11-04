@@ -2,7 +2,6 @@
 import { parseISO } from "date-fns";
 import type {
   UserScheduleData,
-  ParticipateObject,
   EventWithColor
 } from "@/apis/participate/participateTypes";
 interface BusyEvent {
@@ -10,7 +9,7 @@ interface BusyEvent {
   end: Date;
   display: string;
   classNames: string[];
-  extendedProps: Record<string, any>;
+  extendedProps: Record<string, boolean>;
 }
 
 interface SelectedEvent {
@@ -19,7 +18,7 @@ interface SelectedEvent {
   display:string;
   backgroundColor: string;
   classNames: string[];
-  extendedProps: Record<string, any>;
+  extendedProps: Record<string, boolean>;
 }
 //사용자의 구글캘린더 일정 정보 불러와 데이터 재설정
 export const toBusyEvents = (
