@@ -21,4 +21,11 @@
   &__mainlogo {
     width: 5rem;
   }
+
+  &__hamburger{
+    position: absolute;
+    right: 20px;
+
+    cursor: pointer;
+  }
 }

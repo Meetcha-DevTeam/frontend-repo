@@ -44,7 +44,7 @@ const MeetingDetailPage = () => {
 
   return (
     <div className={styles.meetingDetailPage}>
-      <Header prevButton={true} />
+      <Header prevButton={true} hamburger={meetingDetail?.meetingStatus==="MATCHING"}/>
       <div className={styles.meetingDetailPage__contents}>
         <div className={styles.meetingDetailPage__contents__view}>
           {meetingDetail && <MeetingDetailView data={meetingDetail} />}
