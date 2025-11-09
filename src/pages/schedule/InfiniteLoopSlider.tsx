@@ -31,6 +31,14 @@ const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
   const justDragged = useRef(false);
   const DRAG_THRESHOLD = 8; // px
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollLeft = (Number(month) - 1 + baseNumbers.length) * itemWidth;
+      isInitializing.current = false;
+    }
+  }, [isSliderOpen]);
+
   const handleScroll = () => {
     if (isInitializing.current) return; // 초기 active Index를 정할때 추가 스크롤되지 않기 위한 방어 로직
 
@@ -48,7 +56,6 @@ const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
       container.scrollLeft = currentScrollLeft;
     }
 
-    // 현재 보이는 중앙 아이템의 실제 인덱스 계산
     const newRawIndex = Math.round(currentScrollLeft / itemWidth);
 
     // 12월 <-> 1월 경계 넘었는지 감지하여 연도 변경
@@ -65,24 +72,6 @@ const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
     setActiveIndex(newRawIndex);
     setMonth(String(Number(newMonthVal) % 12 === 0 ? 12 : Number(newMonthVal) % 12));
   };
-
-  useEffect(() => {
-    console.log("month:", month);
-    console.log("year", year);
-  }, [month, year]);
-
-  //   useEffect(() => {
-  //     console.log(extendedNumbers);
-  //     console.log(activeIndex);
-  //   }, [extendedNumbers, activeIndex]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.scrollLeft = (Number(month) - 1 + baseNumbers.length) * itemWidth;
-      isInitializing.current = false;
-    }
-  }, [isSliderOpen]);
 
   // ---------- Pointer Events: 드래그로 스크롤 ----------
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
