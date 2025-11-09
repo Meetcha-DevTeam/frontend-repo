@@ -1,7 +1,7 @@
 .dropdown{
   position:fixed;
   background-color: aqua;
-  width: 15%;
+  width: 6.1rem;
   height: 5%;
   top: 3rem;
   right: 0.8rem;
@@ -19,5 +19,12 @@
     align-items: center;
     padding: 0.8rem;
     gap: 0.9rem;
+    >img{
+      width: 20%;
+      height: 20%;
+    }
+    p{
+      font-size: 50% ;
+    }
   }
 }
