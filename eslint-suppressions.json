@@ -202,7 +202,7 @@
       "count": 1
     },
     "@typescript-eslint/no-unused-vars": {
-      "count": 3
+      "count": 2
     }
   },
   "src/pages/schedule/weekly_schedule/WeeklyScheduleView.tsx": {
