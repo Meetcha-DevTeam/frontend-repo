@@ -1,6 +1,7 @@
-import React from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LandingPage from "./LandingPage";
+import { apiCall } from "@/apis/apiCall";
 
 import book from "@assets/book.svg";
 import alarm from "@assets/alarmClock.svg";
@@ -10,6 +11,34 @@ import "./LandingBackground.scss";
 
 const LandingBackground = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyAuth = async () => {
+      const token = localStorage.getItem("access-token");
+
+      if (!token) {
+        return;
+      }
+
+      try {
+        const res = await apiCall(`/user/mypage`, "GET", null, true);
+
+        if (res.code === 200) {
+          navigate("/schedule");
+        } else {
+          localStorage.removeItem("access-token");
+          localStorage.removeItem("refresh-token");
+        }
+      } catch {
+        // 에러 발생 시 토큰 제거
+        localStorage.removeItem("access-token");
+        localStorage.removeItem("refresh-token");
+      }
+    };
+
+    verifyAuth();
+  }, [navigate]);
+
   const handleClick = () => {
     navigate("/login");
   };
