@@ -11,7 +11,8 @@ const MeetingPage = () => {
   useEffect(() => {
     fetchMeetings();
   }, []);
-
+  console.log(meetings);
+  
   return (
     <div className={styles.meetingPage}>
       <MeetingCompleteSection meetingList={meetings} />

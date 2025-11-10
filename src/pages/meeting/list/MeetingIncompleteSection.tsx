@@ -20,10 +20,6 @@ const MeetingIncompleteSection = ({ meetingList }: { meetingList: Meeting[] }) =
   return (
     <div className={styles.meetingIncompleteSection}>
       <div className={styles.meetingIncompleteSection__label}>매칭 중인 미팅</div>
-      {/* <Carousel
-        dataSet={incompleteData}
-        renderItem={(data, index) => <CarouselItem key={index} data={data} />}
-      /> */}
       <div className={styles.meetingIncompleteSection__list}>
         {incompleteMeetings?.map((item, _) => (
           <MeetingItemCard key={item.meetingId} data={item} />

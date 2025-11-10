@@ -17,7 +17,7 @@ const MeetingItemCard = ({ data }: Props) => {
   const [meetingDetail, setMeetingDetail] = useState<string>("");
   const [cardStyle, setCardStyle] = useState<string>();
   const [textStyle, setTextStyle] = useState<string>();
-
+  
   const handleClick = () => {
     navigate("detail", {
       state: {
@@ -50,20 +50,23 @@ const MeetingItemCard = ({ data }: Props) => {
   }, [data]);
 
   return (
-    <div className={styles.meetingItemCard} onClick={handleClick}>
-      <div className={`${styles.meetingItemCard__leftEdge} ${cardStyle}`}></div>
-      <div className={styles.meetingItemCard__dataArea}>
-        <div className={styles.meetingItemCard__dataArea__meetingInfo}>
-          <div className={styles.meetingItemCard__dataArea__meetingInfo__meetingName}>
-            {data.title}
-          </div>
-          <div
-            className={`${styles.meetingItemCard__dataArea__meetingInfo__meetingDetail} ${textStyle}`}
-          >
-            {meetingDetail}
+    <div className={styles.meetingItemCardWithDelete}>
+      <div className={styles.meetingItemCard} onClick={handleClick}>
+        <div className={`${styles.meetingItemCard__leftEdge} ${cardStyle}`}></div>
+        <div className={styles.meetingItemCard__dataArea}>
+          <div className={styles.meetingItemCard__dataArea__meetingInfo}>
+            <div className={styles.meetingItemCard__dataArea__meetingInfo__meetingName}>
+              {data.title}
+            </div>
+            <div
+              className={`${styles.meetingItemCard__dataArea__meetingInfo__meetingDetail} ${textStyle}`}
+            >
+              {meetingDetail}
+            </div>
           </div>
         </div>
       </div>
+      <button className={styles.meetingItemCard__delete}>삭제하기</button>
     </div>
   );
 };
