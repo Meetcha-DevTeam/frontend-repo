@@ -3,10 +3,10 @@ type JSONValue = any;
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
 
-const getAccess = () => sessionStorage.getItem("access-token");
-const setAccess = (t: string) => sessionStorage.setItem("access-token", t);
+const getAccess = () => localStorage.getItem("access-token");
+const setAccess = (t: string) => localStorage.setItem("access-token", t);
 const getRefresh = () =>
-  localStorage.getItem("refresh-token") ?? sessionStorage.getItem("refresh-token") ?? "";
+  localStorage.getItem("refresh-token") ?? localStorage.getItem("refresh-token") ?? "";
 const setRefresh = (t?: string) => {
   if (t) localStorage.setItem("refresh-token", t);
 };
