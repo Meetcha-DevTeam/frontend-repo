@@ -38,27 +38,7 @@
       "count": 1
     }
   },
-  "src/mocks/handlers.ts": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 7
-    }
-  },
   "src/mocks/handlers/index.ts": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/mocks/handlers/meetingHandlers.ts": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/mocks/handlers/meetingParticipateHandlers.ts": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/mocks/handlers/projectsAllHandler.ts": {
     "@typescript-eslint/no-unused-vars": {
       "count": 1
     }
