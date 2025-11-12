@@ -49,17 +49,7 @@ const ScheduleCrudCardExpandable = ({ clickedSpan }: Props) => {
       startYear + "-" + startMonth + "-" + startDate + "T" + formatTime(startTime)
     );
     setFormValue("endAt", endYear + "-" + endMonth + "-" + endDate + "T" + formatTime(endTime));
-  }, [
-    startTime,
-    endTime,
-    startYear,
-    startMonth,
-    startDate,
-    endYear,
-    endMonth,
-    endDate,
-    setFormValue,
-  ]);
+  }, [startTime, endTime, startYear, startMonth, startDate, endYear, endMonth, endDate]);
 
   const formatTime = (time: string) => {
     const [meridiem, timeAndMinute] = time.split(" ");
