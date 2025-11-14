@@ -23,7 +23,10 @@ const CalendarHeader = ({ calendarType, setCalendarType }: Props) => {
         </div>
       ) : (
         <>
-          <span className={styles.month} onClick={() => setIsSliderOpen((prev) => !prev)}>
+          <span
+            className={styles.month}
+            onClick={() => calendarType === CALENDAR.Monthly && setIsSliderOpen((prev) => !prev)}
+          >
             {month}
           </span>
           <div className={styles.calendarTypeCtn}>
