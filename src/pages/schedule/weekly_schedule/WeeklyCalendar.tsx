@@ -9,9 +9,9 @@ import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudPage from "../schedule_crud/ScheduleCrudPage";
-import type { ParsedSchedule } from "./WeeklyScheduleView";
 import { DateContext } from "../DataContext";
 import { getMonth } from "date-fns";
+import type { ParsedSchedule } from "@/types/WeeklyScheuldeTypes";
 
 /**
  * 슬라이드가 생성모드로 열렸는지, 수정모드로 열렸는지를 구분
