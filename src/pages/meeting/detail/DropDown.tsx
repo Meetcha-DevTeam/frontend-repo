@@ -5,12 +5,12 @@ import { createPortal } from "react-dom";
 
 import styles from "./DropDown.module.scss";
 
-interface props {
+interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DropDown:React.FC<props> = ({open,setOpen}) => {
+const DropDown = ({open,setOpen}:Props) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

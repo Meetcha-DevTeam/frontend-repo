@@ -1,8 +1,15 @@
 .meetingItemCardWithDelete {
+  position: relative;
   width: 100%;
   display: flex;
+
+  .swipeTrack{
+    width: 100%;
+    will-change: transform;
+    touch-action: pan-y;
+  }
   .meetingItemCard {
-    width: 85%;
+    width: 100%;
     height: 4rem;
 
     display: flex;
@@ -19,7 +26,18 @@
     cursor: pointer;
 
     &__delete {
-      background-color: $color-orange-4;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      width: 72px;
+      height: 100%;
+      cursor: pointer;
+      z-index: 1;
+      background-color: $color-cream-100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     &__leftEdge {
@@ -91,5 +109,9 @@
         font-weight: 400;
       }
     }
+  }
+
+  &[data-status="MATCHING"]{
+    .meetingItemCard{width: 85%;}
   }
 }
