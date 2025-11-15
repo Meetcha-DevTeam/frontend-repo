@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LandingPage from "./LandingPage";
-import { apiCall } from "@/apis/apiCall";
 
 import book from "@assets/book.svg";
 import alarm from "@assets/alarmClock.svg";
 import pen from "@assets/pen.svg";
 
 import "./LandingBackground.scss";
+import { fetchMyPage } from "@/apis/user/userAPI";
 
 const LandingBackground = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const LandingBackground = () => {
       }
 
       try {
-        const res = await apiCall(`/user/mypage`, "GET", null, true);
+        const res = await fetchMyPage();
 
         if (res.code === 200) {
           navigate("/schedule");
@@ -37,7 +37,7 @@ const LandingBackground = () => {
     };
 
     verifyAuth();
-  }, [navigate]);
+  }, []);
 
   const handleClick = () => {
     navigate("/login");

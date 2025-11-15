@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 // import myPageImg from "@/assets/myPage.png"; // ← fallback 용으로 유지
 import "./MyPage.scss";
-import { apiCall } from "@/apis/apiCall";
-
-interface MyPageData {
-  nickname: string;
-  profileImgUrl: string;
-}
+import { fetchMyPage } from "@/apis/user/userAPI";
+import type { MypageResponse } from "@/apis/user/userTypes";
 
 const MyPage = () => {
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<MypageResponse>(null);
 
   const getUserData = async () => {
     try {
-      const res = await apiCall(`/user/mypage`, "GET", null, true);
+      const res = await fetchMyPage();
 
       if (!res) return;
       if (res.code === 401) {
