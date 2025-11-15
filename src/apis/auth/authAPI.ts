@@ -1,6 +1,7 @@
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
-import type { AuthResponse } from "./authTypes";
+import type { AuthResponse, logoutResponse } from "./authTypes";
+import { getResponseType } from "./authUtils";
 
 export const sendAuthCode = async (authCode: string, addr: string) => {
   const data = { code: authCode, redirectUri: addr };
@@ -19,7 +20,19 @@ export const renewAccessToken = async (refToken: string) => {
     localStorage.setItem("refresh-token", res.data.refreshToken);
     return true;
   } else {
-    console.error(res.message);
     return false;
+  }
+};
+
+export const logout = async () => {
+  const res: ApiResponse<logoutResponse> = await apiCall("/oauth/logout", "POST", null, true);
+  const type = getResponseType(res.code);
+
+  if (type === "success") {
+    sessionStorage.removeItem("access-token");
+    sessionStorage.removeItem("refresh-token");
+    return res;
+  } else {
+    throw Promise.reject(new Error(res.message));
   }
 };
