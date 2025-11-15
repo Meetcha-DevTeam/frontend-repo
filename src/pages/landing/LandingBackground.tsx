@@ -7,7 +7,7 @@ import alarm from "@assets/alarmClock.svg";
 import pen from "@assets/pen.svg";
 
 import "./LandingBackground.scss";
-import { fetchMyPage } from "@/apis/user/userAPI";
+import { fetchProfileData } from "@/apis/mypage/mypageAPI";
 
 const LandingBackground = () => {
   const navigate = useNavigate();
@@ -20,20 +20,14 @@ const LandingBackground = () => {
         return;
       }
 
-      try {
-        const res = await fetchMyPage();
-
-        if (res.code === 200) {
+      fetchProfileData()
+        .then(() => {
           navigate("/schedule");
-        } else {
+        })
+        .catch(() => {
           localStorage.removeItem("access-token");
           localStorage.removeItem("refresh-token");
-        }
-      } catch {
-        // 에러 발생 시 토큰 제거
-        localStorage.removeItem("access-token");
-        localStorage.removeItem("refresh-token");
-      }
+        });
     };
 
     verifyAuth();
