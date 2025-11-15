@@ -114,11 +114,6 @@
       "count": 1
     }
   },
-  "src/pages/mypage/MyPage.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
   "src/pages/participate/Participate_link/Participate_link_ctn.tsx": {
     "@typescript-eslint/no-unused-vars": {
       "count": 2
