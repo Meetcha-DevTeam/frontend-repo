@@ -4,17 +4,16 @@ import styles from "./InfiniteLoopSlider.module.scss";
 import { DateContext } from "./DataContext";
 
 interface Props {
-  isSliderOpen: boolean;
   setIsSliderOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
+const InfiniteLoopSlider = ({ setIsSliderOpen }: Props) => {
   const { year, month, setYear, setMonth } = useContext(DateContext);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const itemWidth = 60;
   const oneSetWidth = itemWidth * 12;
-  const baseNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const baseNumbers = Array.from({ length: 12 }, (_, i) => i + 1);
   const extendedNumbers = [...baseNumbers, ...baseNumbers, ...baseNumbers];
   const isInitializing = useRef(true);
 
@@ -37,7 +36,7 @@ const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
       container.scrollLeft = (Number(month) - 1 + baseNumbers.length) * itemWidth;
       isInitializing.current = false;
     }
-  }, [isSliderOpen]);
+  }, []);
 
   const handleScroll = () => {
     if (isInitializing.current) return; // 초기 active Index를 정할때 추가 스크롤되지 않기 위한 방어 로직
