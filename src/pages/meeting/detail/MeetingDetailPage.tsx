@@ -53,7 +53,7 @@ const MeetingDetailPage = () => {
     <div className={styles.meetingDetailPage}>
       <Header
         prevButton={true}
-        hamburger={meetingDetail?.meetingStatus === "MATCHING"}
+        hamburger={meetingDetail?.meetingStatus === "MATCH_FAILED"}
         open={open}
         onToggle={handleToggle}
       />
