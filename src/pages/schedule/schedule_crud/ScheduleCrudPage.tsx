@@ -18,8 +18,12 @@ interface Props {
 
 const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) => {
   const form = useScheduleCreateForm();
+
   useEffect(() => {
-    if (slideType === Slide.Create) return;
+    console.log(clickedSpan);
+    if (slideType === Slide.Create) {
+      return;
+    }
     form.setFormValue("title", data?.title);
     form.setFormValue("recurrence", data?.recurrence);
   }, [slideType, data, form]);
