@@ -33,7 +33,7 @@ interface Props {
 const localizer = luxonLocalizer(DateTime);
 
 const formats = {
-  timeGutterFormat: (date: Date, culture: string, localizer: any) => {
+  timeGutterFormat: (date: Date) => {
     return DateTime.fromJSDate(date).toFormat("H"); // 예: 22
   },
 };
