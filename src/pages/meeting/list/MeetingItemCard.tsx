@@ -6,7 +6,7 @@ import {
   incompletedMeetingDateFormatter,
 } from "@/utils/dateFormatter";
 import type { Meeting } from "@/apis/meeting/meetingTypes";
-
+import { deleteMeeting } from "@/apis/meeting/meetingAPI";
 
 import trashCan from "@assets/trashCan.svg";
 
@@ -19,8 +19,8 @@ const OPEN_THRESHOLD = 0.5;
 
 const MeetingItemCard = ({ data }: Props) => {
   const currentStatus: string = data.meetingStatus;
-  
-  const isMatchFailed:boolean=currentStatus==="MATCH_FAILED";
+
+  const isMatchFailed: boolean = currentStatus === "MATCH_FAILED";
 
   const navigate = useNavigate();
 
@@ -56,13 +56,14 @@ const MeetingItemCard = ({ data }: Props) => {
       },
     });
   };
+
   //형코드
   const cardInfoResolver = () => {
     if (currentStatus === "MATCHING") {
       setMeetingDetail(`${incompletedMeetingDateFormatter(data.deadline)} 종료`);
       setCardStyle(styles.incomplete);
       setTextStyle(styles.incompleteText);
-    } else if (currentStatus==="MATCH_FAILED") {
+    } else if (currentStatus === "MATCH_FAILED") {
       setMeetingDetail("매칭 실패");
       setCardStyle(styles.fail);
       setTextStyle(styles.failText);
@@ -131,6 +132,16 @@ const MeetingItemCard = ({ data }: Props) => {
     movedRef.current = false;
   };
 
+  const handleDeleteBtn = async () => {
+    try {
+      const res = await deleteMeeting(data.meetingId);
+      navigate("/meeting");
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div
       ref={containerRef}
@@ -169,8 +180,8 @@ const MeetingItemCard = ({ data }: Props) => {
           </div>
         </div>
       </div>
-      {(isMatchFailed) && open ? (
-        <button className={styles.meetingItemCard__delete}>
+      {isMatchFailed && open ? (
+        <button className={styles.meetingItemCard__delete} onClick={handleDeleteBtn}>
           <img src={trashCan} alt="쓰레기통"></img>
         </button>
       ) : null}

@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
-import type { AlternativeObj, Meeting, MeetingCreateResponse, MeetingDetail } from "./meetingTypes";
+import type {
+  DeleteRes,
+  AlternativeObj,
+  Meeting,
+  MeetingCreateResponse,
+  MeetingDetail,
+} from "./meetingTypes";
 
 export const fetchMeetingList = async () => {
   const res: ApiResponse<Meeting[]> = await apiCall("/meeting-lists", "GET", null, true);
@@ -21,7 +27,7 @@ export const fetchMeetingDetail = async (meetingId: string) => {
 export const voteAlternativeMeeting = async (meetingId: string, data) => {
   const navigate = useNavigate();
   const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
-  if (!res.success) {
+  if (res.code !== 200) {
     alert(res.message);
   }
   navigate(`/meeting/${meetingId}`);
@@ -60,4 +66,16 @@ export const createMeeting = async (data) => {
     default:
       alert(res.message);
   }
+};
+
+export const deleteMeeting = async (meetingId:string) => {
+  const res: ApiResponse<DeleteRes> = await apiCall(`/meeting/${meetingId}`, "DELETE", null, true);
+  const errorCodes = [400, 401, 403, 404];
+
+  if (errorCodes.includes(res.code)) {
+    alert(res.message);
+    // 상위에서 잡을 수 있도록 에러 던짐
+    throw new Error(res.message);
+  }
+  return res;
 };

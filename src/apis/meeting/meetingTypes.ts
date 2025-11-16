@@ -52,3 +52,8 @@ export interface Anchor {
   right: number;
   bottom: number;
 }
+
+export interface DeleteRes {
+  meetingId: string;
+  message: string;
+}

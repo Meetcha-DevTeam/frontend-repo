@@ -2,16 +2,31 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import trashCan from "@assets/trashCan.svg";
 import { createPortal } from "react-dom";
+import { deleteMeeting } from "@/apis/meeting/meetingAPI";
 
 import styles from "./DropDown.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  meetingId: string;
 }
 
-const DropDown = ({open,setOpen}:Props) => {
+const DropDown = ({ open, setOpen, meetingId }: Props) => {
   const menuRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const handleDeleteBtn = async () => {
+    console.log("🧨 delete button clicked!", meetingId);
+    try {
+      const res = await deleteMeeting(meetingId);
+      navigate("/meeting");
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -27,7 +42,7 @@ const DropDown = ({open,setOpen}:Props) => {
 
   if (!open) return null;
   return (
-    <div ref={menuRef} className={styles.dropdownCtn}>
+    <div className={styles.dropdownCtn}>
       {open &&
         createPortal(
           <div
@@ -35,13 +50,7 @@ const DropDown = ({open,setOpen}:Props) => {
             className={styles.dropdown} // 아래 SCSS 참고
             role="menu"
           >
-            <button
-              className={styles.dropdown__deleteBtn}
-              onClick={() => {
-                setOpen(false);
-                // 삭제 로직 실행
-              }}
-            >
+            <button className={styles.dropdown__deleteBtn} onClick={handleDeleteBtn}>
               <img src={trashCan} alt="trashCan"></img>
               <p>삭제하기</p>
             </button>

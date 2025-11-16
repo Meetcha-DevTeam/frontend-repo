@@ -87,7 +87,7 @@ const MeetingDetailPage = () => {
             )}
         </div>
       </div>
-      <DropDown open={open} setOpen={setOpen} />
+      <DropDown open={open} setOpen={setOpen} meetingId={meetingId} />
     </div>
   );
 };
