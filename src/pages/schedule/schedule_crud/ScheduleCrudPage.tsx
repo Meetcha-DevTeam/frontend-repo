@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./ScheduleCrudPage.module.scss";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
@@ -8,6 +8,8 @@ import { ScheduleCreateFormContext, useScheduleCreateForm } from "./hooks/useSch
 import { Slide, type SlideType } from "../weekly_schedule/WeeklyCalendar";
 import type { Dispatch, SetStateAction } from "react";
 import { ScheduleCrudContext } from "./hooks/useScheduleCrudContext";
+import { DateContext } from "../DataContext";
+import { useSchedules } from "@/hooks/useSchedules";
 
 interface Props {
   clickedSpan: string;
@@ -18,6 +20,8 @@ interface Props {
 
 const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) => {
   const form = useScheduleCreateForm();
+  const { year, month } = useContext(DateContext);
+  const { forceRefresh } = useSchedules(year, month);
 
   useEffect(() => {
     console.log(clickedSpan);
@@ -30,6 +34,8 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
 
   const sendCreationReq = () => {
     if (form.errors) {
+      console.log(form.getFormValue("startAt"));
+      console.log(form.getFormValue("endAt"));
       for (const [key, value] of Object.entries(form.errors)) {
         alert(`${key} ${value}`);
       }
@@ -38,6 +44,7 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
 
     form.onSubmit(async () => {
       await createSchedule(form.values);
+      forceRefresh();
       setCrudOpen(false);
     });
   };
