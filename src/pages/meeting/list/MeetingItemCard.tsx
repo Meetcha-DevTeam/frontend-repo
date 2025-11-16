@@ -84,7 +84,6 @@ const MeetingItemCard = ({ data }: Props) => {
   const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
   //MeetingItemCard에 클릭했을 때의 동작
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    console.log("↓ pointerDown");
     if (!isMatching) return; // 매칭중일 때만 슬라이드 허용
     setDragging(true);
     movedRef.current = false;
@@ -97,7 +96,6 @@ const MeetingItemCard = ({ data }: Props) => {
   };
   //드래그 했을 때 동작
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    console.log("→ pointerMove");
     if (!dragging) return;
 
     const dx = e.clientX - startXRef.current;
@@ -118,7 +116,6 @@ const MeetingItemCard = ({ data }: Props) => {
   };
   //드래그 종료
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    console.log("↑ pointerUp");
     if (!dragging) return;
     setDragging(false);
 
@@ -127,7 +124,7 @@ const MeetingItemCard = ({ data }: Props) => {
     setTx(opened ? -DelBtnWidth : 0);
 
     if (!movedRef.current && !opened) {
-      navigate("detail", { state: { meetingId: data.meetingId } });
+      handleClick();
     }
 
     movedRef.current = false;
@@ -142,6 +139,11 @@ const MeetingItemCard = ({ data }: Props) => {
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
       className={styles.meetingItemCardWithDelete}
+      onClick={() => {
+        if (!isMatching) {
+          handleClick();
+        }
+      }}
     >
       <div
         className={styles.swipeTrack}
