@@ -14,7 +14,7 @@ const InfiniteLoopSlider = ({ isSliderOpen, setIsSliderOpen }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemWidth = 60;
   const oneSetWidth = itemWidth * 12;
-  const baseNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const baseNumbers = Array.from({ length: 12 }, (_, i) => i + 1);
   const extendedNumbers = [...baseNumbers, ...baseNumbers, ...baseNumbers];
   const isInitializing = useRef(true);
 
