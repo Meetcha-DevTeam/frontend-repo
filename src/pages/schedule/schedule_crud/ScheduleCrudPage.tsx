@@ -34,8 +34,6 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
 
   const sendCreationReq = () => {
     if (form.errors) {
-      console.log(form.getFormValue("startAt"));
-      console.log(form.getFormValue("endAt"));
       for (const [key, value] of Object.entries(form.errors)) {
         alert(`${key} ${value}`);
       }
@@ -59,12 +57,14 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
 
     form.onSubmit(async () => {
       await editSchedule({ ...form.values, eventId: data.eventId });
+      forceRefresh();
       setCrudOpen(false);
     });
   };
 
   const sendDelReq = async () => {
     await deleteSchedule(data.eventId);
+    forceRefresh();
     setCrudOpen(false);
   };
 
