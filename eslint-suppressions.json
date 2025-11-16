@@ -117,9 +117,6 @@
   "src/pages/mypage/MyPage.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1
-    },
-    "@typescript-eslint/no-unused-vars": {
-      "count": 2
     }
   },
   "src/pages/participate/Participate_link/Participate_link_ctn.tsx": {
@@ -166,14 +163,6 @@
   "src/pages/schedule/weekly_schedule/CustomWeekHeader.tsx": {
     "@typescript-eslint/no-explicit-any": {
       "count": 1
-    }
-  },
-  "src/pages/schedule/weekly_schedule/WeeklyCalendar.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
-    "@typescript-eslint/no-unused-vars": {
-      "count": 3
     }
   },
   "src/pages/schedule/weekly_schedule/WeeklyScheduleView.tsx": {
