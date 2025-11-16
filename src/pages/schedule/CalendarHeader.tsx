@@ -19,7 +19,7 @@ const CalendarHeader = ({ calendarType, setCalendarType }: Props) => {
       {isSliderOpen ? (
         <div className={styles.slider}>
           <div className={styles.year}>{year}</div>
-          <InfiniteLoopSlider isSliderOpen={isSliderOpen} setIsSliderOpen={setIsSliderOpen} />
+          <InfiniteLoopSlider setIsSliderOpen={setIsSliderOpen} />
         </div>
       ) : (
         <>
