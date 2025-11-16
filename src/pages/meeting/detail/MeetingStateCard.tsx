@@ -4,7 +4,6 @@ import RunningMatching from "@assets/runningMatching.svg?react";
 import CompletedMatching from "@assets/completedMatching.svg?react";
 import FailedMatching from "@assets/failedMatching.svg?react";
 import type { MeetingDetail } from "@/apis/meeting/meetingTypes";
-import { isBefore } from "date-fns";
 
 interface Props {
   data: MeetingDetail;

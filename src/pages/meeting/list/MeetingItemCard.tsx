@@ -6,7 +6,7 @@ import {
   incompletedMeetingDateFormatter,
 } from "@/utils/dateFormatter";
 import type { Meeting } from "@/apis/meeting/meetingTypes";
-import { isBefore } from "date-fns";
+
 
 import trashCan from "@assets/trashCan.svg";
 
@@ -18,8 +18,8 @@ const DelBtnWidth = 72;
 const OPEN_THRESHOLD = 0.5;
 
 const MeetingItemCard = ({ data }: Props) => {
-  const currentStatus: String = data.meetingStatus;
-  const isMatching: boolean = currentStatus === "MATCHING";
+  const currentStatus: string = data.meetingStatus;
+  
   const isMatchFailed:boolean=currentStatus==="MATCH_FAILED";
 
   const navigate = useNavigate();
@@ -116,7 +116,7 @@ const MeetingItemCard = ({ data }: Props) => {
     e.preventDefault();
   };
   //드래그 종료
-  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+  const onPointerUp = () => {
     if (!dragging) return;
     setDragging(false);
 

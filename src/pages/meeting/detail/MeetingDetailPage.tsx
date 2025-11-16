@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import MeetingDetailView from "./MeetingDetailView";
 import Button from "@/components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
-import type { MeetingDetail, Anchor } from "@/apis/meeting/meetingTypes";
+import type { MeetingDetail } from "@/apis/meeting/meetingTypes";
 import { fetchMeetingDetail } from "@/apis/meeting/meetingAPI";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "@/utils/copyToClipBoard";

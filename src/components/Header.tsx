@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 import MainLogo from "@assets/MeetchaLogo.svg";
 import LeftArrow from "@assets/leftArrow.svg?react";
 import Hamburger from "@assets/hamburger2.svg";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import clsx from "clsx";
 
@@ -11,23 +11,25 @@ interface Props {
   prevButton: boolean;
   hamburger: boolean;
   open: boolean;
-  onToggle: (next:boolean, rect:DOMRect)=>void;
+  onToggle: (next: boolean, rect: DOMRect) => void;
 }
 
 const Header = ({ prevButton, hamburger, open, onToggle }: Props) => {
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const toggle=()=>{
-    const rect=ref.current.getBoundingClientRect();
-    onToggle(!open,rect);
-  }
+  const toggle = () => {
+    const rect = ref.current.getBoundingClientRect();
+    onToggle(!open, rect);
+  };
 
   return (
-    <div className={clsx(styles.header,{
-     [styles["header__hasHamburger"]]:hamburger,
-     [styles["header__noHamburger"]]:!hamburger, 
-    })}>
+    <div
+      className={clsx(styles.header, {
+        [styles["header__hasHamburger"]]: hamburger,
+        [styles["header__noHamburger"]]: !hamburger,
+      })}
+    >
       {prevButton && (
         <LeftArrow className={styles.header__leftArrow} onClick={() => navigate(-1)} />
       )}
