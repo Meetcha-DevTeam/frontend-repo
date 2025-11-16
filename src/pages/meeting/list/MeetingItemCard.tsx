@@ -18,7 +18,10 @@ const DelBtnWidth = 72;
 const OPEN_THRESHOLD = 0.5;
 
 const MeetingItemCard = ({ data }: Props) => {
-  const isMatching = data.meetingStatus === "MATCHING";
+  const currentStatus: String = data.meetingStatus;
+  const isMatching: boolean = currentStatus === "MATCHING";
+  const isMatchFailed:boolean=currentStatus==="MATCH_FAILED";
+
   const navigate = useNavigate();
 
   const [meetingDetail, setMeetingDetail] = useState<string>("");
@@ -55,16 +58,14 @@ const MeetingItemCard = ({ data }: Props) => {
   };
   //형코드
   const cardInfoResolver = () => {
-    if (isMatching) {
-      if (isBefore(new Date(), data.deadline)) {
-        setMeetingDetail(`${incompletedMeetingDateFormatter(data.deadline)} 종료`);
-        setCardStyle(styles.incomplete);
-        setTextStyle(styles.incompleteText);
-      } else if (isBefore(data.deadline, new Date())) {
-        setMeetingDetail("매칭 실패");
-        setCardStyle(styles.fail);
-        setTextStyle(styles.failText);
-      }
+    if (currentStatus === "MATCHING") {
+      setMeetingDetail(`${incompletedMeetingDateFormatter(data.deadline)} 종료`);
+      setCardStyle(styles.incomplete);
+      setTextStyle(styles.incompleteText);
+    } else if (currentStatus==="MATCH_FAILED") {
+      setMeetingDetail("매칭 실패");
+      setCardStyle(styles.fail);
+      setTextStyle(styles.failText);
     } else {
       setMeetingDetail(
         `${completedMeetingDateFormatter(data.confirmedTime, data.durationMinutes)}`
@@ -84,7 +85,7 @@ const MeetingItemCard = ({ data }: Props) => {
   const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
   //MeetingItemCard에 클릭했을 때의 동작
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isMatching) return; // 매칭중일 때만 슬라이드 허용
+    if (!isMatchFailed) return; // 매칭중일 때만 슬라이드 허용
     setDragging(true);
     movedRef.current = false;
 
@@ -140,7 +141,7 @@ const MeetingItemCard = ({ data }: Props) => {
       onPointerCancel={onPointerUp}
       className={styles.meetingItemCardWithDelete}
       onClick={() => {
-        if (!isMatching) {
+        if (!isMatchFailed) {
           handleClick();
         }
       }}
@@ -168,7 +169,7 @@ const MeetingItemCard = ({ data }: Props) => {
           </div>
         </div>
       </div>
-      {isMatching && open ? (
+      {(isMatchFailed) && open ? (
         <button className={styles.meetingItemCard__delete}>
           <img src={trashCan} alt="쓰레기통"></img>
         </button>
