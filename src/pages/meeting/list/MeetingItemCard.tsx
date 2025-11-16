@@ -26,12 +26,12 @@ const MeetingItemCard = ({ data }: Props) => {
   const [textStyle, setTextStyle] = useState<string>();
 
   const [open, setOpen] = useState<boolean>(false);
-  const [dragging, setDragging] = useState(false);
-  const [tx, setTx] = useState(0);
+  const [dragging, setDragging] = useState<boolean>(false); //스와이프가 진행중인지 여부
+  const [tx, setTx] = useState<number>(0); //카드의 X축 이동 픽셀값
 
   const startXRef = useRef(0);
   const startYRef = useRef(0);
-  const movedRef = useRef(false);
+  const movedRef = useRef(false); //드래그가 발생했는지
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const MeetingItemCard = ({ data }: Props) => {
       },
     });
   };
-
+  //형코드
   const cardInfoResolver = () => {
     if (isMatching) {
       if (isBefore(new Date(), data.deadline)) {
@@ -76,14 +76,15 @@ const MeetingItemCard = ({ data }: Props) => {
   useEffect(() => {
     cardInfoResolver();
   }, [data]);
-
+  //형코드
   useEffect(() => {
     setTx(open ? -DelBtnWidth : 0);
   }, [open]);
-
+  //범위 제한 유틸함수
   const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
-
+  //MeetingItemCard에 클릭했을 때의 동작
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    console.log("↓ pointerDown");
     if (!isMatching) return; // 매칭중일 때만 슬라이드 허용
     setDragging(true);
     movedRef.current = false;
@@ -91,11 +92,12 @@ const MeetingItemCard = ({ data }: Props) => {
     startXRef.current = e.clientX;
     startYRef.current = e.clientY;
 
-    // 드래그 캡처
+    // 드래그 캡처, 드래그가 시작된 이후, 커서가 요소 밖으로 나가더라도 pointermove/pointer up 이벤트를 계속 이요소가 받게 하려는 기능
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
   };
-
+  //드래그 했을 때 동작
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    console.log("→ pointerMove");
     if (!dragging) return;
 
     const dx = e.clientX - startXRef.current;
@@ -111,23 +113,24 @@ const MeetingItemCard = ({ data }: Props) => {
     const next = clamp(dx + (open ? -DelBtnWidth : 0), -DelBtnWidth, 0);
     setTx(next);
 
-    // 스크롤 방지
+    // 스와이프 중 화면이 스크롤 되는것을 막아준다.
     e.preventDefault();
   };
-
+  //드래그 종료
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    console.log("↑ pointerUp");
     if (!dragging) return;
     setDragging(false);
 
     const opened = Math.abs(tx) >= DelBtnWidth * OPEN_THRESHOLD;
     setOpen(opened);
     setTx(opened ? -DelBtnWidth : 0);
-  };
 
-  const handleClickCard = () => {
-    // 스와이프 동작이 있었으면 클릭 네비게이션 막기
-    if (movedRef.current) return;
-    navigate("detail", { state: { meetingId: data.meetingId } });
+    if (!movedRef.current && !opened) {
+      navigate("detail", { state: { meetingId: data.meetingId } });
+    }
+
+    movedRef.current = false;
   };
 
   return (
@@ -146,9 +149,8 @@ const MeetingItemCard = ({ data }: Props) => {
           transform: `translateX(${tx}px)`,
           transition: dragging ? "none" : "transform 160ms ease",
         }}
-        onClick={handleClickCard}
       >
-        <div className={styles.meetingItemCard} onClick={handleClick}>
+        <div className={styles.meetingItemCard}>
           <div className={`${styles.meetingItemCard__leftEdge} ${cardStyle}`}></div>
           <div className={styles.meetingItemCard__dataArea}>
             <div className={styles.meetingItemCard__dataArea__meetingInfo}>
