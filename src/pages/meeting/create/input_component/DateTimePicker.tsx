@@ -51,7 +51,6 @@ export const DateTimePicker = () => {
 
   const timeSetter = (time: TimeOption) => {
     setTime(time);
-    console.log(time);
     if (day) {
       form.setFormValue("deadline", `${formatDate(day)}T${formatTime(time)}`);
     }
