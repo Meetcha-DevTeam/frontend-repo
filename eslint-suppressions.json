@@ -126,13 +126,10 @@
   },
   "src/pages/schedule/SchedulePage.tsx": {
     "@typescript-eslint/no-unused-vars": {
-      "count": 7
+      "count": 5
     }
   },
   "src/pages/schedule/monthly_schedule/MonthlyScheduleView.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
     "@typescript-eslint/no-unused-expressions": {
       "count": 1
     },

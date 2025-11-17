@@ -4,17 +4,22 @@ import EventTagBox from "./EventTagBox";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { getMonth } from "date-fns/getMonth";
 import { getYear } from "date-fns";
+import { useContext } from "react";
+import { DateContext } from "../DataContext";
+import type { UserScheduleData } from "@/apis/participate/participateTypes";
 
 interface Props {
-  schedules: any[];
-  setFetchStandardDate: React.Dispatch<React.SetStateAction<string>>;
+  schedules: UserScheduleData[];
 }
 
-const MonthlyScheduleView = ({ schedules, setFetchStandardDate }: Props) => {
+const MonthlyScheduleView = ({ schedules }: Props) => {
+  const { year, month, setYear, setMonth } = useContext(DateContext);
+  const activeStartDate = new Date(year, month - 1, 1);
   // console.log(schedules);
   return (
     <div className="monthlyScheduleView">
       <Calendar
+        activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={({ date, view }) => {
           const eventName = [];
@@ -31,20 +36,34 @@ const MonthlyScheduleView = ({ schedules, setFetchStandardDate }: Props) => {
           return <EventTagBox eventName={eventName} />;
         }}
         formatDay={(_, date) => {
-          // console.log(date);
           return date.toLocaleString("en", { day: "numeric" });
         }}
         formatShortWeekday={(_, date) => date.toLocaleString("en-US", { weekday: "short" })}
         onActiveStartDateChange={({ activeStartDate, view }) => {
-          setFetchStandardDate((prev) => {
-            const newStandardDate = `${getYear(activeStartDate)} ${getMonth(activeStartDate) + 1}`;
-            if (prev !== newStandardDate) {
-              // console.log(getMonth(activeStartDate) + 1);
-              return newStandardDate;
+          setYear((prev) => {
+            const newYear = getYear(activeStartDate);
+            if (prev !== newYear) {
+              return newYear;
             } else {
               return prev;
             }
           });
+          setMonth((prev) => {
+            const newMonth = getMonth(activeStartDate);
+            if (prev !== newMonth) {
+              return newMonth;
+            } else {
+              return prev;
+            }
+          });
+          // setFetchStandardDate((prev) => {
+          //   const newStandardDate = `${getYear(activeStartDate)} ${getMonth(activeStartDate) + 1}`;
+          //   if (prev !== newStandardDate) {
+          //     return newStandardDate;
+          //   } else {
+          //     return prev;
+          //   }
+          // });
         }}
       />
     </div>
