@@ -75,25 +75,17 @@
       "count": 1
     }
   },
-  "src/pages/memoir/Memoir_complete/Memoir_complete_ctn.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
   "src/pages/memoir/Memoir_meeting/Meeting_list_content.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 3
-    },
     "@typescript-eslint/no-unused-vars": {
       "count": 1
     }
   },
   "src/pages/memoir/Memoir_meeting/Memoir_meeting_All.tsx": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 5
+      "count": 1
     },
     "no-irregular-whitespace": {
-      "count": 2
+      "count": 1
     }
   },
   "src/pages/memoir/Memoir_write/Memoir_write_ctn.tsx": {

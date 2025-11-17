@@ -16,7 +16,7 @@ const Meeting_card = ({
   const toggleExpand = () => {
     setIsExpanded((prev) => !prev);
   };
-  console.log(chosenProject);
+ 
   useEffect(() => {
     if (descRef.current) {
       setDescHeight(descRef.current.scrollHeight);
