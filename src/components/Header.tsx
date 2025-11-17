@@ -11,7 +11,7 @@ interface Props {
   prevButton: boolean;
   hamburger: boolean;
   open: boolean;
-  onToggle: (next: boolean, rect: DOMRect) => void;
+  onToggle: (next: boolean) => void;
 }
 
 const Header = ({ prevButton, hamburger, open, onToggle }: Props) => {
@@ -19,8 +19,7 @@ const Header = ({ prevButton, hamburger, open, onToggle }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const toggle = () => {
-    const rect = ref.current.getBoundingClientRect();
-    onToggle(!open, rect);
+    onToggle(!open);
   };
 
   return (
