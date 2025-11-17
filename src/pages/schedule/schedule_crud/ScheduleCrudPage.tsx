@@ -24,7 +24,6 @@ const ScheduleCrudPage = ({ clickedSpan, slideType, data, setCrudOpen }: Props) 
   const { forceRefresh } = useSchedules(year, month);
 
   useEffect(() => {
-    console.log(clickedSpan);
     if (slideType === Slide.Create) {
       return;
     }
