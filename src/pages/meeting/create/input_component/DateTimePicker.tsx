@@ -66,7 +66,7 @@ export const DateTimePicker = () => {
             form.setFormValue("deadline", `${formatDate(date)}T${formatTime(time)}`);
           }}
           tileClassName={({ date }) => {
-            if (day === date) {
+            if (day?.getTime() === date.getTime()) {
               return "custom-active";
             }
           }}

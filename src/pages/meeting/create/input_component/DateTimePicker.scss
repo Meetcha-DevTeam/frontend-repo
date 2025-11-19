@@ -118,7 +118,6 @@
   font: inherit;
   font-size: 0.833em;
 }
-
 .calendarInputComponent .react-calendar__tile:disabled {
   background-color: #f0f0f0;
   color: #ababab;
@@ -130,17 +129,19 @@
   color: #cdcdcd;
 }
 
-.calendarInputComponent .react-calendar__tile:enabled:hover,
+.calendarInputComponent .react-calendar__tile:enabled:hover {
+  background-color: $color-orange-100;
+}
+
 .calendarInputComponent .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
 }
 
 .calendarInputComponent .react-calendar__tile--now {
+  background: $color-orange-200;
 }
 
 .calendarInputComponent .react-calendar__tile--now:enabled:hover,
 .calendarInputComponent .react-calendar__tile--now:enabled:focus {
-  background: #ffffa9;
 }
 
 .calendarInputComponent .react-calendar__tile--hasActive {
@@ -191,16 +192,9 @@
 }
 
 .calendarInputComponent .custom-active {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-
   background: $color-orange-10;
   color: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 8px;
 }
 
 .calendarInputComponent .custom-active:enabled:hover,
