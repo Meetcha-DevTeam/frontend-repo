@@ -2,7 +2,7 @@ import Calendar from "react-calendar";
 import { useMeetingCreateFormContext } from "../hooks/useMeetingCreateForm";
 import dayjs from "dayjs";
 import min from "dayjs/plugin/minMax";
-import "./DateTimePicker.scss";
+import "./Calendar.scss";
 import { useState } from "react";
 import { WheelPicker, WheelPickerWrapper, type WheelPickerOption } from "@ncdai/react-wheel-picker";
 import { isPreviousDate } from "@/utils/MeetingOptionCardUtils";
