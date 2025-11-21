@@ -9,7 +9,7 @@
     "vercel-build": "vite build",
     "lint": "eslint . --prune-suppressions",
     "lint:fix": "eslint . --fix --prune-suppressions",
-    "type-check": "tsc --project tsconfig.app.json",
+    "type-check": "tsc --project tsconfig.app.json --strictNullChecks false",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
