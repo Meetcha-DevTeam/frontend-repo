@@ -10,6 +10,7 @@ function normalizePath(filePath: string): string {
   return path.relative(projectRoot, absolutePath).replace(/\\/g, "/");
 }
 
+console.log("TODO: 현재 변경파일들은 origin/develop을 기준으로 추출");
 console.log("🔍 Comparing with origin/develop...");
 const changed = new Set<string>();
 execSync("git diff --name-only origin/develop...HEAD -- '*.ts' '*.tsx'", {
