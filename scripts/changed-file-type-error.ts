@@ -10,19 +10,46 @@ function normalizePath(filePath: string): string {
   return path.relative(projectRoot, absolutePath).replace(/\\/g, "/");
 }
 
-console.log("TODO: 현재 변경파일들은 origin/develop을 기준으로 추출");
-console.log("🔍 Comparing with origin/develop...");
+// CLI 인자로 base branch 받기 (CI에서 전달)
+// 예: tsx scripts/changed-file-type-error.ts develop
+// 기본값: origin/develop (GitHub PR의 base branch와 동일한 방식)
+const baseBranchArg = process.argv[2];
+const baseBranch = baseBranchArg ? `origin/${baseBranchArg}` : "origin/develop";
+
+// 브랜치 존재 여부 확인 및 fetch
+function ensureBranchExists(branch: string): void {
+  try {
+    execSync(`git rev-parse --verify ${branch}`, { encoding: "utf8", stdio: "ignore" });
+  } catch {
+    // 브랜치가 없으면 fetch 시도
+    console.log(`⚠️  Branch ${branch} not found, fetching...`);
+    try {
+      const branchName = branch.replace("origin/", "");
+      execSync(`git fetch origin ${branchName}:${branch}`, { encoding: "utf8" });
+    } catch {
+      // fetch 실패 시 에러
+      throw new Error(`Failed to fetch branch: ${branch}`);
+    }
+  }
+}
+
+ensureBranchExists(baseBranch);
+console.log(`🔍 Comparing with ${baseBranch}...`);
 const changed = new Set<string>();
-execSync("git diff --name-only origin/develop...HEAD -- '*.ts' '*.tsx'", {
-  encoding: "utf8",
-})
-  .split("\n")
-  .filter(Boolean)
-  .forEach((file) => {
-    // Git이 반환하는 경로는 상대 경로이므로 정규화
-    const normalized = normalizePath(file);
-    changed.add(normalized);
-  });
+try {
+  execSync(`git diff --name-only ${baseBranch}...HEAD -- '*.ts' '*.tsx'`, {
+    encoding: "utf8",
+  })
+    .split("\n")
+    .filter(Boolean)
+    .forEach((file) => {
+      const normalized = normalizePath(file);
+      changed.add(normalized);
+    });
+} catch (error) {
+  console.error(`❌ Error comparing with ${baseBranch}:`, error);
+  process.exit(1);
+}
 
 console.log(`🔍 ${changed.size} changed TS files found.`);
 

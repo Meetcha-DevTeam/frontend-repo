@@ -34,6 +34,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 전체 히스토리 필요 (merge base 계산용)
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,9 +46,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
-        run: npm run strict-type-check:changed
+      - name: Determine base branch
+        id: base
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "branch=${{ github.base_ref }}" >> $GITHUB_OUTPUT
+          else
+            # push 이벤트인 경우 현재 브랜치 사용
+            echo "branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
 
+      - name: Type check
+        run: npm run strict-type-check:changed ${{ steps.base.outputs.branch }}
 
   lint:
     name: Lint
