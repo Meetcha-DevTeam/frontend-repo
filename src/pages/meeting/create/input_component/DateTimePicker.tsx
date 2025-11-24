@@ -56,7 +56,7 @@ export const DateTimePicker = () => {
   };
 
   return (
-    <>
+    <div className="dateTimePicker">
       <div className="calendarInputComponent">
         <Calendar
           formatDay={(_, date) => date.toLocaleString("en", { day: "numeric" })}
@@ -107,6 +107,6 @@ export const DateTimePicker = () => {
           }}
         />
       </WheelPickerWrapper>
-    </>
+    </div>
   );
 };
