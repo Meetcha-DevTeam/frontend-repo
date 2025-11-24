@@ -10,9 +10,6 @@
     },
     "no-case-declarations": {
       "count": 1
-    },
-    "react-hooks/rules-of-hooks": {
-      "count": 1
     }
   },
   "src/components/BottomNav/BottomNav.tsx": {
