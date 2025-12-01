@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { apiCall } from "../apiCall";
+import { isSuccess } from "../auth/authUtils";
 import type { ApiResponse } from "../common/types";
 import type {
   DeleteRes,
@@ -30,7 +30,6 @@ export const voteAlternativeMeeting = async (meetingId: string, data) => {
   if (res.code !== 200) {
     alert(res.message);
   }
-  navigate(`/meeting/${meetingId}`);
 
   return res;
 };
