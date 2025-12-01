@@ -8,6 +8,8 @@ import {
 import type { Meeting } from "@/apis/meeting/meetingTypes";
 import { deleteMeeting } from "@/apis/meeting/meetingAPI";
 
+import { useMouseEvent } from "../create/hooks/useHandleMouseEvent";
+
 import trashCan from "@assets/trashCan.svg";
 
 interface Props {
@@ -35,19 +37,9 @@ const MeetingItemCard = ({ data }: Props) => {
   const startXRef = useRef(0);
   const startYRef = useRef(0);
   const movedRef = useRef(false); //드래그가 발생했는지
-  const containerRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement|null>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (containerRef.current && !containerRef.current.contains(target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [open, setOpen]);
+  useMouseEvent({ open, setOpen, targetRef });
 
   const handleClick = () => {
     navigate("detail", {
@@ -144,7 +136,7 @@ const MeetingItemCard = ({ data }: Props) => {
 
   return (
     <div
-      ref={containerRef}
+      ref={targetRef}
       data-status={data.meetingStatus}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
