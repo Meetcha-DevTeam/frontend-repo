@@ -9,9 +9,9 @@ interface props {
   meeting: MemoirDetail;
 }
 const Memoir_complete_main = ({ meeting }: props) => {
-  const projectId: string = meeting.projectId;
+  const projectId = meeting.projectId;
 
-  const projectName: string = meeting.projectName;
+  const projectName = meeting.projectName;
 
   // projectId가 없으면 meetingId나 "default"로 안정적인 색을 계산
   const { text, bg }: projectTheme = getProjectTheme(projectId);
