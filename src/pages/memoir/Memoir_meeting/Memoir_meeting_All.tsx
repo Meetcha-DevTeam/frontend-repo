@@ -12,6 +12,7 @@ import type {
   meetingSummary,
   memoirList,
   MemoirWithTheme,
+  MemoirLocationState,
 } from "@/apis/memoir/memoirTypes";
 
 const Memoir_meeting_All = () => {
@@ -21,9 +22,9 @@ const Memoir_meeting_All = () => {
   const didRefetch = useRef(false);
   const mounted = useRef(true);
 
-  const [meetingLists, setMeetingLists] = useState<meetingList[]>(null);
-  const [memoirLists, setMemoirLists] = useState<memoirList[]>(null);
-  const [meetingSummary, setMeetingSummary] = useState<meetingSummary>(null);
+  const [meetingLists, setMeetingLists] = useState<meetingList[] | null>(null);
+  const [memoirLists, setMemoirLists] = useState<memoirList[] | null>(null);
+  const [meetingSummary, setMeetingSummary] = useState<meetingSummary | null>(null);
 
   useEffect(() => {
     return () => {
@@ -53,7 +54,7 @@ const Memoir_meeting_All = () => {
   }, []);
 
   useEffect(() => {
-    const s: any = location.state;
+    const s: MemoirLocationState = location.state;
     if (!s?.refetchMemoirs || didRefetch.current) return;
 
     didRefetch.current = true;
