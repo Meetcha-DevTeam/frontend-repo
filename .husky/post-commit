@@ -1,0 +1,11 @@
+FILE="eslint-suppressions.json"
+
+# If the suppression file exists and has unstaged or uncommitted changes
+if [ -f "$FILE" ]; then
+  # If there are working tree changes OR index changes for the file
+  if ! git diff --quiet -- "$FILE" || ! git diff --cached --quiet -- "$FILE"; then
+    git add "$FILE"
+    # Amend last commit without changing message, and skip hooks to avoid recursion
+    git commit --amend --no-edit --no-verify >/dev/null 2>&1 || true
+  fi
+fi
