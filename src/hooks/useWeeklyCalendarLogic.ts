@@ -29,7 +29,7 @@ export function useWeeklyCalendarLogic(week: Date, isActiveCalendar: boolean) {
   }, []);
 
   const openEdit = useCallback((event) => {
-    setSlideType("edit");
+    setSlideType(Slide.Edit);
 
     setClickedSchedule({
       title: event.title,
