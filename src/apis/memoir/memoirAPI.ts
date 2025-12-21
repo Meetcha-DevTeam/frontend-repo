@@ -1,7 +1,14 @@
 import { apiCall } from "../apiCall";
 import type { ApiResponse } from "../common/types";
 
-import type { meetingList, memoirList, meetingSummary, MemoirDetail } from "./memoirTypes";
+import type {
+  meetingList,
+  memoirList,
+  meetingSummary,
+  MemoirDetail,
+  PostMemoirReturn,
+  PostMemoirPayload,
+} from "./memoirTypes";
 
 export const getMeetingLists = async () => {
   const res: ApiResponse<meetingList[]> = await apiCall(
@@ -57,5 +64,31 @@ export const getChosenMemoir = async (meetingId) => {
     return res.data;
   } else {
     alert("서버오류");
+  }
+};
+
+export const postMemoir = async (meetingId: string, data: PostMemoirPayload) => {
+  const res: ApiResponse<PostMemoirReturn> = await apiCall(
+    `/meeting/${meetingId}/reflection/create`,
+    "POST",
+    data,
+    true
+  );
+
+  switch (res.code) {
+    case 201:
+      return res;
+    case 400:
+      alert(res.message);
+      break;
+    case 401:
+      alert(res.message);
+      break;
+    case 404:
+      alert(res.message);
+      break;
+    default:
+      alert(res.message);
+      break;
   }
 };
