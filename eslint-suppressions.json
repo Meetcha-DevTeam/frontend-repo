@@ -81,9 +81,6 @@
     }
   },
   "src/pages/memoir/Memoir_meeting/Memoir_meeting_All.tsx": {
-    "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    },
     "no-irregular-whitespace": {
       "count": 1
     }
