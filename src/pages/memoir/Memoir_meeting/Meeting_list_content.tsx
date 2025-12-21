@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiCall } from "@/apis/apiCall";
 import "./Memoir_meeting.scss";
 import type { MemoirDetail, memoirList } from "@/apis/memoir/memoirTypes";
 import { getChosenMemoir } from "@/apis/memoir/memoirAPI";
@@ -11,12 +10,12 @@ interface Props {
 const Meeting_list_content = ({ memoirLists }: Props) => {
   const navigate = useNavigate();
 
-  const [chosenMemoir, setChosenMemoir] = useState<MemoirDetail>();
+  const [chosenMemoir, setChosenMemoir] = useState<MemoirDetail | null>(null);
 
-  const load = async(meetingId:string)=>{
-    const res=await getChosenMemoir(meetingId);
+  const load = async (meetingId: string) => {
+    const res = await getChosenMemoir(meetingId);
     setChosenMemoir(res);
-  }
+  };
 
   // 2. 클릭 시 선택된 미팅 ID 저장 + fire 실행
   const handleClick = (meeting: memoirList) => {
