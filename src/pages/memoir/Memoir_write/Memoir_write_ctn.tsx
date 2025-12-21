@@ -5,7 +5,7 @@ import Memoir_write_intro from "./Memoir_write_intro";
 import Memoir_write_main from "./Memoir_write_main";
 
 import { fetchProjects } from "@/apis/project/projectAPI";
-import type { Project, PostMemoirPayload, PostMemoirReturn } from "@/apis/memoir/memoirTypes";
+import type { Project, PostMemoirPayload } from "@/apis/memoir/memoirTypes";
 import "./Memoir_write.scss";
 import { postMemoir } from "@/apis/memoir/memoirAPI";
 
@@ -58,7 +58,7 @@ const Memoir_write_ctn = () => {
       if (res) {
         if (mounted.current) setProjectsAll(res.slice()); // 참조 변경 보장
       }
-    } catch (e) {
+    } catch {
       if (mounted.current) setProjectsError("프로젝트 목록을 불러오지 못했습니다.");
     } finally {
       if (mounted.current) setProjectsLoading(false);
@@ -99,7 +99,7 @@ const Memoir_write_ctn = () => {
       if (res) {
         navigate("/memoir", { replace: true, state: { refetchMemoirs: true } });
       }
-    } catch (e) {
+    } catch {
       alert("서버 오류");
     } finally {
       if (mounted.current) setSubmitLoading(false);
