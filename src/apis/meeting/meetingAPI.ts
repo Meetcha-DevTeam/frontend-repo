@@ -1,5 +1,4 @@
 import { apiCall } from "../apiCall";
-import { isSuccess } from "../auth/authUtils";
 import type { ApiResponse } from "../common/types";
 import type {
   DeleteRes,
@@ -25,7 +24,6 @@ export const fetchMeetingDetail = async (meetingId: string) => {
 };
 
 export const voteAlternativeMeeting = async (meetingId: string, data) => {
-  const navigate = useNavigate();
   const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
   if (res.code !== 200) {
     alert(res.message);
