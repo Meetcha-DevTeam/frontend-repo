@@ -1,4 +1,9 @@
 {
-  "*.{js,jsx,ts,tsx}": ["eslint --fix --prune-suppressions", "prettier --write"],
-  "*.{json,md,scss,css}": ["prettier --write"]
+  "*.{js,jsx,ts,tsx}": [
+    "eslint --fix --prune-suppressions",
+    "prettier --write"
+  ],
+  "*.{json,md,scss,css}": [
+    "prettier --write"
+  ]
 }

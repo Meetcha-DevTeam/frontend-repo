@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
 import { apiCall } from "../apiCall";
+import { isSuccess } from "../auth/authUtils";
 import type { ApiResponse } from "../common/types";
 import type {
   DeleteRes,
   AlternativeObj,
+  AlternativeVoteRes,
   Meeting,
   MeetingCreateResponse,
   MeetingDetail,
@@ -25,12 +26,15 @@ export const fetchMeetingDetail = async (meetingId: string) => {
 };
 
 export const voteAlternativeMeeting = async (meetingId: string, data) => {
-  const navigate = useNavigate();
-  const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
-  if (res.code !== 200) {
-    alert(res.message);
+  const res: ApiResponse<AlternativeVoteRes> = await apiCall(
+    `/meeting-lists/${meetingId}/alternative-vote`,
+    "POST",
+    data,
+    true
+  );
+  if (!isSuccess(res.code)) {
+    throw Error(res.message);
   }
-  navigate(`/meeting/${meetingId}`);
 
   return res;
 };
@@ -68,7 +72,7 @@ export const createMeeting = async (data) => {
   }
 };
 
-export const deleteMeeting = async (meetingId:string) => {
+export const deleteMeeting = async (meetingId: string) => {
   const res: ApiResponse<DeleteRes> = await apiCall(`/meeting/${meetingId}`, "DELETE", null, true);
   const errorCodes = [400, 401, 403, 404];
 
