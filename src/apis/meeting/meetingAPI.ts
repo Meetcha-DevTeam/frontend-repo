@@ -4,7 +4,6 @@ import type { ApiResponse } from "../common/types";
 import type {
   DeleteRes,
   AlternativeObj,
-  AlternativeVoteRes,
   Meeting,
   MeetingCreateResponse,
   MeetingDetail,
@@ -26,14 +25,10 @@ export const fetchMeetingDetail = async (meetingId: string) => {
 };
 
 export const voteAlternativeMeeting = async (meetingId: string, data) => {
-  const res: ApiResponse<AlternativeVoteRes> = await apiCall(
-    `/meeting-lists/${meetingId}/alternative-vote`,
-    "POST",
-    data,
-    true
-  );
-  if (!isSuccess(res.code)) {
-    throw Error(res.message);
+  const navigate = useNavigate();
+  const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
+  if (res.code !== 200) {
+    alert(res.message);
   }
 
   return res;

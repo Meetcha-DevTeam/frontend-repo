@@ -48,7 +48,7 @@ const MeetingDetailPage = () => {
       setMeetingDetail(data);
     };
     load();
-  }, []);
+  }, [meetingId]);
 
   return (
     <div className={styles.meetingDetailPage}>
