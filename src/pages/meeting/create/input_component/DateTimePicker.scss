@@ -1,5 +1,13 @@
 @use "@/assets/styles/colors" as *;
 
+.dateTimePicker {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .calendarInputComponent .react-calendar {
   width: 100%;
   height: 100%;
@@ -218,4 +226,16 @@
   display: flex;
   align-items: center !important;
   justify-content: center !important;
+}
+
+// Wheel
+[data-rwp-option] {
+  color: black;
+}
+
+[data-rwp-highlight-wrapper] {
+  display: none;
+}
+
+[data-rwp-wrapper] {
 }

@@ -9,15 +9,23 @@ import { fetchMeetingDetail } from "@/apis/meeting/meetingAPI";
 import { toast } from "react-toastify";
 import { copyToClipboard } from "@/utils/copyToClipBoard";
 import { isBefore } from "date-fns";
+import DropDown from "./DropDown";
+import { getMeetingShareLink } from "@/utils/meetingShare";
 
 const MeetingDetailPage = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const location = useLocation();
   const { meetingId } = location.state;
   const navigate = useNavigate();
   const [meetingDetail, setMeetingDetail] = useState<MeetingDetail | null>(null);
 
+  const handleToggle = (next: boolean) => {
+    setOpen(next);
+  };
+
   const onClickShare = async () => {
-    const ok = await copyToClipboard(meetingDetail.meetingCode);
+    const ok = await copyToClipboard(getMeetingShareLink(meetingDetail?.meetingCode));
 
     if (ok) {
       toast.success("링크를 복사했습니다", { containerId: "timerClose" });
@@ -40,11 +48,16 @@ const MeetingDetailPage = () => {
       setMeetingDetail(data);
     };
     load();
-  }, []);
+  }, [meetingId]);
 
   return (
     <div className={styles.meetingDetailPage}>
-      <Header prevButton={true} />
+      <Header
+        prevButton={true}
+        hamburger={meetingDetail?.meetingStatus === "MATCH_FAILED"}
+        open={open}
+        onToggle={handleToggle}
+      />
       <div className={styles.meetingDetailPage__contents}>
         <div className={styles.meetingDetailPage__contents__view}>
           {meetingDetail && <MeetingDetailView data={meetingDetail} />}
@@ -75,6 +88,7 @@ const MeetingDetailPage = () => {
             )}
         </div>
       </div>
+      <DropDown open={open} setOpen={setOpen} meetingId={meetingId} />
     </div>
   );
 };
