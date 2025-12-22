@@ -9,7 +9,7 @@
     "vercel-build": "vite build",
     "lint": "eslint . --prune-suppressions",
     "lint:fix": "eslint . --fix --prune-suppressions",
-    "type-check": "tsc --project tsconfig.app.json --strictNullChecks=false",
+    "type-check": "tsc --project tsconfig.app.json --strictNullChecks false",
     "strict-type-check:changed": "tsx scripts/changed-file-type-error.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
