@@ -1,9 +1,8 @@
 import { apiCall } from "../apiCall";
-import { isSuccess } from "../auth/authUtils";
 import type { ApiResponse } from "../common/types";
 import type {
+  DeleteRes,
   AlternativeObj,
-  AlternativeVoteRes,
   Meeting,
   MeetingCreateResponse,
   MeetingDetail,
@@ -25,14 +24,9 @@ export const fetchMeetingDetail = async (meetingId: string) => {
 };
 
 export const voteAlternativeMeeting = async (meetingId: string, data) => {
-  const res: ApiResponse<AlternativeVoteRes> = await apiCall(
-    `/meeting-lists/${meetingId}/alternative-vote`,
-    "POST",
-    data,
-    true
-  );
-  if (!isSuccess(res.code)) {
-    throw Error(res.message);
+  const res = await apiCall(`/meeting-lists/${meetingId}/alternative-vote`, "POST", data, true);
+  if (res.code !== 200) {
+    alert(res.message);
   }
 
   return res;
@@ -69,4 +63,16 @@ export const createMeeting = async (data) => {
     default:
       alert(res.message);
   }
+};
+
+export const deleteMeeting = async (meetingId: string) => {
+  const res: ApiResponse<DeleteRes> = await apiCall(`/meeting/${meetingId}`, "DELETE", null, true);
+  const errorCodes = [400, 401, 403, 404];
+
+  if (errorCodes.includes(res.code)) {
+    alert(res.message);
+    // 상위에서 잡을 수 있도록 에러 던짐
+    throw new Error(res.message);
+  }
+  return res;
 };
