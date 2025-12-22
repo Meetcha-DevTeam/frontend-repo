@@ -85,7 +85,7 @@ const Memoir_meeting_All = () => {
   }
 
   return (
-    <div style={{ flex: 1, width: "100%" }}>
+    <div style={{ flex: 1, width: "100%", minHeight: 0 }}>
       <Memoir_meeting_ctn
         meetingLists={meetingLists}
         memoirLists={memoirWithTheme}
