@@ -17,8 +17,9 @@ const Participate_link = () => {
   };
 
   const requestLinkCheck = async () => {
-    const res: ApiResponse<MeetingData> = await requestLinkCheckFunc(linkText);
     try {
+      const res: ApiResponse<MeetingData> = await requestLinkCheckFunc(linkText);
+
       if (!res) return;
 
       if (res.code === 400) {

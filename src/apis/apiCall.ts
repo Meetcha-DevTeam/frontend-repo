@@ -42,7 +42,7 @@ export const apiCall = async <T>(
         "Content-Type": "application/json",
         ...(withAuth ? { Authorization: `Bearer ${access_token}` } : {}),
       },
-      ...(data && { body: JSON.stringify(data) }),
+      ...(data ? { body: JSON.stringify(data) } : {}),
     });
   };
   return doFetch()
