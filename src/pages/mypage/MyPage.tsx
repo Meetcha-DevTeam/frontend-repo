@@ -23,6 +23,8 @@ const MyPage = () => {
   const logoutHandler = () => {
     logout()
       .then(() => {
+        localStorage.removeItem("access-token");
+        localStorage.removeItem("refresh-token");
         navigate("/landingPage");
       })
       .catch((error) => {
