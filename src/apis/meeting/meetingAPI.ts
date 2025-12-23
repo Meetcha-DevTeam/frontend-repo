@@ -6,6 +6,7 @@ import type {
   Meeting,
   MeetingCreateResponse,
   MeetingDetail,
+  MeetingAvailabilities,
 } from "./meetingTypes";
 
 export const fetchMeetingList = async () => {
@@ -74,5 +75,15 @@ export const deleteMeeting = async (meetingId: string) => {
     // 상위에서 잡을 수 있도록 에러 던짐
     throw new Error(res.message);
   }
+  return res;
+};
+
+export const fetchMeetingAvailabilities = async (meetingId: string) => {
+  const res: ApiResponse<MeetingAvailabilities> = await apiCall(
+    `/meeting-lists/${meetingId}/availabilities`,
+    "GET",
+    null,
+    true
+  );
   return res;
 };

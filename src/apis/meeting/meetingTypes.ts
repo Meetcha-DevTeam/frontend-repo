@@ -61,3 +61,30 @@ export interface DeleteRes {
   meetingId: string;
   message: string;
 }
+
+export interface MeetingAvailabilities {
+  participants: AvailabilityParticipant[];
+  /**
+   * 총 참여자 수
+   */
+  count: number;
+}
+
+export interface AvailabilityParticipant {
+  participantId: string;
+  userId: string;
+  name: string;
+  availabilities: Availability[];
+}
+
+export interface Availability {
+  availabilityId: string;
+  /**
+   * format: 2025-07-22T16:00:00
+   */
+  startAt: string;
+  /**
+   * format: 2025-07-22T16:00:00
+   */
+  endAt: string;
+}
