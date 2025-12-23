@@ -5,7 +5,6 @@ interface Props {
 }
 
 const EventTagBox = ({ eventName }: Props) => {
-  console.log(eventName);
   return (
     <div
       className="eventTagBox"
