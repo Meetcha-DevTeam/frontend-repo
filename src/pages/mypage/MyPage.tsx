@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import type { ProfileResponse } from "@/apis/mypage/mypageTypes";
 
 const MyPage = () => {
-  const [userData, setUserData] = useState<ProfileResponse>(null);
+  const [userData, setUserData] = useState<ProfileResponse | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
