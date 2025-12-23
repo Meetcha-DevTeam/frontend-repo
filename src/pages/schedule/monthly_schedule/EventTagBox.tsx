@@ -5,6 +5,7 @@ interface Props {
 }
 
 const EventTagBox = ({ eventName }: Props) => {
+  console.log(eventName);
   return (
     <div
       className="eventTagBox"
@@ -15,9 +16,13 @@ const EventTagBox = ({ eventName }: Props) => {
         // 토스트를 띄우고 해당 토스트의 id를 받아둠
         const id = toast(
           <div className="eventToast">
-            {eventName.map((val, idx) => {
-              return <div key={idx}>{val}</div>;
-            })}
+            {eventName.length !== 0 ? (
+              eventName.map((val, idx) => {
+                return <div key={idx}>{val}</div>;
+              })
+            ) : (
+              <div>일정이 없습니다</div>
+            )}
           </div>,
           {
             containerId: "clickClose",
