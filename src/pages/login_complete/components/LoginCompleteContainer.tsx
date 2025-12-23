@@ -23,6 +23,9 @@ const LoginCompleteContainer = () => {
     })();
 
     setTimeout(() => {
+      if (sessionStorage.getItem("reservedNavigate")) {
+        window.location.href = sessionStorage.getItem("reservedNavigate");
+      }
       navigate("/schedule");
     }, 5000);
   }, [params]);

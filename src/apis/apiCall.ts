@@ -1,3 +1,4 @@
+import { UnauthorizedError } from "@/errors/errors";
 import type { ApiResponse } from "./common/types";
 
 export const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -29,8 +30,12 @@ export const apiCall = async <T>(
 ): Promise<ApiResponse<T>> => {
   let SAFE_RETRY_FLAG = 0;
 
+  const access_token = localStorage.getItem("access-token");
+  if (withAuth && !access_token) {
+    throw new UnauthorizedError();
+  }
+
   const doFetch = () => {
-    const access_token = localStorage.getItem("access-token");
     return fetch(`${API_BASE}${path}`, {
       method,
       headers: {
