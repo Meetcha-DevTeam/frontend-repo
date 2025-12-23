@@ -40,7 +40,7 @@ export const apiCall = async <T>(
       method,
       headers: {
         "Content-Type": "application/json",
-        ...(withAuth && { Authorization: `Bearer ${access_token}` }),
+        ...(withAuth ? { Authorization: `Bearer ${access_token}` } : {}),
       },
       ...(data && { body: JSON.stringify(data) }),
     });

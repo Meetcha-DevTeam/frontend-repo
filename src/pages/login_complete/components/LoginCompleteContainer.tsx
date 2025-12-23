@@ -23,8 +23,10 @@ const LoginCompleteContainer = () => {
     })();
 
     setTimeout(() => {
-      if (sessionStorage.getItem("reservedNavigate")) {
-        window.location.href = sessionStorage.getItem("reservedNavigate");
+      const reserved = sessionStorage.getItem("reservedNavigate");
+      if (reserved) {
+        window.location.href = reserved;
+        return;
       }
       navigate("/schedule");
     }, 5000);
