@@ -198,8 +198,8 @@ export const meetingAvailabilitiesMock: MeetingAvailabilities = {
       availabilities: [
         {
           availabilityId: "avail-7-1",
-          startAt: "2025-12-22T18:00:00",
-          endAt: "2025-12-22T21:00:00",
+          startAt: "2025-12-21T18:00:00",
+          endAt: "2025-12-21T21:00:00",
         }, // 월
       ],
     },

@@ -4,6 +4,9 @@
 .container {
   width: 100%;
   margin-top: 37px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
 }
 
 .title {
@@ -65,4 +68,25 @@
   display: flex;
   line-height: 140%;
   justify-content: space-between;
+}
+
+.calendarContainer {
+  width: 100%;
+
+  :global(.fc) {
+    .fc-event {
+      background-color: $color-orange-700;
+      border-color: $color-orange-700;
+      border-radius: 4px;
+    }
+
+    .fc-event-title {
+      display: none;
+    }
+  }
+}
+
+.calendarEvent {
+  background-color: $color-orange-700 !important;
+  border-color: $color-orange-700 !important;
 }
