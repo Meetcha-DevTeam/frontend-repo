@@ -7,7 +7,7 @@ import MeetingStateCard from "./MeetingStateCard";
 import MeetingInfoCard from "./MeetingInfoCard";
 import type { MeetingDetail } from "@/apis/meeting/meetingTypes";
 import { scheduleStringFormatter } from "@/utils/dateFormatter";
-import { MeetingAvailabilitiesContainer } from "./Meetingavailabilities";
+import { MeetingAvailabilitiesContainer } from "./MeetingAvailabilities";
 
 const MeetingDetailView = ({ data }: { data: MeetingDetail }) => {
   const getMeetingTimeDisplay = () => {
