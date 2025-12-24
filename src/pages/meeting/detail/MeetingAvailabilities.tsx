@@ -11,6 +11,7 @@ import {
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import type { EventInput } from "@fullcalendar/core";
+import { format, parseISO } from "date-fns";
 export const MeetingAvailabilitiesContainer = ({ meetingId }: { meetingId: string }) => {
   const [availabilities, setAvailabilities] = useState<MeetingAvailabilities | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,6 +66,15 @@ const MeetingAvailabilitiesContent = ({
   const [selectedCount, setSelectedCount] = useState<number>(initialCount);
   const isUpperBound = selectedCount >= totalCount;
   const isLowerBound = selectedCount <= 1;
+
+  const minTime = useMemo(() => {
+    const earliest = Array.from(participantsTime.keys())
+      .map((time) => format(parseISO(time), "HH:mm:ss"))
+      .sort()[0];
+    const fallbackTime = "12:00:00";
+    if (!earliest) return fallbackTime;
+    return earliest > fallbackTime ? fallbackTime : earliest;
+  }, [participantsTime]);
 
   const calendarEvents = useMemo<EventInput[]>(() => {
     const filteredTime = filterParticipantsTime(participantsTime, selectedCount);
@@ -139,8 +149,9 @@ const MeetingAvailabilitiesContent = ({
           slotDuration="00:30:00"
           slotMinTime="00:00:00"
           slotMaxTime="24:00:00"
+          scrollTime={minTime}
           allDaySlot={false}
-          height="auto"
+          contentHeight={"calc(1.5em * 24)"}
           headerToolbar={false}
           locale="ko"
         />
