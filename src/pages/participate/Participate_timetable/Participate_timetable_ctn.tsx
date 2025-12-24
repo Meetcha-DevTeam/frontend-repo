@@ -32,9 +32,9 @@ const Participate_timetable_ctn = () => {
 
   const [nickname, setNickname] = useState("");
 
-  const [meetingData, setMeetingData] = useState<MeetingInfoData>(null); //참가페이지에 해당하는 미팅 데이터
+  const [meetingData, setMeetingData] = useState<MeetingInfoData|null>(null); //참가페이지에 해당하는 미팅 데이터
   const [scheduleData, setScheduleData] = useState<UserScheduleData[]>([]); //사용자의 캘린더 데이터
-  const [previousAvailTime, setPreviousAvailTime] = useState<ParticipateResponse>(null); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
+  const [previousAvailTime, setPreviousAvailTime] = useState<ParticipateResponse|null>(null); //이전에 선택했던 시간 데이터 대안 시간 투표를 위한 데이터
 
   //이 친구는 선택된 시간 데이터들(startAt,endAt)데이터들의 배열임
   const [selectedTimes, setSelectedTimes] = useState<ParticipateObject[]>([]); //  수정됨: 선택된 시간 저장용 state
