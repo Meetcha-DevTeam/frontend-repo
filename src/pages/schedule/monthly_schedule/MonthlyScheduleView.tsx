@@ -22,7 +22,7 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={({ date, view }) => {
-          const eventName = [];
+          const eventNames = [];
 
           schedules &&
             schedules.map((schedule) => {
@@ -30,10 +30,10 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
               const date2 = dateFormatter(new Date(date));
 
               if (date1 === date2) {
-                eventName.push(schedule.title);
+                eventNames.push(schedule.title);
               }
             });
-          return <EventTagBox eventName={eventName} />;
+          return <EventTagBox eventNames={eventNames} />;
         }}
         formatDay={(_, date) => {
           return date.toLocaleString("en", { day: "numeric" });

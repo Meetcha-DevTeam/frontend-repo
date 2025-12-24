@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
 
 interface Props {
-  eventName: string[];
+  eventNames: string[];
 }
 
-const EventTagBox = ({ eventName }: Props) => {
+const EventTagBox = ({ eventNames }: Props) => {
   return (
     <div
       className="eventTagBox"
@@ -15,8 +15,8 @@ const EventTagBox = ({ eventName }: Props) => {
         // 토스트를 띄우고 해당 토스트의 id를 받아둠
         const id = toast(
           <div className="eventToast">
-            {eventName.length !== 0 ? (
-              eventName.map((val, idx) => {
+            {eventNames.length !== 0 ? (
+              eventNames.map((val, idx) => {
                 return <div key={idx}>{val}</div>;
               })
             ) : (
@@ -56,7 +56,7 @@ const EventTagBox = ({ eventName }: Props) => {
         );
       }}
     >
-      {eventName.map((item, index) => {
+      {eventNames.map((item, index) => {
         if (index === 2) {
           return (
             <div className="eventTag" key={index}>
