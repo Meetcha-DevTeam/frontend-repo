@@ -18,7 +18,7 @@ const EventTagBox = ({ eventNames }: Props) => {
           <div className="eventToast">
             {eventNames.length !== 0 ? (
               eventNames.map((val) => {
-                return <div key={val.id}>{val.name}</div>;
+                return <span key={val.id}>{val.name}</span>;
               })
             ) : (
               <div>일정이 없습니다</div>
