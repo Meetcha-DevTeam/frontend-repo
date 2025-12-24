@@ -63,13 +63,13 @@ const InfiniteLoopSlider = ({ setIsSliderOpen }: Props) => {
     const newMonthVal = extendedNumbers[newRawIndex];
 
     if (currentMonthVal === 12 && newMonthVal === 1) {
-      setYear(String(Number(year) + 1));
+      setYear(Number(year) + 1);
     } else if (currentMonthVal === 1 && newMonthVal === 12) {
-      setYear(String(Number(year) - 1));
+      setYear(Number(year) - 1);
     }
 
     setActiveIndex(newRawIndex);
-    setMonth(String(Number(newMonthVal) % 12 === 0 ? 12 : Number(newMonthVal) % 12));
+    setMonth(Number(newMonthVal) % 12 === 0 ? 12 : Number(newMonthVal) % 12);
   };
 
   // ---------- Pointer Events: 드래그로 스크롤 ----------
