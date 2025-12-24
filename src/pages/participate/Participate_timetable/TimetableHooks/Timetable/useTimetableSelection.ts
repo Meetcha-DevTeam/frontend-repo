@@ -55,7 +55,10 @@ function keysToIntervals(set: Set<string>): ParticipateObject[] {
       // 바로 붙으면 연속
       curEnd = e;
     } else {
-      out.push({ startAt: new Date(curStart).toISOString(), endAt: new Date(curEnd).toISOString() });
+      out.push({
+        startAt: new Date(curStart).toISOString(),
+        endAt: new Date(curEnd).toISOString(),
+      });
       curStart = s;
       curEnd = e;
     }
@@ -69,13 +72,13 @@ export const useTimetableSelection = (
   setSelectedTimes: React.Dispatch<React.SetStateAction<ParticipateObject[]>>
 ) => {
   // ✅ 드래그 토글
-  const handleSelect = (info: any) => {
+  const handleSelect = (info) => {
     setSelectedTimes((prev) => toggleRangeKeys(prev, info.start, info.end));
     info.view?.calendar?.unselect?.();
   };
 
   // ✅ 클릭(한 칸) 토글: dateClick은 클릭한 "시각"이 들어옴
-  const handleDateClick = (info: any) => {
+  const handleDateClick = (info) => {
     const start = snap30(info.date);
     const end = addMinutes(start, MIN30);
     setSelectedTimes((prev) => toggleRangeKeys(prev, start, end));

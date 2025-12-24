@@ -1,6 +1,6 @@
 //구글 캘린더에 이미 있는 일정...,선택된 일정들 fullcalendar에서 쓰기 위해 데이터 변환
 import { parseISO } from "date-fns";
-import type { UserScheduleData, EventWithColor, ParticipateObject } from "@/apis/participate/participateTypes";
+import type { UserScheduleData, ParticipateObject } from "@/apis/participate/participateTypes";
 interface BusyEvent {
   start: Date;
   end: Date;
