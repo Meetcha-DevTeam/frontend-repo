@@ -24,7 +24,7 @@ export const toBusyEvents = (scheduleData: UserScheduleData[]): BusyEvent[] =>
     end: parseISO(ev.endAt),
     display: "background",
     classNames: ["busy-block"],
-    extendedProps: { isBusy: true },
+    extendedProps: { isBusy: false },
   })); //결과는 toBusyEvents는 이러한 데이터 형식가진 배열
 
 //색 6개 중에 번갈아 가면서 설정
