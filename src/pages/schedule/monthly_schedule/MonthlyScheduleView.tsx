@@ -13,6 +13,11 @@ interface Props {
   schedules: UserScheduleData[];
 }
 
+export interface Event {
+  id: string;
+  name: string;
+}
+
 const MonthlyScheduleView = ({ schedules }: Props) => {
   const { year, month, setYear, setMonth } = useContext(DateContext) as DateContextValue;
   const activeStartDate = new Date(year, month - 1, 1);
@@ -23,7 +28,7 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
         tileContent={({ date, view }) => {
-          const eventNames: string[] = [];
+          const eventNames: Event[] = [];
 
           schedules &&
             schedules.map((schedule) => {
@@ -31,7 +36,7 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
               const date2 = dateFormatter(new Date(date));
 
               if (date1 === date2) {
-                eventNames.push(schedule.title);
+                eventNames.push({ id: schedule.eventId, name: schedule.title });
               }
             });
           return <EventTagBox eventNames={eventNames} />;

@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
+import type { Event } from "./MonthlyScheduleView";
 
 interface Props {
-  eventNames: string[];
+  eventNames: Event[];
 }
 
 const EventTagBox = ({ eventNames }: Props) => {
@@ -16,8 +17,8 @@ const EventTagBox = ({ eventNames }: Props) => {
         const id = toast(
           <div className="eventToast">
             {eventNames.length !== 0 ? (
-              eventNames.map((val, idx) => {
-                return <div key={idx}>{val}</div>;
+              eventNames.map((val) => {
+                return <div key={val.id}>{val.name}</div>;
               })
             ) : (
               <div>일정이 없습니다</div>
@@ -67,8 +68,8 @@ const EventTagBox = ({ eventNames }: Props) => {
           return null;
         }
         return (
-          <div key={index} className="eventTag" title={item}>
-            {item}
+          <div key={index} className="eventTag" title={item.name}>
+            {item.name}
           </div>
         );
       })}
