@@ -70,7 +70,38 @@ const Timetable = ({
       selectMirror={false}
       unselectAuto={false}
       select={handleSelect} //  수정됨: 드래그 선택 이벤트 핸들러
-      dateClick={handleDateClick}
+      viewDidMount={(arg) => {
+        const root = arg.el; // FullCalendar 루트 DOM
+
+        // 이벤트 위임: 슬롯 클릭을 안정적으로 캐치
+        const onClick = (e: MouseEvent) => {
+          const target = e.target as HTMLElement | null;
+          if (!target) return;
+
+          // timeGrid의 "빈 칸" 영역
+          const lane = target.closest(".fc-timegrid-slot-lane") as HTMLElement | null;
+          if (!lane) return;
+
+          const td = target.closest("td[data-date]") as HTMLElement | null;
+          const dateStr = td?.getAttribute("data-date"); // "YYYY-MM-DD"
+
+          // row(시간)는 closest tr의 data-time 또는 lane의 이전 sibling에서 얻는 경우가 많음
+          const tr = target.closest("tr") as HTMLElement | null;
+          const time = tr?.getAttribute("data-time") || lane.getAttribute("data-time"); // "HH:mm:ss"
+
+          if (!dateStr || !time) return;
+
+          // 클릭한 칸의 Date 만들기
+          const clicked = parseISO(`${dateStr}T${time}`);
+
+          handleDateClick(clicked);
+        };
+
+        root.addEventListener("click", onClick);
+
+        // cleanup
+        return () => root.removeEventListener("click", onClick);
+      }}
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       events={[...toBusyEvents(scheduleData), ...toSelectedEvents(selectedTimes)]} //  수정됨: 선택된 시간대 렌더링
       height="auto"
