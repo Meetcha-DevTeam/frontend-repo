@@ -107,6 +107,12 @@
       }
 
       > p {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        gap: 10px;
+
         font-family: Pretendard;
         font-weight: 500;
         font-style: Medium;
@@ -114,8 +120,17 @@
         line-height: 100%;
         letter-spacing: 0%;
         color: #616161;
-        > span {
+        > .star {
           color: #ff6200;
+        }
+
+        > .resetBtn {
+          background-color: $color-orange-400;
+          border-radius: 15px;
+          padding: 5px;
+
+          color: white;
+          font-size: smaller;
         }
       }
     }

@@ -84,8 +84,6 @@ function keysToIntervals(set: Set<string>): ParticipateObject[] {
   }
   out.push({ startAt: new Date(curStart).toISOString(), endAt: new Date(curEnd).toISOString() });
 
-  console.log(out);
-
   return out;
 }
 
@@ -122,6 +120,7 @@ export function splitRectSelection(start: Date, end: Date): Array<{ start: Date;
 
     segments.push({ start: segStart, end: segEnd });
   }
+  console.log(segments);
 
   return segments;
 }
