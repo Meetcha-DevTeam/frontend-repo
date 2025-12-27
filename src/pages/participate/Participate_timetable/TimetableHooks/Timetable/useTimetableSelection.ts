@@ -120,7 +120,6 @@ export function splitRectSelection(start: Date, end: Date): Array<{ start: Date;
 
     segments.push({ start: segStart, end: segEnd });
   }
-  console.log(segments);
 
   return segments;
 }
