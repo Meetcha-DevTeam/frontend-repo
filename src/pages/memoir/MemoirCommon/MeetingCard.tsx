@@ -19,11 +19,12 @@ const MeetingCard = ({
 }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [descHeight, setDescHeight] = useState(0);
-  const descRef = useRef(null);
+  const descRef = useRef<HTMLDivElement|null>(null);
 
   const toggleExpand = () => {
     setIsExpanded((prev) => !prev);
   };
+  
   useEffect(() => {
     if (descRef.current) {
       setDescHeight(descRef.current.scrollHeight);

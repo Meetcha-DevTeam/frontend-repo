@@ -45,7 +45,6 @@ const Memoir_write_main = ({
         <p className="write_title">작성할 회의</p>
         <MeetingCard
           chosenProject={chosenProject}
-          setChosenProject={setChosenProject}
           chosenProjectBgColor={chosenProjectBgColor}
           chosenProjectTextColor={chosenProjectTextColor}
           meeting={meeting}

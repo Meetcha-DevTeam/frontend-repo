@@ -30,7 +30,7 @@ const ParticipateLink = () => {
         // 404 등
         navigate("/error");
       }
-    } catch (e) {
+    } catch {
       // 500 등 서버 에러
       navigate("/error");
     }
