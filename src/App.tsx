@@ -12,13 +12,13 @@ import MeetingSharePage from "./pages/meeting/share/MeetingSharePage";
 import SchedulePage from "./pages/schedule/SchedulePage";
 import MeetingPage from "./pages/meeting/MeetingPage";
 
-import Participate_timetable_ctn from "./pages/participate/Participate_timetable/Participate_timetable_ctn";
+import ParticipateTimetableCtn from "./pages/participate/Participate_timetable/ParticipateTimetableCtn";
 
-import Participate_link from "./pages/participate/Participate_link/Participate_link_ctn";
+import ParticipateLink from "./pages/participate/Participate_link/ParticipateLinkCtn";
 
-import Participate_completed_ctn from "./pages/participate/Participate_complete/Participate_completed_ctn";
+import ParticipateCompletedCtn from "./pages/participate/Participate_complete/ParticipateCompletedCtn";
 
-import Participate_error_ctn from "./pages/participate/Participate_error/Participate_error_ctn";
+import ParticipateErrorCtn from "./pages/participate/Participate_error/ParticipateErrorCtn";
 
 import MyPage from "./pages/mypage/MyPage";
 import PrivacyPage from "./pages/privacy/PrivacyPage";
@@ -45,10 +45,10 @@ const App = () => {
         </Route>
         <Route index path="/memoir-write" element={<MemoirWriteCtn />}></Route>
         <Route index path="/memoir-complete" element={<MemoirCompleteCtn />}></Route>
-        <Route index path="/timetable" element={<Participate_timetable_ctn />}></Route>
-        <Route index path="/participate" element={<Participate_link />}></Route>
-        <Route index path="/error" element={<Participate_error_ctn />}></Route>
-        <Route index path="/complete" element={<Participate_completed_ctn />}></Route>
+        <Route index path="/timetable" element={<ParticipateTimetableCtn />}></Route>
+        <Route index path="/participate" element={<ParticipateLink />}></Route>
+        <Route index path="/error" element={<ParticipateErrorCtn />}></Route>
+        <Route index path="/complete" element={<ParticipateCompletedCtn />}></Route>
         <Route index path="/meeting-creation" element={<MeetingCreationPage />}></Route>
         <Route index path="/privacy" element={<PrivacyPage />}></Route>
         <Route index path="/meeting/share/:meetingId" element={<MeetingSharePage />} />

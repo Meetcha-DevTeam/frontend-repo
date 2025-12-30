@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Participate_link.scss";
+import "./ParticipateLink.scss";
 import LeftChevron from "@assets/LeftChevron.svg";
 import { requestLinkCheckFunc } from "@/apis/participate/participate_link/linkAPI";
 import type { ApiResponse } from "@/apis/common/types";
 import type { MeetingData } from "@/apis/participate/participate_link/linkTypes";
 
-const Participate_link = () => {
+const ParticipateLink = () => {
   const top_text = "미팅 참가";
   const navigate = useNavigate();
 
@@ -77,4 +77,4 @@ const Participate_link = () => {
   );
 };
 
-export default Participate_link;
+export default ParticipateLink;
