@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Memoir_write_intro from "./Memoir_write_intro";
-import Memoir_write_main from "./Memoir_write_main";
+import MemoirWriteIntro from "./MemoirWriteIntro";
+import MemoirWriteMain from "./MemoirWriteMain";
 
 import { fetchProjects } from "@/apis/project/projectAPI";
 import type { Project, PostMemoirPayload } from "@/apis/memoir/memoirTypes";
-import "./Memoir_write.scss";
+import "./MemoirWrite.scss";
 import { postMemoir } from "@/apis/memoir/memoirAPI";
 
-const Memoir_write_ctn = () => {
+const MemoirWriteCtn = () => {
   // 폼 상태
   const [contribution, setContribution] = useState<string>("");
   const [role, setRole] = useState<string>("");
@@ -111,9 +111,9 @@ const Memoir_write_ctn = () => {
 
   return (
     <div className="Memoir_write_ctn">
-      <Memoir_write_intro />
+      <MemoirWriteIntro />
       <div className="Memoir_content_ctn">
-        <Memoir_write_main
+        <MemoirWriteMain
           projectsAll={projectsAll} // ✅ state 배열 전달
           refetchProjects={refetchProjects} // ✅ 자식에서 호출하면 목록 최신화
           contribution={contribution}
@@ -150,4 +150,4 @@ const Memoir_write_ctn = () => {
   );
 };
 
-export default Memoir_write_ctn;
+export default MemoirWriteCtn;

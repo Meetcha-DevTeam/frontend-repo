@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Mymeeting_summary from "./Mymeeting_summary";
-import Must_list_container from "./Must_list_container";
+import MymeetingSummary from "./MymeetingSummary";
+import MustListContainer from "./MustListContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { getMeetingLists, getMemoirLists, getMeetingSummary } from "@/apis/memoir/memoirAPI";
@@ -15,7 +15,7 @@ import type {
   MemoirLocationState,
 } from "@/apis/memoir/memoirTypes";
 
-const Memoir_meeting_All = () => {
+const MemoirMeetingAll = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const didInit = useRef(false);
@@ -75,21 +75,21 @@ const Memoir_meeting_All = () => {
       })),
     [memoir]
   );
-  
+
   if (!meetingLists || !memoirLists || !meetingSummary) {
     return (
       <>
-        <p style={{ textAlign: "center", marginTop: "2rem" }}>⌛ 로딩 중…</p>
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>⌛ 로딩 중…</p>
       </>
     );
   }
 
   return (
     <div style={{ flex: 1, width: "100%", minHeight: 0, display: "flex", flexDirection: "column" }}>
-      <Mymeeting_summary meetingSummary={meetingSummary} />
-      <Must_list_container meetingLists={meetingLists} memoirLists={memoirWithTheme} />
+      <MymeetingSummary meetingSummary={meetingSummary} />
+      <MustListContainer meetingLists={meetingLists} memoirLists={memoirWithTheme} />
     </div>
   );
 };
 
-export default Memoir_meeting_All;
+export default MemoirMeetingAll;

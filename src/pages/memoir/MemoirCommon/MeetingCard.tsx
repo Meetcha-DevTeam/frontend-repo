@@ -1,14 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
-import "./Meeting_card.scss";
+import "./MeetingCard.scss";
 import LowChevron from "@assets/LowChevron.svg";
 
-const Meeting_card = ({
+import type { MemoirDetail } from "@/apis/memoir/memoirTypes";
+
+interface Props {
+  meeting: MemoirDetail;
+  chosenProject: string;
+  chosenProjectBgColor: string;
+  chosenProjectTextColor: string;
+}
+
+const MeetingCard = ({
   meeting,
   chosenProject,
   chosenProjectBgColor,
-  setChosenProject,
   chosenProjectTextColor,
-}) => {
+}: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [descHeight, setDescHeight] = useState(0);
   const descRef = useRef(null);
@@ -60,4 +68,4 @@ const Meeting_card = ({
   );
 };
 
-export default Meeting_card;
+export default MeetingCard;

@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginContainer from "./pages/login/components/LoginContainer";
 import LoginCompleteContainer from "./pages/login_complete/components/LoginCompleteContainer";
 import BackgroundPage from "./pages/background/BackgroundPage";
-import Memoir_meeting_All from "./pages/memoir/Memoir_meeting/Memoir_meeting_All";
-import Memoir_write_ctn from "./pages/memoir/Memoir_write/Memoir_write_ctn";
-import Memoir_complete_ctn from "./pages/memoir/Memoir_complete/Memoir_complete_ctn";
+import MemoirMeetingAll from "./pages/memoir/MemoirMeeting/MemoirMeetingAll";
+import MemoirWriteCtn from "./pages/memoir/MemoirWrite/MemoirWiteCtn";
+import MemoirCompleteCtn from "./pages/memoir/MemoirComplete/MemoirCompleteCtn";
 import MeetingCreationPage from "./pages/meeting/create/MeetingCreationPage";
 import MeetingDetailPage from "./pages/meeting/detail/MeetingDetailPage";
 import MeetingAlternativePage from "./pages/meeting/alternative/MeetingAlternativePage";
@@ -26,6 +26,7 @@ import PrivacyPage from "./pages/privacy/PrivacyPage";
 import LandingBackground from "./pages/landing/LandingBackground";
 import MeetingLinkPage from "./pages/meeting/link/MeetingLinkPage";
 
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -39,11 +40,11 @@ const App = () => {
         <Route path="/" element={<BackgroundPage />}>
           <Route index path="schedule" element={<SchedulePage />} />
           <Route path="meeting" element={<MeetingPage />} />
-          <Route index path="/memoir" element={<Memoir_meeting_All />}></Route>
+          <Route index path="/memoir" element={<MemoirMeetingAll />}></Route>
           <Route index path="/mypage" element={<MyPage />}></Route>
         </Route>
-        <Route index path="/memoir-write" element={<Memoir_write_ctn />}></Route>
-        <Route index path="/memoir-complete" element={<Memoir_complete_ctn />}></Route>
+        <Route index path="/memoir-write" element={<MemoirWriteCtn />}></Route>
+        <Route index path="/memoir-complete" element={<MemoirCompleteCtn />}></Route>
         <Route index path="/timetable" element={<Participate_timetable_ctn />}></Route>
         <Route index path="/participate" element={<Participate_link />}></Route>
         <Route index path="/error" element={<Participate_error_ctn />}></Route>
