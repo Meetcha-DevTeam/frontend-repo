@@ -46,7 +46,7 @@ const MemoirWriteCtn = () => {
   );
 
   // 프로젝트 목록
-  const [projectsAll, setProjectsAll] = useState<Project[]>([]);
+  const [projectsAll, setProjectsAll] = useState<Project[] | undefined>([]);
   const [projectsLoading, setProjectsLoading] = useState<boolean>(false);
   const [projectsError, setProjectsError] = useState<string | null>(null);
 

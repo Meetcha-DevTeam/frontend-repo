@@ -10,7 +10,7 @@ interface Props {
 const MeetingListContent = ({ memoirLists }: Props) => {
   const navigate = useNavigate();
 
-  const [chosenMemoir, setChosenMemoir] = useState<MemoirDetail | null>(null);
+  const [chosenMemoir, setChosenMemoir] = useState<MemoirDetail | null | undefined>(null);
 
   const load = async (meetingId: string) => {
     const res = await getChosenMemoir(meetingId);

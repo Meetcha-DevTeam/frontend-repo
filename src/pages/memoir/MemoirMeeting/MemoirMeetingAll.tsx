@@ -22,9 +22,9 @@ const MemoirMeetingAll = () => {
   const didRefetch = useRef(false);
   const mounted = useRef(true);
 
-  const [meetingLists, setMeetingLists] = useState<meetingList[] | null>(null);
-  const [memoirLists, setMemoirLists] = useState<memoirList[] | null>(null);
-  const [meetingSummary, setMeetingSummary] = useState<meetingSummary | null>(null);
+  const [meetingLists, setMeetingLists] = useState<meetingList[] | null | undefined>(null);
+  const [memoirLists, setMemoirLists] = useState<memoirList[] | null | undefined>(null);
+  const [meetingSummary, setMeetingSummary] = useState<meetingSummary | null | undefined>(null);
 
   useEffect(() => {
     return () => {
