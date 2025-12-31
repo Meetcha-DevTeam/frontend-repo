@@ -32,13 +32,16 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Navigate to="/landingPage" replace />} />
+        <Route path="/landingPage" element={<LandingBackground />}></Route>
+        <Route path="/login" element={<LoginContainer />}></Route>
+        <Route path="/login-complete" element={<LoginCompleteContainer />}></Route>
+
+        {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Navigate to="/landingPage" replace />} />
-          <Route path="/landingPage" element={<LandingBackground />}></Route>
           <Route index path="/alternative/:id" element={<MeetingAlternativePage />}></Route>
           <Route index path="/meeting/detail" element={<MeetingDetailPage />}></Route>
-          <Route path="/login" element={<LoginContainer />}></Route>
-          <Route path="/login-complete" element={<LoginCompleteContainer />}></Route>
           <Route path="/" element={<BackgroundPage />}>
             <Route index path="schedule" element={<SchedulePage />} />
             <Route path="meeting" element={<MeetingPage />} />

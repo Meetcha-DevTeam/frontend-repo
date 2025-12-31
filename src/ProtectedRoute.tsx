@@ -6,7 +6,10 @@ const ProtectedRoute = () => {
   const location = useLocation();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    const returnRoute = `${location.pathname}${location.search}`;
+    alert("로그인이 필요합니다!");
+    sessionStorage.setItem("return-route", returnRoute);
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
