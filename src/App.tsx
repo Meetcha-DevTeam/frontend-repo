@@ -27,7 +27,6 @@ import LandingBackground from "./pages/landing/LandingBackground";
 import MeetingLinkPage from "./pages/meeting/link/MeetingLinkPage";
 import { AlreadyAuthRedirect } from "./components/AlreadyAuthRedirect";
 
-
 import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
@@ -49,15 +48,15 @@ const App = () => {
           <Route path="/" element={<BackgroundPage />}>
             <Route index element={<SchedulePage />} />
             <Route path="/meeting" element={<MeetingPage />} />
-            <Route path="/memoir" element={<Memoir_meeting_All />}></Route>
+            <Route path="/memoir" element={<MemoirMeetingAll />}></Route>
             <Route path="/mypage" element={<MyPage />}></Route>
           </Route>
-          <Route path="/memoir-write" element={<Memoir_write_ctn />}></Route>
-          <Route path="/memoir-complete" element={<Memoir_complete_ctn />}></Route>
-          <Route path="/timetable" element={<Participate_timetable_ctn />}></Route>
-          <Route path="/participate" element={<Participate_link />}></Route>
-          <Route path="/error" element={<Participate_error_ctn />}></Route>
-          <Route path="/complete" element={<Participate_completed_ctn />}></Route>
+          <Route path="/memoir-write" element={<MemoirWriteCtn />}></Route>
+          <Route path="/memoir-complete" element={<MemoirCompleteCtn />}></Route>
+          <Route path="/timetable" element={<ParticipateTimetableCtn />}></Route>
+          <Route path="/participate" element={<ParticipateLink />}></Route>
+          <Route path="/error" element={<ParticipateErrorCtn />}></Route>
+          <Route path="/complete" element={<ParticipateCompletedCtn />}></Route>
           <Route path="/meeting-creation" element={<MeetingCreationPage />}></Route>
           <Route path="/privacy" element={<PrivacyPage />}></Route>
           <Route path="/meeting/share/:meetingId" element={<MeetingSharePage />} />
