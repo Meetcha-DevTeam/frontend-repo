@@ -48,7 +48,8 @@ const WeeklyCalendar = ({ week, events, blockInteraction, isActiveCalendar }: Pr
         date={week}
         events={events}
         selectable
-        onSelecting={() => !blockInteraction}
+        // onSelecting={() => !blockInteraction}
+        onSelecting={() => false}
         onSelectSlot={(slot) => {
           if (!blockInteraction) openCreate(slot);
         }}
