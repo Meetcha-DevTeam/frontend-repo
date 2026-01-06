@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { luxonLocalizer } from "react-big-calendar";
-import CustomWeekHeader from "./CustomWeekHeader";
-import { CustomEvent } from "./CustomEvent";
+import CustomWeekHeader from "../CustomWeekHeader";
+import { CustomEvent } from "../CustomEvent";
 import { colorAutoSelector } from "@/utils/colorAutoSelector";
 
 export const localizer = luxonLocalizer(DateTime);
