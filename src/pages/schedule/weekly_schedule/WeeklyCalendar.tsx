@@ -17,7 +17,7 @@ export type SlideType = (typeof Slide)[keyof typeof Slide];
 interface Props {
   week: Date;
   events: ParsedSchedule[];
-  blockInteraction: boolean;
+  blockInteraction: boolean; // Swiper로 좌우 드래그 중일 경우의 플래그
   isActiveCalendar: boolean; // 현재 표시되고있는 캘린더인지 여부
 }
 
@@ -34,7 +34,12 @@ const WeeklyCalendar = ({ week, events, blockInteraction, isActiveCalendar }: Pr
   } = useWeeklyCalendarLogic(week, isActiveCalendar);
 
   return (
-    <>
+    <div
+      style={{
+        touchAction: "pan-y",
+        height: "100%",
+      }}
+    >
       <Calendar
         localizer={localizer}
         startAccessor="startAt"
@@ -59,7 +64,7 @@ const WeeklyCalendar = ({ week, events, blockInteraction, isActiveCalendar }: Pr
         setCrudOpen={setCrudOpen}
         onClose={closeSlide}
       />
-    </>
+    </div>
   );
 };
 
