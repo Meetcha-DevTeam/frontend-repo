@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import scrollGridPlugin from "@fullcalendar/scrollgrid";
 import { parseUserCalendarEvents, toSelectedEvents } from "@/utils/eventTransform";
 import { useMergePreviousTimes } from "./TimetableHooks/Timetable/useMergePreviousTime";
 import { useTimetableSelection } from "./TimetableHooks/Timetable/useTimetableSelection";
@@ -13,7 +14,6 @@ import {
   getHours,
   format as formatDate,
   startOfDay,
-  isEqual,
   format,
 } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -32,6 +32,7 @@ const Timetable = ({
     handleSelectAllow,
     handleSelect: originalHandleSelect,
   } = useTimetableSelection(setSelectedTimes);
+
   useMergePreviousTimes(previousAvailTime, setSelectedTimes);
   /* dayspan으로 연속된 날짜를 없애고
    */
@@ -156,8 +157,11 @@ const Timetable = ({
 
   console.log(selectedTimes);
   return (
+    
     <FullCalendar
-      plugins={[timeGridPlugin, interactionPlugin]}
+      schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+      plugins={[timeGridPlugin, interactionPlugin,scrollGridPlugin]}
+      
       initialView="timeGridSpan"
       views={{
         timeGridSpan: { type: "timeGrid", duration: { days: dateMap.length } },
@@ -179,17 +183,19 @@ const Timetable = ({
         ...toSelectedEvents(selectedTimesForDisplay),
         ...dragPreviewEvents,
       ]}
-      height="auto"
+
       headerToolbar={false}
       dayHeaderContent={(info) => {
         const idx = differenceInCalendarDays(info.date, baseDate);
         const realDate = dateMap[idx]?.realDate;
         return realDate ? formatDate(realDate, "M.d(EEE)", { locale: ko }) : "";
       }}
+      dayMinWidth={92}
       slotLabelContent={(arg) => String(getHours(arg.date))}
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       longPressDelay={200}
     />
+  
   );
 };
 

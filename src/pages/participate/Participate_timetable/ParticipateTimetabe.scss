@@ -94,7 +94,7 @@
         height: 80%;
       }
       .timetable_ctn {
-        height: 80%;
+        height: calc(100vh - 200px);
         overflow: scroll;
         border: 1px solid #e8e8e8;
         border-radius: 1rem;
