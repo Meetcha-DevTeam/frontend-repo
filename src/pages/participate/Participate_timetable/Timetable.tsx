@@ -43,8 +43,6 @@ const Timetable = ({
       .sort();
   }, [candidateDates]);
 
-  if (candidateDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
-
   const realToIdx = useMemo(() => {
     return new Map(sortedDates.map((d, i) => [d, i]));
   }, [candidateDates]);
@@ -153,15 +151,14 @@ const Timetable = ({
 
       return { ...t, startAt: fakeStart.toISOString(), endAt: fakeEnd.toISOString() };
     });
-  },[selectedTimes,realToIdx,baseDate]);
+  }, [selectedTimes, realToIdx, baseDate]);
 
-  console.log(selectedTimes);
+  if (candidateDates.length === 0) return <p>표시할 날짜가 없습니다.</p>;
+
   return (
-    
     <FullCalendar
       schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
-      plugins={[timeGridPlugin, interactionPlugin,scrollGridPlugin]}
-      
+      plugins={[timeGridPlugin, interactionPlugin, scrollGridPlugin]}
       initialView="timeGridSpan"
       views={{
         timeGridSpan: { type: "timeGrid", duration: { days: dateMap.length } },
@@ -183,7 +180,6 @@ const Timetable = ({
         ...toSelectedEvents(selectedTimesForDisplay),
         ...dragPreviewEvents,
       ]}
-
       headerToolbar={false}
       dayHeaderContent={(info) => {
         const idx = differenceInCalendarDays(info.date, baseDate);
@@ -195,7 +191,6 @@ const Timetable = ({
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       longPressDelay={200}
     />
-  
   );
 };
 
