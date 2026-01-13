@@ -83,7 +83,7 @@ const MeetingDetailRow = ({ label, icon, data }: Props) => {
               <img
                 key={item.participantId}
                 className={styles.meetingDetailRow__rightArea__participantImg}
-                src={item.profileImageUrl}
+                src={item.profileImageSrc}
               />
             ))
           : (data as string)}

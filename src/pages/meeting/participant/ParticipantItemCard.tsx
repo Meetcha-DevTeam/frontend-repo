@@ -13,7 +13,7 @@ const ParticipantItemCard = ({ data }: Props) => {
       <div className={styles.participantItemCard__dataArea}>
         <img
           className={styles.participantItemCard__dataArea__profileImg}
-          src={data.profileImageUrl}
+          src={data.profileImageSrc}
           alt=""
         />
         {data.nickname}
