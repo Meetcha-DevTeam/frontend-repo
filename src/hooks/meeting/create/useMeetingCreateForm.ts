@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { meetingCreationSchema, type MeetingCreationSchema } from "schemas/meetingCreationSchema";
+import { meetingCreationSchema, type MeetingCreationSchema } from "@/schemas/meetingCreationSchema";
 
 export type SetError<Schema> = (field: keyof Schema, reason: string) => void;
 

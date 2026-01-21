@@ -6,7 +6,7 @@ import Calendar from "@assets/calendar.svg?react";
 import Clock from "@assets/clock.svg?react";
 import Watch from "@assets/watch.svg?react";
 import Icon from "@assets/icon.svg?react";
-import type { MeetingCreationSchema } from "../../../../../schemas/meetingCreationSchema";
+import type { MeetingCreationSchema } from "../../../../schemas/meetingCreationSchema";
 import { MeetingAccordionItem } from "./MeetingAccordionItem";
 import { MultiSelectCalendar } from "./input_component/MultiSelectCalendar";
 import { DurationSelect } from "./input_component/DurationSelect";

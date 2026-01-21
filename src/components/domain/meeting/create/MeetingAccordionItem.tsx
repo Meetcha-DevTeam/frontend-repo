@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
 import styles from "./MeetingAccordion.module.scss";
-import type { MeetingCreationSchema } from "../../../../../schemas/meetingCreationSchema";
+import type { MeetingCreationSchema } from "../../../../schemas/meetingCreationSchema";
 import DownArrow from "@assets/downArrow.svg?react";
 export const MeetingAccordionItem = ({
   triggerContent,

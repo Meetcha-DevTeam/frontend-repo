@@ -1,7 +1,7 @@
 import type {
   MeetingCreationSchema,
   MeetingSendData,
-} from "../../../../schemas/meetingCreationSchema";
+} from "../../../schemas/meetingCreationSchema";
 
 /*
  * 폼 데이터를 서버에 적합한 형태로 정제

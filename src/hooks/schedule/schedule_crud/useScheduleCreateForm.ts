@@ -2,7 +2,7 @@ import type { FormBase, FormSetter } from "@/hooks/meeting/create/useMeetingCrea
 import {
   scheduleCreationSchema,
   type ScheduleCreationSchema,
-} from "../../../../schemas/scheduleCreationSchema";
+} from "../../../schemas/scheduleCreationSchema";
 import { createContext, useContext, useState } from "react";
 
 export const useScheduleCreateForm = (

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { createMeeting } from "@/apis/meeting/meetingAPI";
 import { useNavigate } from "react-router-dom";
 import { meetingFormDataConvert } from "../../../utils/meeting/create/meetingFormDataConvert";
-import { meetingCreationSchema } from "../../../../schemas/meetingCreationSchema";
+import { meetingCreationSchema } from "../../../schemas/meetingCreationSchema";
 import {
   MeetingCreateFormContext,
   useMeetingCreateForm,

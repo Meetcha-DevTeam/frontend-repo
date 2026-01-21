@@ -38,7 +38,7 @@
   "include": [
     "src",
     "src/types/**/*.d.ts",
-    "schemas/meetingCreationSchema.ts",
-    "schemas/scheduleCreationSchema.ts"
+    "src/schemas/meetingCreationSchema.ts",
+    "src/schemas/scheduleCreationSchema.ts"
   ]
 }
