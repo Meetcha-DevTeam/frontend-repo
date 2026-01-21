@@ -30,7 +30,7 @@ const CountDown = ({ label, finishTime }: Props) => {
       const dateDifference = differenceInDays(finishTime, now);
       const timeDifference = intervalToDuration({ start: now, end: finishTime });
       setTimeLeft({
-        days: String(dateDifference) ?? "0",
+        days: String(dateDifference),
         hours: String(timeDifference.hours ?? 0).padStart(2, "0"),
         minutes: String(timeDifference.minutes ?? 0).padStart(2, "0"),
         seconds: String(timeDifference.seconds ?? 0).padStart(2, "0"),

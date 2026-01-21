@@ -1,4 +1,4 @@
-import TopNav from "@/components/TopNav";
+import TopNav from "@/components/common/TopNav";
 import styles from "./MeetingAlternativePage.module.scss";
 import MeetingAlternativeView from "./MeetingAlternativeView";
 import { useEffect, useState } from "react";

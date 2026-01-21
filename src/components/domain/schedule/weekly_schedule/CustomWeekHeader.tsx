@@ -1,6 +1,10 @@
 import styles from "./CustomWeekHeader.module.scss";
 
-const CustomWeekHeader = ({ label }: any) => {
+type Props = {
+  label: string;
+};
+
+const CustomWeekHeader = ({ label }: Props) => {
   return (
     <div className={styles.customWeekHeader}>
       <div

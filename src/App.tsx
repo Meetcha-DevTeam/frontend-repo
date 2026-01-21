@@ -23,10 +23,10 @@ import PrivacyPage from "./pages/privacy/PrivacyPage";
 
 import LandingBackground from "./pages/landing/LandingBackground";
 import MeetingLinkPage from "./pages/meeting/link/MeetingLinkPage";
-import { AlreadyAuthRedirect } from "./components/AlreadyAuthRedirect";
+import { AlreadyAuthRedirect } from "./components/common/AlreadyAuthRedirect";
 
 import ProtectedRoute from "./ProtectedRoute";
-import Loading from "./components/Loading/Loading";
+import Loading from "./components/common/Loading/Loading";
 
 const MeetingAlternativePage = lazy(
   () => import("./pages/meeting/alternative/MeetingAlternativePage")

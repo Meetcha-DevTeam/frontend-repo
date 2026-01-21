@@ -4,7 +4,6 @@ import Calendar from "@assets/calendar.svg?react";
 import SpinningClock from "@assets/spinningClock.svg?react";
 import Human from "@assets/human.svg?react";
 import { PiPlusCircleFill } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import NavModal from "./NavModal";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,7 +15,6 @@ interface Props {
 }
 
 const BottomNav = ({ activeMenuNum, setActiveMenuNum }: Props) => {
-  const navigate = useNavigate();
   const [modal, setModal] = useState<boolean>(false);
 
   const leftDataSet = [

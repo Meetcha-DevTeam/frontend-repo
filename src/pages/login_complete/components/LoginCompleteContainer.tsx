@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Meetcha_banner from "../../../components/Meetcha_banner";
+import Meetcha_banner from "../../../components/common/Meetcha_banner";
 
 import "../styles/login_complete.scss";
 import { useNavigate, useSearchParams } from "react-router-dom";

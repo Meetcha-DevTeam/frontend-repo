@@ -1,4 +1,4 @@
-import Meetcha_banner from "../../../components/Meetcha_banner";
+import Meetcha_banner from "../../../components/common/Meetcha_banner";
 import Continue_Google from "./Continue_Google";
 import Continue_des from "./Continue_des";
 

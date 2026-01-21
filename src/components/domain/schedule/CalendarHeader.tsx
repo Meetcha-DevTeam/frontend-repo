@@ -1,9 +1,9 @@
-import { useContext, useState, type Dispatch, type SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import styles from "./CalendarHeader.module.scss";
-import { CALENDAR, type Calendar } from "./calendarType.constants";
+import { CALENDAR, type Calendar } from "../../../const/scheduleCalendarType.constants";
 import clsx from "clsx";
 import InfiniteLoopSlider from "./InfiniteLoopSlider";
-import { DateContext } from "./DataContext";
+import { useScheduleDate } from "./DateContext";
 
 interface Props {
   calendarType: string;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CalendarHeader = ({ calendarType, setCalendarType }: Props) => {
-  const { year, month } = useContext(DateContext);
+  const { year, month } = useScheduleDate();
   const [isSliderOpen, setIsSliderOpen] = useState<boolean>(false);
 
   return (

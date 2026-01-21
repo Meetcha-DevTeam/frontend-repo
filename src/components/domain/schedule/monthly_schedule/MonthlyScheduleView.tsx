@@ -4,9 +4,7 @@ import EventTagBox from "./EventTagBox";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { getMonth } from "date-fns/getMonth";
 import { getYear } from "date-fns";
-import { useContext } from "react";
-import { DateContext } from "../DataContext";
-import type { DateContextValue } from "../DataContext";
+import { useScheduleDate } from "../DateContext";
 import type { UserScheduleData } from "@/apis/participate/participateTypes";
 
 interface Props {
@@ -19,7 +17,7 @@ export interface Event {
 }
 
 const MonthlyScheduleView = ({ schedules }: Props) => {
-  const { year, month, setYear, setMonth } = useContext(DateContext) as DateContextValue;
+  const { year, month, setYear, setMonth } = useScheduleDate();
   const activeStartDate = new Date(year, month - 1, 1);
 
   return (
@@ -27,25 +25,24 @@ const MonthlyScheduleView = ({ schedules }: Props) => {
       <Calendar
         activeStartDate={activeStartDate}
         showNeighboringMonth={false}
-        tileContent={({ date, view }) => {
+        tileContent={({ date }) => {
           const eventNames: Event[] = [];
 
-          schedules &&
-            schedules.map((schedule) => {
-              const date1 = dateFormatter(new Date(schedule.startAt)); // 서버에서 받아온 일정의 날짜
-              const date2 = dateFormatter(new Date(date));
+          schedules?.forEach((schedule) => {
+            const date1 = dateFormatter(new Date(schedule.startAt)); // 서버에서 받아온 일정의 날짜
+            const date2 = dateFormatter(new Date(date));
 
-              if (date1 === date2) {
-                eventNames.push({ id: schedule.eventId, name: schedule.title });
-              }
-            });
+            if (date1 === date2) {
+              eventNames.push({ id: schedule.eventId, name: schedule.title });
+            }
+          });
           return <EventTagBox eventNames={eventNames} />;
         }}
         formatDay={(_, date) => {
           return date.toLocaleString("en", { day: "numeric" });
         }}
         formatShortWeekday={(_, date) => date.toLocaleString("en-US", { weekday: "short" })}
-        onActiveStartDateChange={({ activeStartDate, view }) => {
+        onActiveStartDateChange={({ activeStartDate }) => {
           setYear((prev) => {
             const newYear = getYear(activeStartDate as Date);
             if (prev !== newYear) {

@@ -1,14 +1,14 @@
-import { useContext, useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import clsx from "clsx";
 import styles from "./InfiniteLoopSlider.module.scss";
-import { DateContext, type DateContextValue } from "./DataContext";
+import { useScheduleDate } from "./DateContext";
 
 interface Props {
   setIsSliderOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const InfiniteLoopSlider = ({ setIsSliderOpen }: Props) => {
-  const { year, month, setYear, setMonth } = useContext(DateContext) as DateContextValue;
+  const { year, month, setYear, setMonth } = useScheduleDate();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const itemWidth = 60;

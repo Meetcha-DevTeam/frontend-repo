@@ -1,6 +1,6 @@
 import styles from "./MeetingCreationPage.module.scss";
-import Button from "@/components/Button";
-import TopNav from "@/components/TopNav";
+import Button from "@/components/common/Button";
+import TopNav from "@/components/common/TopNav";
 import MeetingCreationView from "./MeetingCreationView";
 import { useState } from "react";
 import { createMeeting } from "@/apis/meeting/meetingAPI";

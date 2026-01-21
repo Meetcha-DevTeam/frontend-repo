@@ -10,7 +10,7 @@ const WeeklyScheduleView = ({ schedules }) => {
   const { calendarArr, activeIndex, isSwiping, setIsSwiping, handleSlideChange } =
     useWeeklySwiperController();
 
-  const events: ParsedSchedule[] = schedules?.map((item, _) => ({
+  const events: ParsedSchedule[] = schedules?.map((item) => ({
     eventId: item.eventId,
     title: item.title,
     startAt: new Date(item.startAt),

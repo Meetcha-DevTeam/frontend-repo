@@ -1,6 +1,4 @@
-import React from "react";
-
-import meetchaImage from ".././assets/MeetchaLogo.svg";
+import meetchaImage from "@assets/MeetchaLogo.svg";
 
 import "./meetcha_banner.scss";
 

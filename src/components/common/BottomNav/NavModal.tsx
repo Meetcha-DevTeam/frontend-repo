@@ -18,7 +18,7 @@ const NavModal = () => {
   ];
   return (
     <div className={styles.navModal}>
-      {modalMenu.map((item, _) => (
+      {modalMenu.map((item) => (
         <div
           key={item.id}
           className={styles.navModal__row}

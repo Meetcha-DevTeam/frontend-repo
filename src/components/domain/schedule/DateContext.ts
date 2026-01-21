@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export type DateContextValue = {
   year: number;
@@ -8,3 +8,9 @@ export type DateContextValue = {
 };
 
 export const DateContext = createContext<DateContextValue | null>(null);
+
+export function useScheduleDate() {
+  const ctx = useContext(DateContext);
+  if (!ctx) throw Error("Schedule Date Context Error");
+  return ctx;
+}

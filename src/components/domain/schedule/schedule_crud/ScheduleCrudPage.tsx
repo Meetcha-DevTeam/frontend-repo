@@ -1,5 +1,5 @@
-import Button from "@/components/Button";
-import { useContext, useEffect } from "react";
+import Button from "@/components/common/Button";
+import { useEffect } from "react";
 import styles from "./ScheduleCrudPage.module.scss";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
@@ -8,7 +8,7 @@ import { ScheduleCreateFormContext, useScheduleCreateForm } from "./hooks/useSch
 import { Slide } from "../weekly_schedule/WeeklyCalendar";
 import type { Dispatch, SetStateAction } from "react";
 import { ScheduleCrudContext } from "./hooks/useScheduleCrudContext";
-import { DateContext } from "../DataContext";
+import { useScheduleDate } from "../DateContext";
 import { useSchedules } from "@/hooks/useSchedules";
 
 type BaseProps = {
@@ -32,7 +32,7 @@ const ScheduleCrudPage = (props: Props) => {
   const { clickedSpan, slideType, setCrudOpen } = props;
   const data = slideType === Slide.Edit ? props.data : undefined;
   const form = useScheduleCreateForm();
-  const { year, month } = useContext(DateContext)!;
+  const { year, month } = useScheduleDate();
   const { forceRefresh } = useSchedules(year, month);
 
   useEffect(() => {
