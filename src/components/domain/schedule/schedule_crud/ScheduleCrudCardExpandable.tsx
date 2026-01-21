@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ScheduleDurationRow from "./ScheduleDurationRow";
-import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
-import { TimePicker } from "./components/TimePicker";
+import { useScheduleCreateFormContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCreateForm";
+import { TimePicker } from "./TimePicker";
 import Clock from "@assets/clock.svg?react";
 import styles from "./ScheduleCrudCard.module.scss";
 import { naturalDateToISO } from "@/utils/dateFormatter";

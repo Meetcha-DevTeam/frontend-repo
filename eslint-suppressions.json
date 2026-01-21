@@ -4,37 +4,7 @@
       "count": 1
     }
   },
-  "src/pages/landing/CommonContent.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 2
-    }
-  },
-  "src/pages/meeting/alternative/MeetingAlternativeView.tsx": {
-    "no-irregular-whitespace": {
-      "count": 5
-    }
-  },
-  "src/pages/meeting/detail/MeetingDetailRow.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/pages/meeting/list/MeetingCompleteSection.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/pages/meeting/list/MeetingIncompleteSection.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
   "src/pages/meeting/participant/ParticipantInfoPage.tsx": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/pages/meeting/participant/ParticipantInfoView.tsx": {
     "@typescript-eslint/no-unused-vars": {
       "count": 1
     }

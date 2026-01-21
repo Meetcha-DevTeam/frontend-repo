@@ -1,6 +1,6 @@
 import styles from "./ScheduleRepetitionRow.module.scss";
-import { options } from "./constants/ScheduleRepetitionRow.constants";
-import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
+import { options } from "../../../../const/ScheduleRepetitionRow.constants";
+import { useScheduleCreateFormContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCreateForm";
 
 const ScheduleRepetitionRow = () => {
   const form = useScheduleCreateFormContext();

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ScheduleCrudCard.module.scss";
-import type { ScheduleCreationSchema } from "./schemas/scheduleCreationSchema";
-import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
+import type { ScheduleCreationSchema } from "../../../../../schemas/scheduleCreationSchema";
+import { useScheduleCreateFormContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCreateForm";
 
 interface Props {
   icon: React.ReactNode;

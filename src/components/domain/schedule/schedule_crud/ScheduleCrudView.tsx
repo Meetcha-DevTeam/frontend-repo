@@ -3,9 +3,9 @@ import Pencil from "@assets/pencil.svg?react";
 import ScheduleRepetitionRow from "./ScheduleRepetitionRow";
 import ScheduleCrudCardExpandable from "./ScheduleCrudCardExpandable";
 import ScheduleCrudCard from "./ScheduleCrudCard";
-import { useScheduleCreateFormContext } from "./hooks/useScheduleCreateForm";
+import { useScheduleCreateFormContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCreateForm";
 import { Slide } from "../weekly_schedule/WeeklyCalendar";
-import { useScheduleCrudContext } from "./hooks/useScheduleCrudContext";
+import { useScheduleCrudContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCrudContext";
 
 const ScheduleCrudView = () => {
   const form = useScheduleCreateFormContext();

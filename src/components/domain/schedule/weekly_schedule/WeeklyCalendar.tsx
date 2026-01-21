@@ -1,7 +1,7 @@
 import { Calendar } from "react-big-calendar";
 import type { ParsedSchedule } from "@/types/WeeklyScheuldeTypes";
 import { useWeeklyCalendarLogic } from "@/hooks/useWeeklyCalendarLogic";
-import { calendarConfig, localizer } from "./constants/weeklyCalendarConfig";
+import { calendarConfig, localizer } from "../../../../const/weeklyCalendarConfig";
 import ScheduleSlidePanel from "./ScheduleSlidePanel";
 
 /**

@@ -4,10 +4,13 @@ import styles from "./ScheduleCrudPage.module.scss";
 import { createSchedule, deleteSchedule, editSchedule } from "@/apis/schedule/scheduleAPI";
 import type { Schedule } from "@/apis/schedule/scheduleTypes";
 import ScheduleCrudView from "./ScheduleCrudView";
-import { ScheduleCreateFormContext, useScheduleCreateForm } from "./hooks/useScheduleCreateForm";
+import {
+  ScheduleCreateFormContext,
+  useScheduleCreateForm,
+} from "../../../../hooks/schedule/schedule_crud/useScheduleCreateForm";
 import { Slide } from "../weekly_schedule/WeeklyCalendar";
 import type { Dispatch, SetStateAction } from "react";
-import { ScheduleCrudContext } from "./hooks/useScheduleCrudContext";
+import { ScheduleCrudContext } from "../../../../hooks/schedule/schedule_crud/useScheduleCrudContext";
 import { useScheduleDate } from "../DateContext";
 import { useSchedules } from "@/hooks/useSchedules";
 
