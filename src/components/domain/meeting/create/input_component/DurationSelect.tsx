@@ -1,5 +1,5 @@
+import { useMeetingCreateFormContext } from "@/hooks/meeting/create/useMeetingCreateForm";
 import { durationOptions } from "../../../../../const/meetingCreation.constants";
-import { useMeetingCreateFormContext } from "../hooks/useMeetingCreateForm";
 import styles from "./DurationSelect.module.scss";
 export const DurationSelect = () => {
   const form = useMeetingCreateFormContext();

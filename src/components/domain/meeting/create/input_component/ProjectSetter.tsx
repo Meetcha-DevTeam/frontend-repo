@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Plus from "@assets/plus.svg?react";
 import type { Project } from "@/apis/project/projectTypes";
 import { createProject, fetchProjects } from "@/apis/project/projectAPI";
-import { useMeetingCreateForm } from "../hooks/useMeetingCreateForm";
+import { useMeetingCreateForm } from "@/hooks/meeting/create/useMeetingCreateForm";
 
 export const ProjectSetter = () => {
   const form = useMeetingCreateForm();

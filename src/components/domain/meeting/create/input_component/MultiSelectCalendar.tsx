@@ -1,8 +1,8 @@
 import { isPreviousDate } from "@/utils/MeetingOptionCardUtils";
 import Calendar from "react-calendar";
-import { useMeetingCreateFormContext } from "../hooks/useMeetingCreateForm";
 import dayjs from "dayjs";
 import "./Calendar.scss";
+import { useMeetingCreateFormContext } from "@/hooks/meeting/create/useMeetingCreateForm";
 
 const formatDate = (date: Date) => {
   return dayjs(date).format("YYYY-MM-DD");
