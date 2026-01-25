@@ -13,7 +13,7 @@ export const useScheduleCreateForm = (
       title: "",
       startAt: "",
       endAt: "",
-      recurrence: "NONE",
+      recurrence: "",
     }
   );
 
