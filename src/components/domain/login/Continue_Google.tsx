@@ -1,5 +1,5 @@
 import google_logo from "../../../assets/Google.svg";
-import "../styles/login.scss";
+import styles from "./Continue_Google.module.scss";
 
 const Continue_Google = () => {
   const handleGoogleLogin = () => {
@@ -18,7 +18,7 @@ const Continue_Google = () => {
   };
 
   return (
-    <button className="google_button" onClick={handleGoogleLogin}>
+    <button className={styles.google_button} onClick={handleGoogleLogin}>
       <img src={google_logo} alt="google_logo" />
       <p>Sign in with Google</p>
     </button>

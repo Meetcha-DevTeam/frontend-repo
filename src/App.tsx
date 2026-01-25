@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import LoginContainer from "./pages/login/LoginContainer";
-import LoginCompleteContainer from "./pages/login_complete/components/LoginCompleteContainer";
 import BackgroundPage from "./pages/background/BackgroundPage";
 import MemoirMeetingAll from "./pages/memoir/MemoirMeeting/MemoirMeetingAll";
-import MemoirWriteCtn from "./pages/memoir/MemoirWrite/MemoirWiteCtn";
+import MemoirWriteCtn from "./pages/memoir/MemoirWrite/MemoirWriteCtn";
 import MemoirCompleteCtn from "./pages/memoir/MemoirComplete/MemoirCompleteCtn";
 import MeetingSharePage from "./pages/meeting/share/MeetingSharePage";
 import MeetingPage from "./pages/meeting/MeetingPage";
@@ -27,6 +26,7 @@ import { AlreadyAuthRedirect } from "./components/common/AlreadyAuthRedirect";
 import ProtectedRoute from "./ProtectedRoute";
 import Loading from "./components/common/Loading/Loading";
 import MeetingDetailPage from "./pages/meeting/detail/MeetingDetailPage";
+import LoginCompleteContainer from "./pages/login_complete/LoginCompleteContainer";
 
 const MeetingAlternativePage = lazy(
   () => import("./pages/meeting/alternative/MeetingAlternativePage")

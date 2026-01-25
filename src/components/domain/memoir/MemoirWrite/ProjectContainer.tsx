@@ -1,6 +1,6 @@
 // Project_container.tsx
 import React, { useEffect, useState } from "react";
-import "./MemoirWrite.scss";
+import styles from "./ProjectContainer.module.scss";
 
 import LowChevron from "@/assets/LowChevron.svg";
 import Plus from "@/assets/plus.svg";
@@ -93,28 +93,30 @@ const ProjectContainer = ({
     setChosenProjectTextColor(t.text);
   }, [projectId, list]);
   return (
-    <div className="ctn_in_common to_write_meeting">
-      <p className="write_title">프로젝트</p>
+    <div className={`${styles.ctn_in_common} ${styles.to_write_meeting}`}>
+      <p className={styles.write_title}>프로젝트</p>
 
-      <div className="project_banner_ctn">
-        <div className="in-common banner" onClick={toggleBannerBox}>
-          <div className="banner_name_ctn" style={{ background: chosenProjectBgColor }}>
-            <p className="banner_name" style={{ color: chosenProjectTextColor }}>
+      <div className={styles.project_banner_ctn}>
+        <div className={`${styles["in-common"]} ${styles.banner}`} onClick={toggleBannerBox}>
+          <div className={styles.banner_name_ctn} style={{ background: chosenProjectBgColor }}>
+            <p className={styles.banner_name} style={{ color: chosenProjectTextColor }}>
               {chosenProject || "선택된 프로젝트 없음"}
             </p>
           </div>
           <img
             src={LowChevron}
             alt="LowChevron"
-            className={`chevron_icon ${isOpen ? "rotate" : ""}`}
+            className={`${styles.chevron_icon} ${isOpen ? styles.rotate : ""}`}
           />
         </div>
 
-        <div className={`in-common banner_box ${isOpen ? "open" : "closed"}`}>
-          <div className="banner_box_input_ctn">
+        <div
+          className={`${styles["in-common"]} ${styles.banner_box} ${isOpen ? styles.open : styles.closed}`}
+        >
+          <div className={styles.banner_box_input_ctn}>
             <input
               type="text"
-              className="project_banner_input"
+              className={styles.project_banner_input}
               value={newProject}
               onChange={(e) => setNewProject(e.target.value)}
               placeholder="새 프로젝트 이름"
@@ -134,16 +136,16 @@ const ProjectContainer = ({
           {list.map((project) => {
             const t = getProjectTheme(project.projectId);
             return (
-              <div key={project.projectId} className="checkbox_ctn">
+              <div key={project.projectId} className={styles.checkbox_ctn}>
                 <input
-                  className="study_checkbox"
+                  className={styles.study_checkbox}
                   type="radio"
                   name="project"
                   checked={projectId === project.projectId}
                   onChange={() => setProjectId(project.projectId)}
                 />
-                <div className="banner_name_ctn" style={{ backgroundColor: t.bg }}>
-                  <p className="banner_name" style={{ color: t.text }}>
+                <div className={styles.banner_name_ctn} style={{ backgroundColor: t.bg }}>
+                  <p className={styles.banner_name} style={{ color: t.text }}>
                     {project.projectName}
                   </p>
                 </div>

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import styles from "./MeetingPage.module.scss";
-import MeetingIncompleteSection from "../../components/domain/meeting/list/MeetingIncompleteSection";
-import MeetingCompleteSection from "../../components/domain/meeting/list/MeetingCompleteSection";
 import { useMeetingStore } from "@/store/meetingStore";
+import MeetingCompleteSection from "@/components/domain/meeting/MeetingCompleteSection";
+import MeetingIncompleteSection from "@/components/domain/meeting/MeetingIncompleteSection";
 
 const MeetingPage = () => {
   const meetings = useMeetingStore((state) => state.meetingList);

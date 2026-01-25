@@ -1,8 +1,6 @@
-import React from "react";
 import leftchevron from "@/assets/LeftChevron.svg";
 import { useNavigate } from "react-router-dom";
-
-import "./MemoirWrite.scss";
+import styles from "./MemoirWriteIntro.module.scss";
 
 const MemoirWriteIntro = () => {
   const navigate = useNavigate();
@@ -11,7 +9,7 @@ const MemoirWriteIntro = () => {
     navigate("/memoir");
   };
   return (
-    <div className="memoir_write_intro_container">
+    <div className={styles.memoir_write_intro_container}>
       <button onClick={handleClick}>
         <img src={leftchevron} alt="leftchevron"></img>
       </button>

@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import MemoirWriteIntro from "./MemoirWriteIntro";
-import MemoirWriteMain from "./MemoirWriteMain";
+import MemoirWriteIntro from "../../../components/domain/memoir/MemoirWrite/MemoirWriteIntro";
+import MemoirWriteMain from "../../../components/domain/memoir/MemoirWrite/MemoirWriteMain";
 
 import { fetchProjects } from "@/apis/project/projectAPI";
 import type { Project, PostMemoirPayload } from "@/apis/memoir/memoirTypes";
-import "./MemoirWrite.scss";
+import styles from "./MemoirWriteCtn.module.scss";
 import { postMemoir } from "@/apis/memoir/memoirAPI";
 
 const MemoirWriteCtn = () => {
@@ -110,9 +110,9 @@ const MemoirWriteCtn = () => {
   if (projectsError) return <p>프로젝트 목록 불러오기 실패: {projectsError}</p>;
 
   return (
-    <div className="Memoir_write_ctn">
+    <div className={styles.Memoir_write_ctn}>
       <MemoirWriteIntro />
-      <div className="Memoir_content_ctn">
+      <div className={styles.Memoir_content_ctn}>
         <MemoirWriteMain
           projectsAll={projectsAll} // ✅ state 배열 전달
           refetchProjects={refetchProjects} // ✅ 자식에서 호출하면 목록 최신화
@@ -137,10 +137,10 @@ const MemoirWriteCtn = () => {
         />
       </div>
 
-      <div className="memoir_botton_fixed">
+      <div className={styles.memoir_botton_fixed}>
         <button
           onClick={handleSubmitBtnClick}
-          className={isReadyToSubmit ? "memoir_write_btn_ready" : "memoir_write_btn"}
+          className={isReadyToSubmit ? styles.memoir_write_btn_ready : styles.memoir_write_btn}
           disabled={!isReadyToSubmit || submitLoading}
         >
           <p>{submitLoading ? "작성 중..." : "회고 작성하기"}</p>

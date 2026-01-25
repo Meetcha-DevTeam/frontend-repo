@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import Meetcha_banner from "../../../components/common/Meetcha_banner";
 
-import "../styles/login_complete.scss";
+import "./login_complete.scss";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { sendAuthCode } from "@/apis/auth/authAPI";
+import Meetcha_banner from "@/components/common/Meetcha_banner";
 
 const LoginCompleteContainer = () => {
   const [params] = useSearchParams();

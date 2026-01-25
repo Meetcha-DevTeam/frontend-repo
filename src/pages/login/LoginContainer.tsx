@@ -2,14 +2,14 @@ import Meetcha_banner from "../../components/common/Meetcha_banner";
 import Continue_Google from "../../components/domain/login/Continue_Google";
 import Continue_des from "../../components/domain/login/Continue_des";
 
-import "../styles/login.scss";
+import styles from "./LoginContainer.module.scss";
 
 const LoginContainer = () => {
   return (
-    <div className="login_container">
-      <div className="flex_container1">
+    <div className={styles.login_container}>
+      <div className={styles.flex_container1}>
         <Meetcha_banner />
-        <div className="flex_container2">
+        <div className={styles.flex_container2}>
           <Continue_Google />
           <Continue_des />
         </div>
