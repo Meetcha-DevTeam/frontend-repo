@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -11,7 +11,6 @@ import {
   parseISO,
   addDays,
   differenceInCalendarDays,
-  getHours,
   format as formatDate,
   startOfDay,
   format,
@@ -159,7 +158,6 @@ const Timetable = ({
     <FullCalendar
       schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
       plugins={[timeGridPlugin, interactionPlugin, scrollGridPlugin]}
-
       stickyHeaderDates={true}
       stickyFooterScrollbar={true}
       initialView="timeGridSpan"
