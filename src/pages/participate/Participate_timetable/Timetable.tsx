@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -6,7 +6,7 @@ import scrollGridPlugin from "@fullcalendar/scrollgrid";
 import { parseUserCalendarEvents, toSelectedEvents } from "@/utils/eventTransform";
 import { useMergePreviousTimes } from "./TimetableHooks/Timetable/useMergePreviousTime";
 import { useTimetableSelection } from "./TimetableHooks/Timetable/useTimetableSelection";
-import "./ParticipateTimetabe.scss";
+import "./Timetable.scss";
 import {
   parseISO,
   addDays,
@@ -159,6 +159,9 @@ const Timetable = ({
     <FullCalendar
       schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
       plugins={[timeGridPlugin, interactionPlugin, scrollGridPlugin]}
+
+      stickyHeaderDates={true}
+      stickyFooterScrollbar={true}
       initialView="timeGridSpan"
       views={{
         timeGridSpan: { type: "timeGrid", duration: { days: dateMap.length } },
@@ -168,6 +171,14 @@ const Timetable = ({
       slotMinTime="00:00:00"
       slotMaxTime="24:00:00"
       slotDuration="00:30:00"
+      slotLabelInterval="01:00:00"
+      slotLabelFormat={{ hour: "2-digit" }}
+      slotLabelContent={(arg) => {
+        const d = arg.date;
+        // ✅ 정각만 라벨 표시
+        if (d.getMinutes() !== 0) return "";
+        return String(d.getHours()); // 또는 format(d, "HH")
+      }}
       allDaySlot={false}
       nowIndicator={true}
       selectable={true} // 선택 기능 활성화
@@ -186,8 +197,9 @@ const Timetable = ({
         const realDate = dateMap[idx]?.realDate;
         return realDate ? formatDate(realDate, "M.d(EEE)", { locale: ko }) : "";
       }}
+      expandRows={true}
+      contentHeight="auto"
       dayMinWidth={92}
-      slotLabelContent={(arg) => String(getHours(arg.date))}
       selectOverlap={(event) => !event.extendedProps?.isBusy}
       longPressDelay={200}
     />
