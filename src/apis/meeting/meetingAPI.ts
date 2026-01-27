@@ -8,6 +8,7 @@ import type {
   Meeting,
   MeetingCreateResponse,
   MeetingDetail,
+  MeetingAvailabilities,
 } from "./meetingTypes";
 
 export const fetchMeetingList = async () => {
@@ -85,4 +86,14 @@ export const deleteMeeting = async (meetingId: string) => {
     if (e instanceof NetworkError) throw e;
     throw e;
   }
+};
+
+export const fetchMeetingAvailabilities = async (meetingId: string) => {
+  const res: ApiResponse<MeetingAvailabilities> = await apiCall(
+    `/meeting-lists/${meetingId}/availabilities`,
+    "GET",
+    null,
+    true
+  );
+  return res;
 };
