@@ -1,7 +1,7 @@
 import { useContext, useRef, useState, useLayoutEffect } from "react";
 import { addMonths, subMonths, getYear, getMonth } from "date-fns";
 import type { Swiper as SwiperType } from "swiper";
-import { DateContext } from "@/pages/schedule/DataContext";
+import { DateContext } from "@/components/domain/schedule/DateContext";
 
 export function useMonthlySwiperController() {
   const { year, month, setYear, setMonth } = useContext(DateContext)!;
