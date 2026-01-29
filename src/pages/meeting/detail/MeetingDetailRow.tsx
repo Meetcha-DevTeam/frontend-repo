@@ -76,7 +76,7 @@ const MeetingDetailRow = ({ label, icon, data }: Props) => {
         onClick={handleClick}
       >
         {label === "참여자 정보 확인"
-          ? participants.map((item, _) => (
+          ? participants.map((item) => (
               <img
                 key={item.participantId}
                 className={styles.meetingDetailRow__rightArea__participantImg}

@@ -4,6 +4,7 @@ import Plus from "@assets/plus.svg?react";
 import type { Project } from "@/apis/project/projectTypes";
 import { createProject, fetchProjects } from "@/apis/project/projectAPI";
 import { useMeetingCreateForm } from "../hooks/useMeetingCreateForm";
+import { isSuccess } from "@/apis/auth/authUtils";
 
 export const ProjectSetter = () => {
   const form = useMeetingCreateForm();
@@ -14,16 +15,19 @@ export const ProjectSetter = () => {
     const data = {
       name: inputValue,
     };
-    const response = await createProject(data);
+    const result = await createProject(data);
 
-    setProjects((prev) => [
-      ...prev,
-      {
-        projectId: response.projectId,
-        projectName: response.name,
-      },
-    ]);
-    setInputValue("");
+    if (isSuccess(result.code)) {
+      const response = result.data;
+      setProjects((prev) => [
+        ...prev,
+        {
+          projectId: response.projectId,
+          projectName: response.name,
+        },
+      ]);
+      setInputValue("");
+    }
   };
 
   useEffect(() => {
