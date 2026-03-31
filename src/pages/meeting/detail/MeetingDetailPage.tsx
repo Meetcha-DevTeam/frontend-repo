@@ -81,7 +81,7 @@ const MeetingDetailPage = () => {
                 />
               </>
             )}
-          {meetingDetail?.meetingStatus === "MATCH_FAILED" &&
+          {meetingDetail?.meetingStatus === "MATCHING" &&
             isBefore(Date.now(), meetingDetail?.earliestTime) && (
               <>
                 <Button
