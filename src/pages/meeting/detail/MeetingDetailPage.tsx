@@ -82,7 +82,7 @@ const MeetingDetailPage = () => {
               </>
             )}
           {meetingDetail?.meetingStatus === "MATCHING" &&
-            isBefore(Date.now(), meetingDetail?.earliestTime) && (
+            isBefore(Date.now(), new Date(meetingDetail?.earliestTime)) && (
               <>
                 <Button
                   label={"대안시간 투표하기"}
